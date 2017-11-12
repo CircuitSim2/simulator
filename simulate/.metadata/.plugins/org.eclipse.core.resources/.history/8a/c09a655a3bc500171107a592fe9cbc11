@@ -1,0 +1,66 @@
+package circuit;
+
+import java.util.ArrayList;
+
+public class SeriesCircuit
+{
+	private Element elem[];
+	private double RSum;
+	private double LSum;
+	private double CinvSum;
+	private double voltage;
+	private ArrayList<Double> iList;
+
+	public SeriesCircuit()
+	{
+		this.elem = new Element[6];
+		this.RSum = 0;
+		this.LSum = 0;
+		this.CinvSum = 0;
+		this.voltage = 0;
+		iList = new ArrayList<Double>();
+	}
+
+	public void setVoltage(double E)
+	{
+		this.voltage = E;
+	}
+	
+	public void setElem(int num, double value, ElemType et)
+	{
+		
+	}
+	
+	public void elemSum()
+	{
+		RSum = 0;
+		CinvSum = 0;
+		LSum = 0;
+
+		for(Element elem : elem)
+		{
+			switch(elem.getEt())
+			{
+				case RESISTANCE:
+					RSum += elem.getNum();
+					break;
+
+				case CAPACITANCE:
+					CinvSum += 1 / elem.getNum();
+					break;
+
+				case INDUCTANCE:
+					LSum += elem.getNum();
+					break;
+			}
+		}
+	}
+
+	public void calcCurrent(double start, double end)
+	{
+		double dt;
+		double i;
+		double iSum;
+		double 
+	}
+}

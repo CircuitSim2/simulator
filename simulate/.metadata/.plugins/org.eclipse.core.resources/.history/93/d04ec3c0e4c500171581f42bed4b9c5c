@@ -1,0 +1,268 @@
+package gui;
+
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+
+public class MainDispApp extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainDispApp frame = new MainDispApp();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public MainDispApp() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 692, 433);
+
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		JMenu menu = new JMenu("ファイル");
+		menuBar.add(menu);
+
+		JMenuItem menuItem = new JMenuItem("新規作成");
+		menu.add(menuItem);
+
+		JMenuItem menuItem_1 = new JMenuItem("開く");
+		menu.add(menuItem_1);
+
+		JMenuItem menuItem_2 = new JMenuItem("上書き保存");
+		menu.add(menuItem_2);
+
+		JMenuItem menuItem_3 = new JMenuItem("名前を付けて保存");
+		menu.add(menuItem_3);
+
+		JMenuItem menuItem_4 = new JMenuItem("波形を画像として保存");
+		menu.add(menuItem_4);
+
+		JMenuItem menuItem_5 = new JMenuItem("閉じる");
+		menu.add(menuItem_5);
+
+		JMenu menu_1 = new JMenu("表示");
+		menuBar.add(menu_1);
+
+		JMenuItem menuItem_6 = new JMenuItem("回路図");
+		menu_1.add(menuItem_6);
+
+		JMenuItem menuItem_7 = new JMenuItem("数式");
+		menu_1.add(menuItem_7);
+
+		JMenuItem menuItem_8 = new JMenuItem("素子リスト");
+		menu_1.add(menuItem_8);
+
+		JMenuItem menuItem_9 = new JMenuItem("波形");
+		menu_1.add(menuItem_9);
+
+
+
+		JMenu menu_2 = new JMenu("編集");
+		menuBar.add(menu_2);
+
+		JMenuItem menuItem_10 = new JMenuItem("戻る");
+		menu_2.add(menuItem_10);
+
+		JMenuItem menuItem_11 = new JMenuItem("進む");
+		menu_2.add(menuItem_11);
+
+		JMenuItem menuItem_12 = new JMenuItem("コピー");
+		menu_2.add(menuItem_12);
+
+		JMenuItem menuItem_13 = new JMenuItem("切り取り");
+		menu_2.add(menuItem_13);
+
+		JMenuItem menuItem_14 = new JMenuItem("ペースト");
+		menu_2.add(menuItem_14);
+
+		JMenuItem menuItem_15 = new JMenuItem("全消去");
+		menu_2.add(menuItem_15);
+
+		JMenu menu_3 = new JMenu("ヘルプ");
+		menuBar.add(menu_3);
+
+		JMenuItem menuItem_16 = new JMenuItem("ヘルプビューア");
+		menu_3.add(menuItem_16);
+
+		JMenu menu_4 = new JMenu("実行");
+		menuBar.add(menu_4);
+
+		JMenuItem menuItem_17 = new JMenuItem("シミュレーション");
+		menu_4.add(menuItem_17);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JMenuBar menuBar_1 = new JMenuBar();
+		menuBar_1.setBounds(0, 0, 676, 21);
+		contentPane.add(menuBar_1);
+
+		JButton button = new JButton("戻る");
+		menuBar_1.add(button);
+
+		JButton button_1 = new JButton("進む");
+		menuBar_1.add(button_1);
+
+		JButton button_2 = new JButton("開く");
+		menuBar_1.add(button_2);
+
+		JButton button_3 = new JButton("保存");
+		menuBar_1.add(button_3);
+
+		JButton button_4 = new JButton("シミュレーション開始");
+		menuBar_1.add(button_4);
+
+		JButton button_5 = new JButton("シミュレーション終了");
+		menuBar_1.add(button_5);
+
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 238, 676, 125);
+		contentPane.add(panel);
+
+		JLabel lblRc = new JLabel("RC直列回路の波形");
+		lblRc.setBounds(0, 222, 676, 13);
+		contentPane.add(lblRc);
+
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(0, 41, 340, 176);
+		contentPane.add(panel_1);
+
+		ImageIcon icon2 = new ImageIcon("F:/simulator/simulate/circuit/src/gui/circuit.png");
+		panel_1.setLayout(null);
+
+		textField = new JTextField();
+		textField.setBounds(54, 75, 67, 19);
+		panel_1.add(textField);
+		textField.setColumns(10);
+
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(197, 42, 51, 19);
+		panel_1.add(textField_2);
+
+		textField_1 = new JTextField();
+		textField_1.setBounds(86, 42, 51, 19);
+		panel_1.add(textField_1);
+		textField_1.setColumns(10);
+
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(197, 115, 51, 19);
+		panel_1.add(textField_3);
+
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(86, 115, 51, 19);
+		panel_1.add(textField_4);
+
+		JLabel elemLabel1 = new JLabel("New label");
+		elemLabel1.setBounds(86, 0, 61, 32);
+		panel_1.add(elemLabel1);
+
+		JLabel elemLabel2 = new JLabel("New label");
+		elemLabel2.setBounds(197, 0, 61, 32);
+		panel_1.add(elemLabel2);
+
+		JLabel elemLabel3 = new JLabel("New label");
+		elemLabel3.setBounds(302, 24, 30, 59);
+		panel_1.add(elemLabel3);
+
+		JLabel elemLabel4 = new JLabel("New label");
+		elemLabel4.setBounds(86, 144, 61, 32);
+		panel_1.add(elemLabel4);
+
+		JLabel elemLabel5 = new JLabel("New label");
+		elemLabel5.setBounds(197, 144, 61, 32);
+		panel_1.add(elemLabel5);
+
+		JLabel elemLabel6 = new JLabel("New label");
+		elemLabel6.setBounds(302, 92, 30, 59);
+		panel_1.add(elemLabel6);
+		JLabel lblCircuitlabel = new JLabel(icon2);
+		lblCircuitlabel.setBounds(0, 0, 340, 176);
+		panel_1.add(lblCircuitlabel);
+
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(512, 41, 164, 176);
+		contentPane.add(panel_3);
+
+		JLabel lblRc_1 = new JLabel("RC直列回路");
+		lblRc_1.setBounds(0, 28, 340, 13);
+		contentPane.add(lblRc_1);
+
+		JLabel label = new JLabel("素子リスト");
+		label.setBounds(339, 28, 173, 13);
+
+		contentPane.add(label);
+
+		JLabel label_1 = new JLabel("数式");
+		label_1.setBounds(512, 28, 164, 13);
+		contentPane.add(label_1);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(339, 41, 173, 176);
+		contentPane.add(scrollPane);
+
+		JPanel panel_2 = new JPanel();
+		scrollPane.setViewportView(panel_2);
+
+		ImageIcon icon = new ImageIcon("F:/simulator/simulate/circuit/src/gui/resistance.png");
+		panel_2.setLayout(null);
+	}
+
+
+
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+}

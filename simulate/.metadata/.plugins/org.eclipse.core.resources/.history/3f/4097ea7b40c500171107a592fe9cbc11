@@ -1,0 +1,10 @@
+package circuit;
+
+public class RLCcircuit
+{
+	public static void main(String[] args)
+	{	
+		
+	}
+
+}
