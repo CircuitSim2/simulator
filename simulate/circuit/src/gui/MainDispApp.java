@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -53,7 +56,7 @@ public class MainDispApp extends JFrame {
 	private JLabel labelFormula;
 	private JPanel panelElementList;
 	private JScrollPane scrollPaneElementList;
-	private JPanel scrollPanelElementList;
+	private JPanel scrollPanelElementListPanel;
 	private JMenuItem menuItemNew;
 	private JMenuItem menuItemOpen;
 	private JMenuItem menuItemOverWrite;
@@ -94,6 +97,13 @@ public class MainDispApp extends JFrame {
 	private JLabel labelElement2Unit;
 	private JLabel labelElement1Unit;
 	private JLabel labelVoltageUnit;
+	private JLabel labelLineDisp;
+	private JLabel labelInductanceDisp;
+	private JLabel labelCapacitanceDisp;
+	private JLabel labelResistanceDisp;
+	private JLabel label;
+	private JLabel label_1;
+	private JLabel label_2;
 
 	/**
 	 * Launch the application.
@@ -116,18 +126,18 @@ public class MainDispApp extends JFrame {
 	 */
 	public MainDispApp() {
 		//必要画像の読み込み
-		 seriesCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/SeriesCircuit.png"));
-		 linePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Line.png"));
-		 resistancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/resistance.png"));
-		 inductancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Inductance.png"));
-		 capacitancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Cpacitance.png"));
-		 linePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/LineV.png"));
-		 resistancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/resistanceV.png"));
-		 inductancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/InductanceV.png"));
-		 capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceV.png"));
+		seriesCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/SeriesCircuit.png"));
+		linePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Line.png"));
+		resistancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/resistance.png"));
+		inductancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Inductance.png"));
+		capacitancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Cpacitance.png"));
+		linePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/LineV.png"));
+		resistancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/resistanceV.png"));
+		inductancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/InductanceV.png"));
+		capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceV.png"));
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 692, 433);
+		setBounds(100, 100, 700, 440);
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -206,7 +216,7 @@ public class MainDispApp extends JFrame {
 		contentPane.setLayout(null);
 
 		menuBarButtons = new JMenuBar();
-		menuBarButtons.setBounds(0, 0, 676, 21);
+		menuBarButtons.setBounds(0, 0, 467, 21);
 		contentPane.add(menuBarButtons);
 
 		buttonRedo = new JButton("戻る");
@@ -302,7 +312,7 @@ public class MainDispApp extends JFrame {
 		labelElement6.setBounds(101, 137, 44, 29);
 		panelCircuit.add(labelElement6);
 		labelCircuitPicture = new JLabel(seriesCircuitPicture);
-		labelCircuitPicture.setBounds(1, 1, 340, 176);
+		labelCircuitPicture.setBounds(1, 1, 341, 176);
 		panelCircuit.add(labelCircuitPicture);
 		
 		labelVoltageUnit = new JLabel("V");
@@ -335,35 +345,80 @@ public class MainDispApp extends JFrame {
 
 		panelFormula = new JPanel();
 		panelFormula.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelFormula.setBounds(512, 41, 164, 178);
+		panelFormula.setBounds(532, 41, 152, 178);
 		contentPane.add(panelFormula);
+		panelFormula.setLayout(null);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(1, 1, 150, 176);
+		panelFormula.add(textArea);
 
 		labelCircuit = new JLabel("回路");
 		labelCircuit.setBounds(0, 28, 340, 13);
 		contentPane.add(labelCircuit);
 
 		labelElementList = new JLabel("素子リスト");
-		labelElementList.setBounds(339, 28, 173, 13);
+		labelElementList.setBounds(346, 28, 154, 13);
 
 		contentPane.add(labelElementList);
 
 		labelFormula = new JLabel("数式");
-		labelFormula.setBounds(512, 28, 164, 13);
+		labelFormula.setBounds(532, 28, 144, 13);
 		contentPane.add(labelFormula);
 		
 		panelElementList = new JPanel();
-		panelElementList.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelElementList.setBounds(339, 41, 173, 178);
+		panelElementList.setBorder(null);
+		panelElementList.setBounds(349, 41, 178, 178);
 		contentPane.add(panelElementList);
 		panelElementList.setLayout(null);
 		
 		scrollPaneElementList = new JScrollPane();
-		scrollPaneElementList.setBounds(1, 1, 171, 176);
+		scrollPaneElementList.setViewportBorder(null);
+		scrollPaneElementList.setBounds(0, 0, 176, 178);
 		panelElementList.add(scrollPaneElementList);
 				
-		scrollPanelElementList = new JPanel();
-		scrollPaneElementList.setViewportView(scrollPanelElementList);
-		scrollPanelElementList.setLayout(null);
+		scrollPanelElementListPanel = new JPanel();
+		scrollPanelElementListPanel.setBorder(null);
+		scrollPaneElementList.setViewportView(scrollPanelElementListPanel);
+		
+		labelCapacitanceDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceDisp.png")));
+		labelCapacitanceDisp.setAlignmentY(Component.TOP_ALIGNMENT);
+		
+		labelResistanceDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/resisitanceDisp.png")));
+		labelResistanceDisp.setAlignmentY(Component.TOP_ALIGNMENT);
+		
+		labelInductanceDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/InductanceDisp.png")));
+		labelInductanceDisp.setAlignmentY(Component.TOP_ALIGNMENT);
+		
+		labelLineDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/LineDisp.png")));
+		labelLineDisp.setAlignmentY(100.0f);
+		GroupLayout gl_scrollPanelElementListPanel = new GroupLayout(scrollPanelElementListPanel);
+		gl_scrollPanelElementListPanel.setHorizontalGroup(
+			gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_scrollPanelElementListPanel.createSequentialGroup()
+					.addGap(12)
+					.addGroup(gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_scrollPanelElementListPanel.createSequentialGroup()
+							.addComponent(labelLineDisp)
+							.addGap(7)
+							.addComponent(labelResistanceDisp))
+						.addGroup(gl_scrollPanelElementListPanel.createSequentialGroup()
+							.addComponent(labelCapacitanceDisp)
+							.addGap(7)
+							.addComponent(labelInductanceDisp, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE))))
+		);
+		gl_scrollPanelElementListPanel.setVerticalGroup(
+			gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_scrollPanelElementListPanel.createSequentialGroup()
+					.addGroup(gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(labelLineDisp)
+						.addComponent(labelResistanceDisp))
+					.addGap(6)
+					.addGroup(gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(labelCapacitanceDisp)
+						.addComponent(labelInductanceDisp, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)))
+		);
+		scrollPanelElementListPanel.setLayout(gl_scrollPanelElementListPanel);
 	}
 
 
