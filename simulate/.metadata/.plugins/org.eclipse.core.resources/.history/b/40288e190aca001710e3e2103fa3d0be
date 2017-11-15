@@ -21,9 +21,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 public class MainDispApp extends JFrame implements MouseListener{
@@ -218,7 +218,7 @@ public class MainDispApp extends JFrame implements MouseListener{
 		contentPane.setLayout(null);
 
 		menuBarButtons = new JMenuBar();
-		menuBarButtons.setBounds(0, 0, 676, 21);
+		menuBarButtons.setBounds(0, 0, 467, 21);
 		contentPane.add(menuBarButtons);
 
 		buttonRedo = new JButton("戻る");
@@ -292,7 +292,6 @@ public class MainDispApp extends JFrame implements MouseListener{
 
 		labelElement1 = new JLabel(resistancePicture);
 		labelElement1.setBounds(101, 11, 43, 29);
-		labelElement1.addMouseListener(this);
 		panelCircuit.add(labelElement1);
 
 		labelElement2 = new JLabel(capacitancePicture);
@@ -455,21 +454,17 @@ public class MainDispApp extends JFrame implements MouseListener{
 
 	 public void mouseEntered(MouseEvent e){
 	   /* 処理したい内容をここに記述する */
-		 System.out.println(e.getComponent());
 	 }
 
 	 public void mouseExited(MouseEvent e){
 	   /* 処理したい内容をここに記述する */
-		 System.out.println(e.getComponent());
 	 }
 
 	 public void mousePressed(MouseEvent e){
 	   /* 処理したい内容をここに記述する */
-		 System.out.println(e.getComponent());
 	 }
 
 	 public void mouseReleased(MouseEvent e){
 	   /* 処理したい内容をここに記述する */
-		 System.out.println(e.getComponent());
 	 }
 }

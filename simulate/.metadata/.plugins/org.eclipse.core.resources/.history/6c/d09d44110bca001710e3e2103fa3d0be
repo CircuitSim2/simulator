@@ -292,7 +292,6 @@ public class MainDispApp extends JFrame implements MouseListener{
 
 		labelElement1 = new JLabel(resistancePicture);
 		labelElement1.setBounds(101, 11, 43, 29);
-		labelElement1.addMouseListener(this);
 		panelCircuit.add(labelElement1);
 
 		labelElement2 = new JLabel(capacitancePicture);
