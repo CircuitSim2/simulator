@@ -87,13 +87,6 @@ public class MainDispApp extends JFrame {
 	private ImageIcon resistancePictureV;
 	private ImageIcon inductancePictureV;
 	private ImageIcon capacitancePictureV;
-	private JLabel labelElement4Unit;
-	private JLabel labelElement5Unit;
-	private JLabel labelElement6Unit;
-	private JLabel labelElement3Unit;
-	private JLabel labelElement2Unit;
-	private JLabel labelElement1Unit;
-	private JLabel labelVoltageUnit;
 
 	/**
 	 * Launch the application.
@@ -124,7 +117,7 @@ public class MainDispApp extends JFrame {
 		 linePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/LineV.png"));
 		 resistancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/resistanceV.png"));
 		 inductancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/InductanceV.png"));
-		 capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceV.png"));
+		 capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CapacitanceV.png"));
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 692, 433);
@@ -278,21 +271,21 @@ public class MainDispApp extends JFrame {
 		textFieldElement4.setBounds(234, 91, 36, 19);
 		panelCircuit.add(textFieldElement4);
 
-		labelElement1 = new JLabel(resistancePicture);
+		labelElement1 = new JLabel(linePicture);
 		labelElement1.setBounds(101, 11, 43, 29);
 		panelCircuit.add(labelElement1);
 
-		labelElement2 = new JLabel(capacitancePicture);
+		labelElement2 = new JLabel(linePicture);
 		labelElement2.setBounds(195, 11, 43, 29);
 		panelCircuit.add(labelElement2);
 
-		labelElement3 = new JLabel(inductancePictureV);
+		labelElement3 = new JLabel(linePictureV);
 		labelElement3.setBounds(297, 41, 29, 43);
 		panelCircuit.add(labelElement3);
 		
-		labelElement4 = new JLabel(linePictureV);
-		labelElement4.setBounds(297, 94, 29, 43);
-		panelCircuit.add(labelElement4);
+				labelElement4 = new JLabel(linePictureV);
+				labelElement4.setBounds(297, 94, 29, 43);
+				panelCircuit.add(labelElement4);
 
 		labelElement5 = new JLabel(linePicture);
 		labelElement5.setBounds(195, 137, 43, 29);
@@ -305,31 +298,31 @@ public class MainDispApp extends JFrame {
 		labelCircuitPicture.setBounds(1, 1, 340, 176);
 		panelCircuit.add(labelCircuitPicture);
 		
-		labelVoltageUnit = new JLabel("V");
+		JLabel labelVoltageUnit = new JLabel("V");
 		labelVoltageUnit.setBounds(101, 83, 19, 13);
 		panelCircuit.add(labelVoltageUnit);
 		
-		labelElement1Unit = new JLabel("Ω");
+		JLabel labelElement1Unit = new JLabel("Ω");
 		labelElement1Unit.setBounds(143, 50, 19, 13);
 		panelCircuit.add(labelElement1Unit);
 		
-		labelElement2Unit = new JLabel("Ω");
+		JLabel labelElement2Unit = new JLabel("Ω");
 		labelElement2Unit.setBounds(237, 50, 19, 13);
 		panelCircuit.add(labelElement2Unit);
 		
-		labelElement3Unit = new JLabel("Ω");
+		JLabel labelElement3Unit = new JLabel("Ω");
 		labelElement3Unit.setBounds(272, 72, 19, 13);
 		panelCircuit.add(labelElement3Unit);
 		
-		labelElement4Unit = new JLabel("Ω");
+		JLabel labelElement4Unit = new JLabel("Ω");
 		labelElement4Unit.setBounds(272, 94, 19, 13);
 		panelCircuit.add(labelElement4Unit);
 		
-		labelElement5Unit = new JLabel("Ω");
+		JLabel labelElement5Unit = new JLabel("Ω");
 		labelElement5Unit.setBounds(234, 118, 19, 13);
 		panelCircuit.add(labelElement5Unit);
 		
-		labelElement6Unit = new JLabel("Ω");
+		JLabel labelElement6Unit = new JLabel("Ω");
 		labelElement6Unit.setBounds(143, 118, 19, 13);
 		panelCircuit.add(labelElement6Unit);
 
