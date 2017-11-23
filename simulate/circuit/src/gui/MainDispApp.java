@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -25,8 +24,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import circuit.SeriesCircuit;
 
-public class MainDispApp extends JFrame implements MouseListener{
+
+public class MainDispApp extends JFrame
+{
 	private JTextField textFieldElement1;
 	private JTextField textFieldElement2;
 	private JTextField textFieldElement5;
@@ -103,9 +105,8 @@ public class MainDispApp extends JFrame implements MouseListener{
 	private JLabel labelInductanceDisp;
 	private JLabel labelCapacitanceDisp;
 	private JLabel labelResistanceDisp;
-	private JLabel label;
-	private JLabel label_1;
-	private JLabel label_2;
+
+	private SeriesCircuit mainCircuit;
 
 	/**
 	 * Launch the application.
@@ -122,7 +123,7 @@ public class MainDispApp extends JFrame implements MouseListener{
 			}
 		});
 	}
-	
+
 	/**
 	 * Create the frame.
 	 */
@@ -137,7 +138,7 @@ public class MainDispApp extends JFrame implements MouseListener{
 		resistancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/resistanceV.png"));
 		inductancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/InductanceV.png"));
 		capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceV.png"));
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 440);
 
@@ -292,7 +293,6 @@ public class MainDispApp extends JFrame implements MouseListener{
 
 		labelElement1 = new JLabel(resistancePicture);
 		labelElement1.setBounds(101, 11, 43, 29);
-		labelElement1.addMouseListener(this);
 		panelCircuit.add(labelElement1);
 
 		labelElement2 = new JLabel(capacitancePicture);
@@ -302,7 +302,7 @@ public class MainDispApp extends JFrame implements MouseListener{
 		labelElement3 = new JLabel(inductancePictureV);
 		labelElement3.setBounds(297, 41, 29, 43);
 		panelCircuit.add(labelElement3);
-		
+
 		labelElement4 = new JLabel(linePictureV);
 		labelElement4.setBounds(297, 94, 29, 43);
 		panelCircuit.add(labelElement4);
@@ -310,38 +310,38 @@ public class MainDispApp extends JFrame implements MouseListener{
 		labelElement5 = new JLabel(linePicture);
 		labelElement5.setBounds(195, 137, 43, 29);
 		panelCircuit.add(labelElement5);
-		
+
 		labelElement6 = new JLabel(linePicture);
 		labelElement6.setBounds(101, 137, 44, 29);
 		panelCircuit.add(labelElement6);
 		labelCircuitPicture = new JLabel(seriesCircuitPicture);
 		labelCircuitPicture.setBounds(1, 1, 341, 176);
 		panelCircuit.add(labelCircuitPicture);
-		
+
 		labelVoltageUnit = new JLabel("V");
 		labelVoltageUnit.setBounds(101, 83, 19, 13);
 		panelCircuit.add(labelVoltageUnit);
-		
+
 		labelElement1Unit = new JLabel("Ω");
 		labelElement1Unit.setBounds(143, 50, 19, 13);
 		panelCircuit.add(labelElement1Unit);
-		
+
 		labelElement2Unit = new JLabel("Ω");
 		labelElement2Unit.setBounds(237, 50, 19, 13);
 		panelCircuit.add(labelElement2Unit);
-		
+
 		labelElement3Unit = new JLabel("Ω");
 		labelElement3Unit.setBounds(272, 72, 19, 13);
 		panelCircuit.add(labelElement3Unit);
-		
+
 		labelElement4Unit = new JLabel("Ω");
 		labelElement4Unit.setBounds(272, 94, 19, 13);
 		panelCircuit.add(labelElement4Unit);
-		
+
 		labelElement5Unit = new JLabel("Ω");
 		labelElement5Unit.setBounds(234, 118, 19, 13);
 		panelCircuit.add(labelElement5Unit);
-		
+
 		labelElement6Unit = new JLabel("Ω");
 		labelElement6Unit.setBounds(143, 118, 19, 13);
 		panelCircuit.add(labelElement6Unit);
@@ -351,7 +351,7 @@ public class MainDispApp extends JFrame implements MouseListener{
 		panelFormula.setBounds(532, 41, 152, 178);
 		contentPane.add(panelFormula);
 		panelFormula.setLayout(null);
-		
+
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(1, 1, 150, 176);
 		panelFormula.add(textArea);
@@ -368,31 +368,31 @@ public class MainDispApp extends JFrame implements MouseListener{
 		labelFormula = new JLabel("数式");
 		labelFormula.setBounds(532, 28, 144, 13);
 		contentPane.add(labelFormula);
-		
+
 		panelElementList = new JPanel();
 		panelElementList.setBorder(null);
 		panelElementList.setBounds(349, 41, 178, 178);
 		contentPane.add(panelElementList);
 		panelElementList.setLayout(null);
-		
+
 		scrollPaneElementList = new JScrollPane();
 		scrollPaneElementList.setViewportBorder(null);
 		scrollPaneElementList.setBounds(0, 0, 176, 178);
 		panelElementList.add(scrollPaneElementList);
-				
+
 		scrollPanelElementListPanel = new JPanel();
 		scrollPanelElementListPanel.setBorder(null);
 		scrollPaneElementList.setViewportView(scrollPanelElementListPanel);
-		
+
 		labelCapacitanceDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceDisp.png")));
 		labelCapacitanceDisp.setAlignmentY(Component.TOP_ALIGNMENT);
-		
+
 		labelResistanceDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/resisitanceDisp.png")));
 		labelResistanceDisp.setAlignmentY(Component.TOP_ALIGNMENT);
-		
+
 		labelInductanceDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/InductanceDisp.png")));
 		labelInductanceDisp.setAlignmentY(Component.TOP_ALIGNMENT);
-		
+
 		labelLineDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/LineDisp.png")));
 		labelLineDisp.setAlignmentY(100.0f);
 		GroupLayout gl_scrollPanelElementListPanel = new GroupLayout(scrollPanelElementListPanel);
@@ -427,7 +427,7 @@ public class MainDispApp extends JFrame implements MouseListener{
 		scrollPanelElementListPanel.setLayout(gl_scrollPanelElementListPanel);
 	}
 
-	
+
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
@@ -446,30 +446,4 @@ public class MainDispApp extends JFrame implements MouseListener{
 			}
 		});
 	}
-	
-	public void mouseClicked(MouseEvent e)
-	{
-	   /* 処理したい内容をここに記述する */
-		System.out.println(e.getComponent());
-	}
-
-	 public void mouseEntered(MouseEvent e){
-	   /* 処理したい内容をここに記述する */
-		 System.out.println(e.getComponent());
-	 }
-
-	 public void mouseExited(MouseEvent e){
-	   /* 処理したい内容をここに記述する */
-		 System.out.println(e.getComponent());
-	 }
-
-	 public void mousePressed(MouseEvent e){
-	   /* 処理したい内容をここに記述する */
-		 System.out.println(e.getComponent());
-	 }
-
-	 public void mouseReleased(MouseEvent e){
-	   /* 処理したい内容をここに記述する */
-		 System.out.println(e.getComponent());
-	 }
 }

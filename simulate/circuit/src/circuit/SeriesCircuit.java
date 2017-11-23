@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 //回路の情報を格納するクラス(直列)
 
-public class SeriesCircuit
+public class SeriesCircuit extends Circuit 
 {
-	private Element elem[]; //配置されている素子
 	private double RSum;    //抵抗の値の合計
 	private double LSum;    //インダクタンスの合計
 	private double CinvSum; //キャパシタンスの逆数の合計
-	private double voltage; //回路の電圧
 	private ArrayList<Double> currentList; //電流の値のList
 	private ArrayList<Double> voltList;
 
@@ -38,20 +36,6 @@ public class SeriesCircuit
 	}
 
 	//セッター
-	public void setVoltage(double voltage)
-	{
-		this.voltage = voltage;
-	}
-
-	public void setElem(int num, double value, ElemType et)
-	{
-		this.elem[num] = new Element(value, et);
-	}
-
-	public void setElem(int num, Element elem)
-	{
-		this.elem[num] = elem;
-	}
 
 	//ゲッター
 	public ArrayList<Double> getCurrentList()
@@ -62,11 +46,6 @@ public class SeriesCircuit
 	public ArrayList<Double> getVoltList()
 	{
 		return this.voltList;
-	}
-
-	public Element getElem(int num)
-	{
-		return this.elem[num];
 	}
 
 	//素子の値をまとめる
