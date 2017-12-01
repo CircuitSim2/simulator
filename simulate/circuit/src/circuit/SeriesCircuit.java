@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 //回路の情報を格納するクラス(直列)
 
-public class SeriesCircuit extends Circuit 
+public class SeriesCircuit extends Circuit
 {
 	private double RSum;    //抵抗の値の合計
 	private double LSum;    //インダクタンスの合計
@@ -75,7 +75,6 @@ public class SeriesCircuit extends Circuit
 	//電圧を計算してリストに格納
 	public void calcVoltage(int num, int start, double end)
 	{
-		double dt = 0.01;
 		double volt;
 		double currentSum = 0;
 		int times = (int)((end - start) / dt);

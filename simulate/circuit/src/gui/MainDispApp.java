@@ -1,4 +1,4 @@
-package gui;
+/*package gui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -108,9 +108,9 @@ public class MainDispApp extends JFrame
 
 	private SeriesCircuit mainCircuit;
 
-	/**
+	*//**
 	 * Launch the application.
-	 */
+	 *//*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -124,9 +124,9 @@ public class MainDispApp extends JFrame
 		});
 	}
 
-	/**
+	*//**
 	 * Create the frame.
-	 */
+	 *//*
 	public MainDispApp() {
 		//必要画像の読み込み
 		seriesCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/SeriesCircuit.png"));
@@ -447,3 +447,4 @@ public class MainDispApp extends JFrame
 		});
 	}
 }
+*/
