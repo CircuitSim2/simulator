@@ -15,8 +15,8 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91pre3 r13670"
-   sodipodi:docname="SeriesCircuit.svg"
-   inkscape:export-filename="H:\simulator\CircuitSimulater\simulate\circuit\img\SeriesCircuit.png"
+   sodipodi:docname="PararellCircuit.svg"
+   inkscape:export-filename="H:\simulator\simulate\circuit\img\SeriesCircuit.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="156.11158"
-     inkscape:cy="104.44073"
+     inkscape:zoom="1.4"
+     inkscape:cx="82.016873"
+     inkscape:cy="97.798898"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -59,10 +59,10 @@
      transform="translate(0,-876.36216)">
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.0419606;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 30.520862,958.56759 30.35802,936.84338 23.606396,921.54705 m 6.692261,0.69634 c -0.01261,-17.53789 0.222205,-21.36021 0.222205,-21.36021 l 279.958068,0 0,125.95802 -279.958068,0 0,-57.0307"
+       d="m 30.520862,958.56759 c -0.08957,-4.13716 -0.144475,-23.13858 -0.177363,-26.87545 l -5.727348,-15.899 m 5.934647,2.29078 c -0.0055,-17.29563 -0.02994,-17.20074 -0.02994,-17.20074 L 258.57143,900.16889 M 236.21429,1027.0975 235,900.1689 l 75.47893,-10e-6 0,126.67231 -279.958068,0 0,-57.0307"
        id="rect4136"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccc" />
+       sodipodi:nodetypes="cccccccccccc" />
     <path
        style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
        d="m 8,959.06216 c 44.821428,0 44.821428,0 44.821428,0 l 0,0"
@@ -73,15 +73,15 @@
        id="rect4160"
        width="45"
        height="31"
-       x="99.539398"
-       y="1011.3228" />
+       x="76.485367"
+       y="1010.8177" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4160-8"
        width="45"
        height="31"
-       x="193.1394"
-       y="1011.3228" />
+       x="146.10605"
+       y="1011.1748" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4160-8-8"
@@ -103,19 +103,35 @@
        id="rect4160-9"
        width="45"
        height="31"
-       x="99.539398"
-       y="885.32275" />
+       x="78.184059"
+       y="885.11615" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4160-8-83"
        width="45"
        height="31"
-       x="193.1394"
-       y="885.32275" />
+       x="144.14355"
+       y="885.47064" />
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 19.266734,969.86216 c 21.934868,0 21.934868,0 21.934868,0 l 0,0"
        id="path4142-2"
        inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4160-8-4"
+       width="45"
+       height="31"
+       x="915.27881"
+       y="-250.62598"
+       transform="matrix(0,1,-1,0,0,0)" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4160-8-4-8"
+       width="45"
+       height="31"
+       x="967.73773"
+       y="-250.99182"
+       transform="matrix(0,1,-1,0,0,0)" />
   </g>
 </svg>
