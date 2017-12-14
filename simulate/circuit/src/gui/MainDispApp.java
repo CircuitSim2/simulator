@@ -1,4 +1,4 @@
-/*package gui;
+package gui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -24,6 +24,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import circuit.Circuit;
+import circuit.ElemType;
 import circuit.SeriesCircuit;
 
 
@@ -86,6 +88,7 @@ public class MainDispApp extends JFrame
 	private JButton buttonStart;
 	private JButton buttonEnd;
 	private ImageIcon seriesCircuitPicture;
+	private ImageIcon parallelCircuitPicture;
 	private ImageIcon linePicture;
 	private ImageIcon resistancePicture;
 	private ImageIcon inductancePicture;
@@ -94,23 +97,28 @@ public class MainDispApp extends JFrame
 	private ImageIcon resistancePictureV;
 	private ImageIcon inductancePictureV;
 	private ImageIcon capacitancePictureV;
+	private JLabel labelElement1Unit;
+	private JLabel labelElement2Unit;
+	private JLabel labelElement3Unit;
 	private JLabel labelElement4Unit;
 	private JLabel labelElement5Unit;
 	private JLabel labelElement6Unit;
-	private JLabel labelElement3Unit;
-	private JLabel labelElement2Unit;
-	private JLabel labelElement1Unit;
 	private JLabel labelVoltageUnit;
 	private JLabel labelLineDisp;
 	private JLabel labelInductanceDisp;
 	private JLabel labelCapacitanceDisp;
 	private JLabel labelResistanceDisp;
 
-	private SeriesCircuit mainCircuit;
+	private Circuit mainCircuit;
+	private JMenu menuCircuitSelect;
+	private JMenuItem menuItemSeriesCircuit;
+	private JMenuItem menuItemParallelCircuit;
+	private JLabel labelElement7;
+	private JLabel labelElement8;
 
-	*//**
+	/**
 	 * Launch the application.
-	 *//*
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -124,12 +132,13 @@ public class MainDispApp extends JFrame
 		});
 	}
 
-	*//**
+	/**
 	 * Create the frame.
-	 *//*
+	 */
 	public MainDispApp() {
 		//必要画像の読み込み
 		seriesCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/SeriesCircuit.png"));
+		parallelCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/PrallelCircuit.png"));
 		linePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Line.png"));
 		resistancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/resistance.png"));
 		inductancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Inductance.png"));
@@ -138,6 +147,11 @@ public class MainDispApp extends JFrame
 		resistancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/resistanceV.png"));
 		inductancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/InductanceV.png"));
 		capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceV.png"));
+
+		mainCircuit = new SeriesCircuit();
+		mainCircuit.setElem(0, 1, ElemType.RESISTANCE);
+		mainCircuit.setElem(1, 1, ElemType.CAPACITANCE);
+		mainCircuit.setElem(2, 1, ElemType.INDUCTANCE);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 440);
@@ -213,6 +227,15 @@ public class MainDispApp extends JFrame
 
 		menuItemSimulation = new JMenuItem("シミュレーション");
 		menuSimulate.add(menuItemSimulation);
+		
+		menuCircuitSelect = new JMenu("回路の種類");
+		menuBar.add(menuCircuitSelect);
+		
+		menuItemSeriesCircuit = new JMenuItem("直列回路");
+		menuCircuitSelect.add(menuItemSeriesCircuit);
+		
+		menuItemParallelCircuit = new JMenuItem("並列回路");
+		menuCircuitSelect.add(menuItemParallelCircuit);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -255,8 +278,110 @@ public class MainDispApp extends JFrame
 		contentPane.add(panelCircuit);
 
 		panelCircuit.setLayout(null);
-
+		
+		//*************並列回路の設計*****************//
+		
 		textFieldVoltage = new JTextField();
+		textFieldVoltage.setBounds(61, 80, 36, 19);
+		panelCircuit.add(textFieldVoltage);
+		textFieldVoltage.setColumns(10);
+
+		textFieldElement2 = new JTextField();
+		textFieldElement2.setColumns(10);
+		textFieldElement2.setBounds(145, 42, 36, 19);
+		panelCircuit.add(textFieldElement2);
+
+		textFieldElement1 = new JTextField();
+		textFieldElement1.setBounds(83, 43, 36, 19);
+		panelCircuit.add(textFieldElement1);
+		textFieldElement1.setColumns(10);
+
+		textFieldElement5 = new JTextField();
+		textFieldElement5.setColumns(10);
+		textFieldElement5.setBounds(150, 110, 36, 19);
+		panelCircuit.add(textFieldElement5);
+
+		textFieldElement6 = new JTextField();
+		textFieldElement6.setColumns(10);
+		textFieldElement6.setBounds(79, 109, 36, 19);
+		panelCircuit.add(textFieldElement6);
+
+		textFieldElement3 = new JTextField();
+		textFieldElement3.setColumns(10);
+		textFieldElement3.setBounds(155, 87, 36, 19);
+		panelCircuit.add(textFieldElement3);
+
+		textFieldElement4 = new JTextField();
+		textFieldElement4.setColumns(10);
+		textFieldElement4.setBounds(155, 65, 36, 19);
+		panelCircuit.add(textFieldElement4);
+
+		labelElement1 = new JLabel(resistancePicture);
+		labelElement1.setBounds(79, 10, 43, 29);
+		panelCircuit.add(labelElement1);
+
+		labelElement2 = new JLabel(capacitancePicture);
+		labelElement2.setBounds(145, 10, 43, 29);
+		panelCircuit.add(labelElement2);
+
+		labelElement3 = new JLabel(inductancePictureV);
+		labelElement3.setBounds(297, 41, 29, 43);
+		panelCircuit.add(labelElement3);
+
+		labelElement4 = new JLabel(linePictureV);
+		labelElement4.setBounds(296, 93, 29, 43);
+		panelCircuit.add(labelElement4);
+
+		labelElement5 = new JLabel(linePicture);
+		labelElement5.setBounds(147, 136, 43, 29);
+		panelCircuit.add(labelElement5);
+
+		labelElement6 = new JLabel(linePicture);
+		labelElement6.setBounds(77, 137, 44, 29);
+		panelCircuit.add(labelElement6);
+		
+		labelElement7 = new JLabel(resistancePictureV);
+		labelElement7.setBounds(220, 40, 29, 43);
+		panelCircuit.add(labelElement7);
+		
+		labelElement8 = new JLabel(resistancePictureV);
+		labelElement8.setBounds(221, 92, 29, 43);
+		panelCircuit.add(labelElement8);
+
+		labelVoltageUnit = new JLabel("V");
+		labelVoltageUnit.setBounds(101, 83, 19, 13);
+		panelCircuit.add(labelVoltageUnit);
+
+		labelElement1Unit = new JLabel("Ω");
+		labelElement1Unit.setBounds(121, 46, 19, 13);
+		panelCircuit.add(labelElement1Unit);
+
+		labelElement2Unit = new JLabel("Ω");
+		labelElement2Unit.setBounds(183, 44, 19, 13);
+		panelCircuit.add(labelElement2Unit);
+
+		labelElement3Unit = new JLabel("Ω");
+		labelElement3Unit.setBounds(193, 90, 19, 13);
+		panelCircuit.add(labelElement3Unit);
+
+		labelElement4Unit = new JLabel("Ω");
+		labelElement4Unit.setBounds(195, 68, 19, 13);
+		panelCircuit.add(labelElement4Unit);
+
+		labelElement5Unit = new JLabel("Ω");
+		labelElement5Unit.setBounds(189, 113, 19, 13);
+		panelCircuit.add(labelElement5Unit);
+
+		labelElement6Unit = new JLabel("Ω");
+		labelElement6Unit.setBounds(117, 111, 19, 13);
+		panelCircuit.add(labelElement6Unit);
+		
+		labelCircuitPicture = new JLabel(parallelCircuitPicture);
+		labelCircuitPicture.setBounds(0, 0, 340, 176);
+		panelCircuit.add(labelCircuitPicture);
+		//******************************************//
+		
+/*		textFieldVoltage = new JTextField();
 		textFieldVoltage.setBounds(61, 80, 36, 19);
 		panelCircuit.add(textFieldVoltage);
 		textFieldVoltage.setColumns(10);
@@ -314,6 +439,7 @@ public class MainDispApp extends JFrame
 		labelElement6 = new JLabel(linePicture);
 		labelElement6.setBounds(101, 137, 44, 29);
 		panelCircuit.add(labelElement6);
+		
 		labelCircuitPicture = new JLabel(seriesCircuitPicture);
 		labelCircuitPicture.setBounds(1, 1, 341, 176);
 		panelCircuit.add(labelCircuitPicture);
@@ -344,7 +470,7 @@ public class MainDispApp extends JFrame
 
 		labelElement6Unit = new JLabel("Ω");
 		labelElement6Unit.setBounds(143, 118, 19, 13);
-		panelCircuit.add(labelElement6Unit);
+		panelCircuit.add(labelElement6Unit);*/
 
 		panelFormula = new JPanel();
 		panelFormula.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -447,4 +573,3 @@ public class MainDispApp extends JFrame
 		});
 	}
 }
-*/

@@ -4,7 +4,7 @@ public class Circuit
 {
 	protected Element elem[]; //配置されている素子
 	protected double voltage; //電源電圧
-	protected static final double dt = 0.0001;
+	protected static final double dt = 0.005;
 
 	//セッター
 	public void setVoltage(double voltage)
