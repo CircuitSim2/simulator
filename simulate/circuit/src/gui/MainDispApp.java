@@ -154,7 +154,7 @@ public class MainDispApp extends JFrame
 		mainCircuit.setElem(2, 1, ElemType.INDUCTANCE);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 440);
+		setBounds(100, 100, 730, 577);
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -227,13 +227,13 @@ public class MainDispApp extends JFrame
 
 		menuItemSimulation = new JMenuItem("シミュレーション");
 		menuSimulate.add(menuItemSimulation);
-		
+
 		menuCircuitSelect = new JMenu("回路の種類");
 		menuBar.add(menuCircuitSelect);
-		
+
 		menuItemSeriesCircuit = new JMenuItem("直列回路");
 		menuCircuitSelect.add(menuItemSeriesCircuit);
-		
+
 		menuItemParallelCircuit = new JMenuItem("並列回路");
 		menuCircuitSelect.add(menuItemParallelCircuit);
 		contentPane = new JPanel();
@@ -265,22 +265,22 @@ public class MainDispApp extends JFrame
 
 		panelGraph = new JPanel();
 		panelGraph.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelGraph.setBounds(0, 238, 676, 125);
+		panelGraph.setBounds(0, 320, 706, 180);
 		contentPane.add(panelGraph);
 
 		labelGraph = new JLabel("波形");
-		labelGraph.setBounds(0, 222, 676, 13);
+		labelGraph.setBounds(0, 304, 676, 13);
 		contentPane.add(labelGraph);
 
 		panelCircuit = new JPanel();
 		panelCircuit.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelCircuit.setBounds(0, 41, 342, 178);
+		panelCircuit.setBounds(0, 41, 360, 250);
 		contentPane.add(panelCircuit);
 
 		panelCircuit.setLayout(null);
-		
+
 		//*************並列回路の設計*****************//
-		
+
 		textFieldVoltage = new JTextField();
 		textFieldVoltage.setBounds(61, 80, 36, 19);
 		panelCircuit.add(textFieldVoltage);
@@ -339,11 +339,11 @@ public class MainDispApp extends JFrame
 		labelElement6 = new JLabel(linePicture);
 		labelElement6.setBounds(77, 137, 44, 29);
 		panelCircuit.add(labelElement6);
-		
+
 		labelElement7 = new JLabel(resistancePictureV);
 		labelElement7.setBounds(220, 40, 29, 43);
 		panelCircuit.add(labelElement7);
-		
+
 		labelElement8 = new JLabel(resistancePictureV);
 		labelElement8.setBounds(221, 92, 29, 43);
 		panelCircuit.add(labelElement8);
@@ -375,12 +375,12 @@ public class MainDispApp extends JFrame
 		labelElement6Unit = new JLabel("Ω");
 		labelElement6Unit.setBounds(117, 111, 19, 13);
 		panelCircuit.add(labelElement6Unit);
-		
+
 		labelCircuitPicture = new JLabel(parallelCircuitPicture);
 		labelCircuitPicture.setBounds(0, 0, 340, 176);
 		panelCircuit.add(labelCircuitPicture);
 		//******************************************//
-		
+
 /*		textFieldVoltage = new JTextField();
 		textFieldVoltage.setBounds(61, 80, 36, 19);
 		panelCircuit.add(textFieldVoltage);
@@ -439,7 +439,7 @@ public class MainDispApp extends JFrame
 		labelElement6 = new JLabel(linePicture);
 		labelElement6.setBounds(101, 137, 44, 29);
 		panelCircuit.add(labelElement6);
-		
+
 		labelCircuitPicture = new JLabel(seriesCircuitPicture);
 		labelCircuitPicture.setBounds(1, 1, 341, 176);
 		panelCircuit.add(labelCircuitPicture);
@@ -474,12 +474,12 @@ public class MainDispApp extends JFrame
 
 		panelFormula = new JPanel();
 		panelFormula.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelFormula.setBounds(532, 41, 152, 178);
+		panelFormula.setBounds(552, 41, 152, 250);
 		contentPane.add(panelFormula);
 		panelFormula.setLayout(null);
 
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(1, 1, 150, 176);
+		textArea.setBounds(1, 1, 150, 248);
 		panelFormula.add(textArea);
 
 		labelCircuit = new JLabel("回路");
@@ -487,23 +487,23 @@ public class MainDispApp extends JFrame
 		contentPane.add(labelCircuit);
 
 		labelElementList = new JLabel("素子リスト");
-		labelElementList.setBounds(346, 28, 154, 13);
+		labelElementList.setBounds(367, 28, 154, 13);
 
 		contentPane.add(labelElementList);
 
 		labelFormula = new JLabel("数式");
-		labelFormula.setBounds(532, 28, 144, 13);
+		labelFormula.setBounds(552, 28, 144, 13);
 		contentPane.add(labelFormula);
 
 		panelElementList = new JPanel();
 		panelElementList.setBorder(null);
-		panelElementList.setBounds(349, 41, 178, 178);
+		panelElementList.setBounds(367, 41, 178, 250);
 		contentPane.add(panelElementList);
 		panelElementList.setLayout(null);
 
 		scrollPaneElementList = new JScrollPane();
 		scrollPaneElementList.setViewportBorder(null);
-		scrollPaneElementList.setBounds(0, 0, 176, 178);
+		scrollPaneElementList.setBounds(0, 0, 176, 250);
 		panelElementList.add(scrollPaneElementList);
 
 		scrollPanelElementListPanel = new JPanel();
