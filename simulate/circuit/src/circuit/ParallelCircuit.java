@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 public class ParallelCircuit extends Circuit
 {
+	//電流を格納するリスト
 	private ArrayList<Double> currentListA;
 	private ArrayList<Double> currentListB;
+	//電圧を格納するリスト
 	//private ArrayList<Double> voltageList;
+	//各素子の合計
 	private double RSum[];
 	private double LSum[];
 	private double CInvSum[];
 
+	//コンストラクタ
 	public ParallelCircuit()
 	{
 		this.elem = new Element[9];
@@ -29,15 +33,19 @@ public class ParallelCircuit extends Circuit
 
 	public ParallelCircuit(Element elem[], double voltage)
 	{
+		this();
+		
 		this.elem = elem;
 		this.voltage = voltage;
 	}
 
+	//*****ゲッター****//
+	//Ia
 	public ArrayList<Double> getCurrentListA()
 	{
 		return this.currentListA;
 	}
-
+	//Ib
 	public ArrayList<Double> getCurrentListB()
 	{
 		return this.currentListB;
@@ -148,12 +156,14 @@ public class ParallelCircuit extends Circuit
 		double IaSum = 0;
 		double currentB = 0; //Ibを格納する変数
 		double IbSum = 0;
-		double a1, a2, b1, b2, c1, c2;
+		double a1, a2, b1, b2, c1, c2;//係数，定数を格納する変数
 		int times = (int)((end - start) / dt);
 
+		//電流をリセット
 		currentListA = new ArrayList<Double>();
 		currentListB = new ArrayList<Double>();
 
+		//素子の値を足し上げる
 		calcBranchSum();
 
 		//a1Ia + b1Ib = c1

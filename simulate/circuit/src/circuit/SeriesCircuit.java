@@ -10,7 +10,7 @@ public class SeriesCircuit extends Circuit
 	private double LSum;    //インダクタンスの合計
 	private double CinvSum; //キャパシタンスの逆数の合計
 	private ArrayList<Double> currentList; //電流の値のList
-	private ArrayList<Double> voltList;
+	private ArrayList<Double> voltList;//電圧を格納するリスト
 
 	//コンストラクタ
 	public SeriesCircuit()
