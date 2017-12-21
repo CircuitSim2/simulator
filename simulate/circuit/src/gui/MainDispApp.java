@@ -6,8 +6,6 @@ import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,11 +16,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 import circuit.Circuit;
 import circuit.ElemType;
@@ -191,13 +190,8 @@ public class MainDispApp extends JFrame
 
 	//素子リストのスクロールバー用
 	public JScrollPane scrollPaneElementList;
-	//スクロールバーのペーンの中に入れるパネル
-	public JPanel scrollPanelElementListPanel;
-	//素子リストで各素子を表示するラベル
-	public JLabel labelResistanceDisp;
-	public JLabel labelLineDisp;
-	public JLabel labelInductanceDisp;
-	public JLabel labelCapacitanceDisp;
+	//素子リスト用のテーブル
+	private JTable table;
 	
 	//直列回路の画像
 	public ImageIcon seriesCircuitPicture;
@@ -224,6 +218,13 @@ public class MainDispApp extends JFrame
 	//回路の情報を保持するクラス
 	public Circuit mainCircuit;
 	
+	//素子リストの表のデータ
+	private Object[][] tabledata={{new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceDisp.png")),"キャパシタ"},
+			                      {new ImageIcon(MainDispApp.class.getResource("/resources/resisitanceDisp.png")),"抵抗"},
+			                      {new ImageIcon(MainDispApp.class.getResource("/resources/InductanceDisp.png")),"インダクタ"},
+			                      {new ImageIcon(MainDispApp.class.getResource("/resources/LineDisp.png")),"ライン"}};
+	
+	private String[] columnNames = {"IMAGE","NAME"};
 
 	/**
 	 * Launch the application.
@@ -248,13 +249,17 @@ public class MainDispApp extends JFrame
 		//必要画像の読み込み
 		seriesCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/SeriesCircuit.png"));
 		parallelCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/PrallelCircuit.png"));
+		//線
 		linePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Line.png"));
-		resistancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/resistance.png"));
-		inductancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Inductance.png"));
-		capacitancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Cpacitance.png"));
 		linePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/LineV.png"));
+		//抵抗
+		resistancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/resistance.png"));
 		resistancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/resistanceV.png"));
+		//インダクタ
+		inductancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Inductance.png"));
 		inductancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/InductanceV.png"));
+		//キャパシタ
+		capacitancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Cpacitance.png"));
 		capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceV.png"));
 
 		//回路情報の生成
@@ -647,75 +652,38 @@ public class MainDispApp extends JFrame
 		labelElementList = new JLabel("素子リスト");
 		labelElementList.setBounds(367, 28, 154, 13);
 		contentPane.add(labelElementList);
-		//素子リストを表示するラベルを作成
+		//素子リスト
 		panelElementList = new JPanel();
 		panelElementList.setBorder(null);
-		panelElementList.setBounds(367, 41, 178, 250);
+		panelElementList.setBounds(361, 41, 191, 250);
 		contentPane.add(panelElementList);
 		panelElementList.setLayout(null);
-		//素子リストのスクロールのためのペーン
-		scrollPaneElementList = new JScrollPane();
-		scrollPaneElementList.setViewportBorder(null);
-		scrollPaneElementList.setBounds(0, 0, 176, 250);
-		panelElementList.add(scrollPaneElementList);
-		//スクロールペーンに入れるパネル
-		scrollPanelElementListPanel = new JPanel();
-		scrollPanelElementListPanel.setBorder(null);
-		scrollPaneElementList.setViewportView(scrollPanelElementListPanel);
-		//素子リストで抵抗を表示するラベル
-		labelResistanceDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/resisitanceDisp.png")));
-		labelResistanceDisp.setAlignmentY(Component.TOP_ALIGNMENT);
-		//素子リストでキャパシタを表示するラベルの作成
-		labelCapacitanceDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceDisp.png")));
-		labelCapacitanceDisp.setAlignmentY(Component.TOP_ALIGNMENT);
-		//素子リストでインダクタを表示するラベルの作成
-		labelInductanceDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/InductanceDisp.png")));
-		labelInductanceDisp.setAlignmentY(Component.TOP_ALIGNMENT);
 
-		labelLineDisp = new JLabel(new ImageIcon(MainDispApp.class.getResource("/resources/LineDisp.png")));
-		labelLineDisp.setAlignmentY(100.0f);
-		GroupLayout gl_scrollPanelElementListPanel = new GroupLayout(scrollPanelElementListPanel);
-		gl_scrollPanelElementListPanel.setHorizontalGroup(
-			gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_scrollPanelElementListPanel.createSequentialGroup()
-					.addGap(12)
-					.addGroup(gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_scrollPanelElementListPanel.createSequentialGroup()
-							.addGap(2)
-							.addComponent(labelLineDisp)
-							.addGap(5)
-							.addComponent(labelResistanceDisp)
-							.addGap(35))
-						.addGroup(Alignment.TRAILING, gl_scrollPanelElementListPanel.createSequentialGroup()
-							.addGap(3)
-							.addComponent(labelCapacitanceDisp)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(labelInductanceDisp, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
-		);
-		gl_scrollPanelElementListPanel.setVerticalGroup(
-			gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_scrollPanelElementListPanel.createSequentialGroup()
-					.addGroup(gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_scrollPanelElementListPanel.createSequentialGroup()
-							.addComponent(labelResistanceDisp)
-							.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, gl_scrollPanelElementListPanel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(labelLineDisp)
-							.addGap(5)))
-					.addGroup(gl_scrollPanelElementListPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_scrollPanelElementListPanel.createSequentialGroup()
-							.addComponent(labelInductanceDisp, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(Alignment.TRAILING, gl_scrollPanelElementListPanel.createSequentialGroup()
-							.addComponent(labelCapacitanceDisp)
-							.addGap(17))))
-		);
-		scrollPanelElementListPanel.setLayout(gl_scrollPanelElementListPanel);
+		DefaultTableModel tableModel = new MyTableModel(columnNames, 0);
+		table = new JTable(tableModel);
+		table.setRowHeight(100);
+
+		for(int i=0;i<4;i++){
+		      tableModel.addRow(tabledata[i]);
+		}
+		
+
+		scrollPaneElementList = new JScrollPane(table);
+		scrollPaneElementList.setViewportBorder(null);
+		scrollPaneElementList.setBounds(0, 0, 191, 250);
+		panelElementList.add(scrollPaneElementList);
+		
 	}
 
+	class MyTableModel extends DefaultTableModel{
+	    MyTableModel(String[] columnNames, int rowNum){
+	      super(columnNames, rowNum);
+	    }
 
+	    public Class getColumnClass(int col){
+	      return getValueAt(0, col).getClass();
+	    }
+	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
