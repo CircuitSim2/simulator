@@ -427,158 +427,131 @@ public class MainDispApp extends JFrame
 		textFieldVoltageParallel.setBounds(66, 113, 36, 19);
 		panelCircuit.add(textFieldVoltageParallel);
 		textFieldVoltageParallel.setColumns(10);
-		textFieldVoltageParallel.setVisible(false);
 		//素子1の値を入力するBOXの生成
 		textFieldElement1Parallel = new JTextField();
 		textFieldElement1Parallel.setBounds(56, 50, 36, 19);
 		panelCircuit.add(textFieldElement1Parallel);
 		textFieldElement1Parallel.setColumns(10);
-		textFieldElement1Parallel.setVisible(false);
 		//素子2の値を入力するBOXの生成
 		textFieldElement2Parallel = new JTextField();
 		textFieldElement2Parallel.setColumns(10);
 		textFieldElement2Parallel.setBounds(112, 49, 36, 19);
-		textFieldElement2Parallel.setVisible(false);
 		panelCircuit.add(textFieldElement2Parallel);
 		//素子3の値を入力するBOXの生成
 		textFieldElement3Parallel = new JTextField();
 		textFieldElement3Parallel.setColumns(10);
 		textFieldElement3Parallel.setBounds(168, 50, 36, 19);
 		panelCircuit.add(textFieldElement3Parallel);
-		textFieldElement3Parallel.setVisible(false);
 		//素子4の値を入力するBOXの生成
 		textFieldElement4Parallel = new JTextField();
 		textFieldElement4Parallel.setColumns(10);
 		textFieldElement4Parallel.setBounds(157, 74, 36, 19);
 		panelCircuit.add(textFieldElement4Parallel);
-		textFieldElement4Parallel.setVisible(false);
 		//素子5の値を入力するBOXの生成
 		textFieldElement5Parallel = new JTextField();
 		textFieldElement5Parallel.setColumns(10);
 		textFieldElement5Parallel.setBounds(157, 123, 36, 19);
 		panelCircuit.add(textFieldElement5Parallel);
-		textFieldElement5Parallel.setVisible(false);
 		//素子6の値を入力するBOXの生成
 		textFieldElement6Parallel = new JTextField();
 		textFieldElement6Parallel.setColumns(10);
 		textFieldElement6Parallel.setBounds(157, 174, 36, 19);
 		panelCircuit.add(textFieldElement6Parallel);
-		textFieldElement6Parallel.setVisible(false);
 		//素子7の値を入力するBOXの生成
 		textFieldElement7Parallel = new JTextField();
 		textFieldElement7Parallel.setColumns(10);
 		textFieldElement7Parallel.setBounds(251, 60, 36, 19);
 		panelCircuit.add(textFieldElement7Parallel);
-		textFieldElement7Parallel.setVisible(false);
 		//素子8の値を入力するBOXの生成
 		textFieldElement8Parallel = new JTextField();
 		textFieldElement8Parallel.setColumns(10);
 		textFieldElement8Parallel.setBounds(252, 120, 36, 19);
 		panelCircuit.add(textFieldElement8Parallel);
-		textFieldElement8Parallel.setVisible(false);
 		//素子9の値を入力するBOXの生成
 		textFieldElement9Parallel = new JTextField();
 		textFieldElement9Parallel.setColumns(10);
 		textFieldElement9Parallel.setBounds(250, 175, 36, 19);
 		panelCircuit.add(textFieldElement9Parallel);
-		textFieldElement9Parallel.setVisible(false);
 
 		//素子1の画像を表示するラベルを生成
 		labelElement1Parallel = new JLabel(resistancePicture);
 		labelElement1Parallel.setBounds(59, 19, 43, 29);
 		panelCircuit.add(labelElement1Parallel);
-		labelElement1Parallel.setVisible(false);
 		//素子2の画像を表示するラベルを生成
 		labelElement2Parallel = new JLabel(capacitancePicture);
 		labelElement2Parallel.setBounds(114, 19, 43, 29);
 		panelCircuit.add(labelElement2Parallel);
-		labelElement2Parallel.setVisible(false);
 		//素子3の画像を表示するラベルを生成
 		labelElement3Parallel = new JLabel(inductancePicture);
 		labelElement3Parallel.setBounds(170, 20, 43, 29);
 		panelCircuit.add(labelElement3Parallel);
-		labelElement3Parallel.setVisible(false);
 		//素子4の画像を表示するラベルを生成
 		labelElement4Parallel = new JLabel(linePictureV);
 		labelElement4Parallel.setBounds(218, 52, 29, 43);
 		panelCircuit.add(labelElement4Parallel);
-		labelElement4Parallel.setVisible(false);
 		//素子5の画像を表示するラベルを生成
 		labelElement5Parallel = new JLabel(linePictureV);
 		labelElement5Parallel.setBounds(217, 109, 29, 43);
 		panelCircuit.add(labelElement5Parallel);
-		labelElement5Parallel.setVisible(false);
 		//素子6の画像を表示するラベルを生成
 		labelElement6Parallel = new JLabel(linePictureV);
 		labelElement6Parallel.setBounds(217, 162, 29, 43);
 		panelCircuit.add(labelElement6Parallel);
-		labelElement6Parallel.setVisible(false);
 		//素子7の画像を表示するラベルを生成
 		labelElement7Parallel = new JLabel(resistancePictureV);
 		labelElement7Parallel.setBounds(304, 47, 29, 43);
 		panelCircuit.add(labelElement7Parallel);
-		labelElement7Parallel.setVisible(false);
 		//素子8の画像を表示するラベルを生成
 		labelElement8Parallel = new JLabel(resistancePictureV);
 		labelElement8Parallel.setBounds(305, 107, 29, 43);
 		panelCircuit.add(labelElement8Parallel);
-		labelElement8Parallel.setVisible(false);
 		//素子9の画像を表示するラベルを生成
 		labelElement9Parallel = new JLabel(resistancePictureV);
 		labelElement9Parallel.setBounds(305, 162, 29, 43);
 		panelCircuit.add(labelElement9Parallel);
-		labelElement9Parallel.setVisible(false);
 
 		//電圧の単位を表示するラベルを生成
 		labelVoltageUnitParallel = new JLabel("V");
 		labelVoltageUnitParallel.setBounds(105, 119, 19, 13);
 		panelCircuit.add(labelVoltageUnitParallel);
-		labelVoltageUnitParallel.setVisible(false);
 		//素子1の単位を表示するラベルを生成
 		labelElement1UnitParallel = new JLabel("Ω");
 		labelElement1UnitParallel.setBounds(93, 53, 19, 13);
 		panelCircuit.add(labelElement1UnitParallel);
-		labelElement1UnitParallel.setVisible(false);
 		//素子2の単位を表示するラベルを生成
 		labelElement2UnitParallel = new JLabel("Ω");
 		labelElement2UnitParallel.setBounds(149, 52, 19, 13);
 		panelCircuit.add(labelElement2UnitParallel);
-		labelElement2UnitParallel.setVisible(false);
 		//素子3の単位を表示するラベルを生成
 		labelElement3UnitParallel = new JLabel("Ω");
 		labelElement3UnitParallel.setBounds(205, 52, 19, 13);
 		panelCircuit.add(labelElement3UnitParallel);
-		labelElement3UnitParallel.setVisible(false);
 		//素子4の単位を表示するラベルを生成
 		labelElement4UnitParallel = new JLabel("Ω");
 		labelElement4UnitParallel.setBounds(193, 76, 19, 13);
 		panelCircuit.add(labelElement4UnitParallel);
-		labelElement4UnitParallel.setVisible(false);
 		//素子5の単位を表示するラベルを生成
 		labelElement5UnitParallel = new JLabel("Ω");
 		labelElement5UnitParallel.setBounds(193, 125, 19, 13);
-		panelCircuit.add(labelElement5UnitParallel);
-		labelElement5UnitParallel.setVisible(false);
+		panelCircuit.add(labelElement5UnitParallel);;
 		//素子6の単位を表示するラベルを生成
 		labelElement6UnitParallel = new JLabel("Ω");
 		labelElement6UnitParallel.setBounds(196, 176, 19, 13);
 		panelCircuit.add(labelElement6UnitParallel);
-		labelElement6UnitParallel.setVisible(false);
 		//素子7の単位を表示するラベルを生成
 		labelElement7UnitParallel = new JLabel("Ω");
 		labelElement7UnitParallel.setBounds(287, 63, 19, 13);
 		panelCircuit.add(labelElement7UnitParallel);
-		labelElement7UnitParallel.setVisible(false);
 		//素子8の単位を表示するラベルを生成
 		labelElement8UnitParallel = new JLabel("Ω");
 		labelElement8UnitParallel.setBounds(288, 122, 19, 13);
 		panelCircuit.add(labelElement8UnitParallel);
-		labelElement8UnitParallel.setVisible(false);
 		//素子9の単位を表示するラベルを生成
 		labelElement9UnitParallel = new JLabel("Ω");
 		labelElement9UnitParallel.setBounds(286, 177, 19, 13);
 		panelCircuit.add(labelElement9UnitParallel);
-		labelElement9UnitParallel.setVisible(false);
+
+		this.changeStateParallel(false);
 		//******************************************//
 
 		//*************直列回路*****************//
@@ -717,6 +690,65 @@ public class MainDispApp extends JFrame
 		scrollPaneElementList.setBounds(0, 0, 191, 250);
 		panelElementList.add(scrollPaneElementList);
 
+	}
+
+	public void changeStateSerial(Boolean state)
+	{
+		//直列回路のコンポーネントを非表示に
+		textFieldVoltage.setVisible(state);
+		textFieldElement1.setVisible(state);
+		textFieldElement2.setVisible(state);
+		textFieldElement3.setVisible(state);
+		textFieldElement4.setVisible(state);
+		textFieldElement5.setVisible(state);
+		textFieldElement6.setVisible(state);
+		labelElement1.setVisible(state);
+		labelElement2.setVisible(state);
+		labelElement3.setVisible(state);
+		labelElement4.setVisible(state);
+		labelElement5.setVisible(state);
+		labelElement6.setVisible(state);
+		labelVoltageUnit.setVisible(state);
+		labelElement1Unit.setVisible(state);
+		labelElement2Unit.setVisible(state);
+		labelElement3Unit.setVisible(state);
+		labelElement4Unit.setVisible(state);
+		labelElement5Unit.setVisible(state);
+		labelElement6Unit.setVisible(state);
+	}
+
+	public void changeStateParallel(Boolean state)
+	{
+		//並列回路のコンポーネントの状態を変更
+		textFieldVoltageParallel.setVisible(state);
+		textFieldElement1Parallel.setVisible(state);
+		textFieldElement2Parallel.setVisible(state);
+		textFieldElement3Parallel.setVisible(state);
+		textFieldElement4Parallel.setVisible(state);
+		textFieldElement5Parallel.setVisible(state);
+		textFieldElement6Parallel.setVisible(state);
+		textFieldElement7Parallel.setVisible(state);
+		textFieldElement8Parallel.setVisible(state);
+		textFieldElement9Parallel.setVisible(state);
+		labelElement1Parallel.setVisible(state);
+		labelElement2Parallel.setVisible(state);
+		labelElement3Parallel.setVisible(state);
+		labelElement4Parallel.setVisible(state);
+		labelElement5Parallel.setVisible(state);
+		labelElement6Parallel.setVisible(state);
+		labelElement7Parallel.setVisible(state);
+		labelElement8Parallel.setVisible(state);
+		labelElement9Parallel.setVisible(state);
+		labelVoltageUnitParallel.setVisible(state);
+		labelElement1UnitParallel.setVisible(state);
+		labelElement2UnitParallel.setVisible(state);
+		labelElement3UnitParallel.setVisible(state);
+		labelElement4UnitParallel.setVisible(state);
+		labelElement5UnitParallel.setVisible(state);
+		labelElement6UnitParallel.setVisible(state);
+		labelElement7UnitParallel.setVisible(state);
+		labelElement8UnitParallel.setVisible(state);
+		labelElement9UnitParallel.setVisible(state);
 	}
 
 	class MyTableModel extends DefaultTableModel{
