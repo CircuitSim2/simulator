@@ -248,7 +248,7 @@ public class MainDispApp extends JFrame
 	public MainDispApp() {
 		//必要画像の読み込み
 		seriesCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/SeriesCircuit.png"));
-		parallelCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/ParallelCircuit.png"));
+		parallelCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/PrallelCircuit.png"));
 		//線
 		linePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Line.png"));
 		linePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/LineV.png"));

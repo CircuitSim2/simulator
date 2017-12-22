@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="340"
-   height="176"
-   viewBox="0 0 340 176"
+   width="360"
+   height="250"
+   viewBox="0 0 360 250"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91pre3 r13670"
+   inkscape:version="0.92.1 r15371"
    sodipodi:docname="SeriesCircuit.svg"
    inkscape:export-filename="H:\simulator\CircuitSimulater\simulate\circuit\img\SeriesCircuit.png"
    inkscape:export-xdpi="90"
@@ -29,14 +29,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="156.11158"
-     inkscape:cy="104.44073"
+     inkscape:cx="152.51502"
+     inkscape:cy="145.76073"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,16 +56,16 @@
      inkscape:label="レイヤー 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-876.36216)">
+     transform="translate(0,-802.36216)">
     <path
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.0419606;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 30.520862,958.56759 30.35802,936.84338 23.606396,921.54705 m 6.692261,0.69634 c -0.01261,-17.53789 0.222205,-21.36021 0.222205,-21.36021 l 279.958068,0 0,125.95802 -279.958068,0 0,-57.0307"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.33129907;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 30.956898,918.07801 -0.173111,-33.36063 -7.177391,-23.4897 m 7.114285,1.06932 c -0.01341,-26.93193 0.236217,-32.80166 0.236217,-32.80166 H 328.56952 V 1022.9219 H 30.956898 v -87.57879"
        id="rect4136"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccc" />
     <path
-       style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
-       d="m 8,959.06216 c 44.821428,0 44.821428,0 44.821428,0 l 0,0"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 8.5357143,917.81216 c 44.8214287,0 44.8214287,0 44.8214287,0 v 0"
        id="path4142"
        inkscape:connector-curvature="0" />
     <rect
@@ -73,48 +73,48 @@
        id="rect4160"
        width="45"
        height="31"
-       x="99.539398"
-       y="1011.3228" />
+       x="107.07964"
+       y="1005.767" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4160-8"
        width="45"
        height="31"
-       x="193.1394"
-       y="1011.3228" />
+       x="203.24094"
+       y="1006.777" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4160-8-8"
        width="45"
        height="31"
-       x="-960.59808"
-       y="294.93939"
-       transform="matrix(0,-1,1,0,0,0)" />
+       x="-908.66187"
+       y="311.93433"
+       transform="rotate(-90)" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4160-8-8-1"
        width="45"
        height="31"
-       x="-1012.8978"
-       y="294.93939"
-       transform="matrix(0,-1,1,0,0,0)" />
+       x="-983.83801"
+       y="312.94446"
+       transform="rotate(-90)" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4160-9"
        width="45"
        height="31"
-       x="99.539398"
-       y="885.32275" />
+       x="107.62062"
+       y="813.60193" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.07879543;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4160-8-83"
        width="45"
        height="31"
-       x="193.1394"
-       y="885.32275" />
+       x="198.19017"
+       y="814.10699" />
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 19.266734,969.86216 c 21.934868,0 21.934868,0 21.934868,0 l 0,0"
+       d="m 18.909591,935.39787 c 21.934868,0 21.934868,0 21.934868,0 v 0"
        id="path4142-2"
        inkscape:connector-curvature="0" />
   </g>
