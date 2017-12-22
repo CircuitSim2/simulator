@@ -579,16 +579,11 @@ public class MainDispApp extends JFrame
 		labelElement9UnitParallel.setBounds(286, 177, 19, 13);
 		panelCircuit.add(labelElement9UnitParallel);
 		labelElement9UnitParallel.setVisible(false);
-
-		//回路の画像を表示するラベルを作成
-		labelCircuitPicture = new JLabel(parallelCircuitPicture);
-		labelCircuitPicture.setBounds(1, 1, 359, 249);
-		panelCircuit.add(labelCircuitPicture);
 		//******************************************//
 
 		//*************直列回路*****************//
 		//電圧の値を入力するBOXの生成
-		/*textFieldVoltage = new JTextField();
+		textFieldVoltage = new JTextField();
 		textFieldVoltage.setBounds(72, 115, 36, 19);
 		panelCircuit.add(textFieldVoltage);
 		textFieldVoltage.setColumns(10);
@@ -680,7 +675,7 @@ public class MainDispApp extends JFrame
 		//回路の画像を表示するラベルを作成
 		labelCircuitPicture = new JLabel(seriesCircuitPicture);
 		labelCircuitPicture.setBounds(1, 1, 359, 249);
-		panelCircuit.add(labelCircuitPicture);*/
+		panelCircuit.add(labelCircuitPicture);
 		//************************************//
 
 		//数式エリアのラベルを作成
