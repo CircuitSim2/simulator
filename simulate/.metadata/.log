@@ -5199,3 +5199,53 @@ Caused by: java.lang.NoSuchMethodError: org.eclipse.ui.internal.registry.FileEdi
 	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
 	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:135)
 	... 23 more
+
+!ENTRY org.eclipse.egit.ui 4 0 2017-12-22 16:00:29.196
+!MESSAGE Branch failed
+!STACK 1
+org.eclipse.core.runtime.CoreException: Missing tree 0ebc99358604f441b67022154b0c3aa11dbe6355
+	at org.eclipse.egit.core.op.BranchOperation$1.run(BranchOperation.java:138)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.egit.core.op.BranchOperation.execute(BranchOperation.java:164)
+	at org.eclipse.egit.ui.internal.branch.BranchOperationUI$1.runInWorkspace(BranchOperationUI.java:286)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:39)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.eclipse.jgit.api.errors.JGitInternalException: Missing tree 0ebc99358604f441b67022154b0c3aa11dbe6355
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:320)
+	at org.eclipse.egit.core.op.BranchOperation$1.run(BranchOperation.java:134)
+	... 5 more
+Caused by: org.eclipse.jgit.errors.MissingObjectException: Missing tree 0ebc99358604f441b67022154b0c3aa11dbe6355
+	at org.eclipse.jgit.internal.storage.file.WindowCursor.open(WindowCursor.java:147)
+	at org.eclipse.jgit.treewalk.CanonicalTreeParser.reset(CanonicalTreeParser.java:202)
+	at org.eclipse.jgit.treewalk.CanonicalTreeParser.createSubtreeIterator0(CanonicalTreeParser.java:236)
+	at org.eclipse.jgit.treewalk.CanonicalTreeParser.createSubtreeIterator(CanonicalTreeParser.java:214)
+	at org.eclipse.jgit.treewalk.CanonicalTreeParser.createSubtreeIterator(CanonicalTreeParser.java:60)
+	at org.eclipse.jgit.treewalk.TreeWalk.enterSubtree(TreeWalk.java:924)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.preScanTwoTrees(DirCacheCheckout.java:258)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.doCheckout(DirCacheCheckout.java:408)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:396)
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:263)
+	... 6 more
+!SUBENTRY 1 org.eclipse.egit.core 4 0 2017-12-22 16:00:29.197
+!MESSAGE Missing tree 0ebc99358604f441b67022154b0c3aa11dbe6355
+!STACK 0
+org.eclipse.jgit.api.errors.JGitInternalException: Missing tree 0ebc99358604f441b67022154b0c3aa11dbe6355
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:320)
+	at org.eclipse.egit.core.op.BranchOperation$1.run(BranchOperation.java:134)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.egit.core.op.BranchOperation.execute(BranchOperation.java:164)
+	at org.eclipse.egit.ui.internal.branch.BranchOperationUI$1.runInWorkspace(BranchOperationUI.java:286)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:39)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.eclipse.jgit.errors.MissingObjectException: Missing tree 0ebc99358604f441b67022154b0c3aa11dbe6355
+	at org.eclipse.jgit.internal.storage.file.WindowCursor.open(WindowCursor.java:147)
+	at org.eclipse.jgit.treewalk.CanonicalTreeParser.reset(CanonicalTreeParser.java:202)
+	at org.eclipse.jgit.treewalk.CanonicalTreeParser.createSubtreeIterator0(CanonicalTreeParser.java:236)
+	at org.eclipse.jgit.treewalk.CanonicalTreeParser.createSubtreeIterator(CanonicalTreeParser.java:214)
+	at org.eclipse.jgit.treewalk.CanonicalTreeParser.createSubtreeIterator(CanonicalTreeParser.java:60)
+	at org.eclipse.jgit.treewalk.TreeWalk.enterSubtree(TreeWalk.java:924)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.preScanTwoTrees(DirCacheCheckout.java:258)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.doCheckout(DirCacheCheckout.java:408)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:396)
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:263)
+	... 6 more
