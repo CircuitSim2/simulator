@@ -32,12 +32,12 @@ public class MainDispApp extends JFrame
 {
 	//メイン画面のペーン(大枠)
 	public JPanel contentPane;
-	
+
 	//回路エリアのラベル
 	public JLabel labelCircuit;
 	//回路エリアを表示するパネル
 	public JPanel panelCircuit;
-	
+
 	//素子の値を入力するBOX
 	public JTextField textFieldElement1;
 	public JTextField textFieldElement2;
@@ -52,7 +52,7 @@ public class MainDispApp extends JFrame
 	public JTextField textFieldElement6Parallel;
 	public JTextField textFieldElement3Parallel;
 	public JTextField textFieldElement4Parallel;
-	
+
 	//素子の画像を表示するラベル
 	public JLabel labelElement1;
 	public JLabel labelElement2;
@@ -69,7 +69,7 @@ public class MainDispApp extends JFrame
 	public JLabel labelElement6Parallel;
 	public JLabel labelElement7Parallel;
 	public JLabel labelElement8Parallel;
-	
+
 	//素子の単位を表示するラベル
 	public JLabel labelElement1Unit;
 	public JLabel labelElement2Unit;
@@ -93,13 +93,13 @@ public class MainDispApp extends JFrame
 	public JLabel labelVoltageUnit;
 	//電圧の単位を表示するラベル(並列用)
 	public JLabel labelVoltageUnitParallel;
-	
+
 	//回路全体の画像を表示するラベル
 	public JLabel labelCircuitPicture;
-	
+
 	//メニューバー
 	public JMenuBar menuBar;
-	
+
 	//編集メニュー
 	public JMenu menuEdit;
 	//戻る
@@ -114,7 +114,7 @@ public class MainDispApp extends JFrame
 	public JMenuItem menuItemPaste;
 	//全消去
 	public JMenuItem menuItemAllClear;
-	
+
 	//ファイルメニュー
 	public JMenu menuFile;
 	//新規作成
@@ -129,7 +129,7 @@ public class MainDispApp extends JFrame
 	public JMenuItem menuItemExportGraph;
 	//閉じる
 	public JMenuItem menuItemClose;
-	
+
 	//表示メニュー
 	public JMenu meuDisp;
 	//回路の表示
@@ -140,24 +140,24 @@ public class MainDispApp extends JFrame
 	public JMenuItem menuItemElement;
 	//グラフの表示
 	public JMenuItem menuItemGraph;
-	
+
 	//実行メニュー
 	public JMenu menuSimulate;
 	//シミュレーション
 	public JMenuItem menuItemSimulation;
-	
+
 	//ヘルプメニュー
 	public JMenu menuHelp;
 	//ヘルプビューワ
 	public JMenuItem menuItemHelpViewer;
-	
+
 	//回路の種類メニュー
 	public JMenu menuCircuitSelect;
 	//直列回路
 	public JMenuItem menuItemSeriesCircuit;
 	//並列回路
 	public JMenuItem menuItemParallelCircuit;
-	
+
 	//メニューバー(ボタンの方)
 	public JMenuBar menuBarButtons;
 	//戻るボタン
@@ -172,17 +172,17 @@ public class MainDispApp extends JFrame
 	public JButton buttonStart;
 	//終了ボタン
 	public JButton buttonEnd;
-	
+
 	//グラフエリアのラベル
 	public JLabel labelGraph;
 	//グラフエリアを表示するパネル
 	public JPanel panelGraph;
-	
+
 	//数式エリアのラベル
 	public JLabel labelFormula;
 	//数式エリアを表示するパネル
 	public JPanel panelFormula;
-	
+
 	//素子リストを表示するパネル
 	public JPanel panelElementList;
 	//素子リストのラベル
@@ -192,7 +192,7 @@ public class MainDispApp extends JFrame
 	public JScrollPane scrollPaneElementList;
 	//素子リスト用のテーブル
 	private JTable table;
-	
+
 	//直列回路の画像
 	public ImageIcon seriesCircuitPicture;
 	//並列回路の画像
@@ -213,17 +213,17 @@ public class MainDispApp extends JFrame
 	public ImageIcon capacitancePicture;
 	//キャパシタの画像(縦)
 	public ImageIcon capacitancePictureV;
-	
-	
+
+
 	//回路の情報を保持するクラス
 	public Circuit mainCircuit;
-	
+
 	//素子リストの表のデータ
 	private Object[][] tabledata={{new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceDisp.png")),"キャパシタ"},
 			                      {new ImageIcon(MainDispApp.class.getResource("/resources/resisitanceDisp.png")),"抵抗"},
 			                      {new ImageIcon(MainDispApp.class.getResource("/resources/InductanceDisp.png")),"インダクタ"},
 			                      {new ImageIcon(MainDispApp.class.getResource("/resources/LineDisp.png")),"ライン"}};
-	
+
 	private String[] columnNames = {"IMAGE","NAME"};
 
 	/**
@@ -268,12 +268,12 @@ public class MainDispApp extends JFrame
 		mainCircuit.setElem(1, 1, ElemType.CAPACITANCE);
 		mainCircuit.setElem(2, 1, ElemType.INDUCTANCE);
 
-		
+		//×ボタンを押したら閉じるように
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		//ウィンドウサイズの決定
 		setBounds(100, 100, 730, 577);
-		
+
 		//コンテントペーン(大枠)の生成
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -321,7 +321,7 @@ public class MainDispApp extends JFrame
 		//波形の表示の生成
 		menuItemGraph = new JMenuItem("波形");
 		meuDisp.add(menuItemGraph);
-		
+
 		//編集メニューの生成
 		menuEdit = new JMenu("編集");
 		menuBar.add(menuEdit);
@@ -369,7 +369,7 @@ public class MainDispApp extends JFrame
 		menuItemParallelCircuit = new JMenuItem("並列回路");
 		menuItemParallelCircuit.addMouseListener(new CircuitChangeEvent(this));
 		menuCircuitSelect.add(menuItemParallelCircuit);
-		
+
 		//メニューバー(ボタン)
 		menuBarButtons = new JMenuBar();
 		menuBarButtons.setBounds(0, 0, 676, 21);
@@ -402,7 +402,7 @@ public class MainDispApp extends JFrame
 		labelGraph = new JLabel("波形");
 		labelGraph.setBounds(0, 304, 676, 13);
 		contentPane.add(labelGraph);
-		
+
 		//回路エリアを表示するパネルを生成
 		panelCircuit = new JPanel();
 		panelCircuit.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -457,7 +457,7 @@ public class MainDispApp extends JFrame
 		textFieldElement6Parallel.setBounds(84, 149, 36, 19);
 		panelCircuit.add(textFieldElement6Parallel);
 		textFieldElement6Parallel.setVisible(false);
-		
+
 		//素子1の画像を表示するラベルを生成
 		labelElement1Parallel = new JLabel(resistancePicture);
 		labelElement1Parallel.setBounds(89, 47, 43, 29);
@@ -542,7 +542,7 @@ public class MainDispApp extends JFrame
 		textFieldVoltage.setBounds(63, 115, 36, 19);
 		panelCircuit.add(textFieldVoltage);
 		textFieldVoltage.setColumns(10);
-		
+
 		//素子1の値を入力するボックスの生成
 		textFieldElement1 = new JTextField();
 		textFieldElement1.setBounds(123, 83, 36, 19);
@@ -573,7 +573,7 @@ public class MainDispApp extends JFrame
 		textFieldElement6.setColumns(10);
 		textFieldElement6.setBounds(106, 150, 36, 19);
 		panelCircuit.add(textFieldElement6);
-		
+
 		//素子1の画像を表示するラベルを生成
 		labelElement1 = new JLabel(resistancePicture);
 		labelElement1.setBounds(110, 48, 43, 29);
@@ -666,13 +666,13 @@ public class MainDispApp extends JFrame
 		for(int i=0;i<4;i++){
 		      tableModel.addRow(tabledata[i]);
 		}
-		
+
 
 		scrollPaneElementList = new JScrollPane(table);
 		scrollPaneElementList.setViewportBorder(null);
 		scrollPaneElementList.setBounds(0, 0, 191, 250);
 		panelElementList.add(scrollPaneElementList);
-		
+
 	}
 
 	class MyTableModel extends DefaultTableModel{
