@@ -300,6 +300,8 @@ public class MainDispApp extends JFrame
 		//開くの生成
 		menuItemOpen = new JMenuItem("開く");
 		menuFile.add(menuItemOpen);
+		menuItemOpen.addActionListener(new FileFunction(mainCircuit));
+
 		//上書きの生成
 		menuItemOverWrite = new JMenuItem("上書き保存");
 		menuFile.add(menuItemOverWrite);
