@@ -1,8 +1,0 @@
-package gui;
-
-import java.awt.event.MouseAdapter;
-
-public class CircuitChangeEvent extends MouseAdapter
-{
-
-}
