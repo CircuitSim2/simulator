@@ -1,0 +1,50 @@
+package test;
+
+import java.awt.BorderLayout;
+
+import circuit.ElemType;
+import circuit.ParallelCircuit;
+
+public class CircuitTest extends JFrame {
+
+	public static void main(String[] args)
+	{
+		ParallelCircuit circuit = new ParallelCircuit();
+		circuit.setVoltage(10);
+
+		for(int i = 0;i < 9;i+=3)
+		{
+			circuit.setElem(i, 1, ElemType.RESISTANCE);
+			circuit.setElem(i + 1, 1, ElemType.CAPACITANCE);
+			circuit.setElem(i + 2, 1, ElemType.INDUCTANCE);
+		}
+
+		circuit.calcCurrent(0, 10);
+		
+		for(int i = 0; i < (10 / 0.005);i++)
+		{
+			pw.println(circuit.getCurrentListA().get(i) + "," + circuit.getCurrentListB().get(i) + ",");
+		}
+	}
+	
+	 CircuitTest(){
+		    DefaultCategoryDataset data = new DefaultCategoryDataset();
+		    data.addValue(300, "米国", "2005年");
+		    data.addValue(500, "米国", "2006年");
+		    data.addValue(120, "米国", "2007年");
+
+		    JFreeChart chart = 
+		      ChartFactory.createLineChart("輸入量",
+		                                   "年度",
+		                                   "トン(t)",
+		                                   data,
+		                                   PlotOrientation.VERTICAL,
+		                                   true,
+		                                   false,
+		                                   false);
+
+		    ChartPanel cpanel = new ChartPanel(chart);
+		    getContentPane().add(cpanel, BorderLayout.CENTER);
+		  }
+
+}
