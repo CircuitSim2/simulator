@@ -259,22 +259,22 @@ public class MainDispApp extends JFrame
 		//新規作成の生成
 		menuItemNew = new JMenuItem("新規作成");
 		menuFile.add(menuItemNew);
-		menuItemNew.addActionListener(new FileFunction());
+		menuItemNew.addActionListener(new FileFunction(this));
 
 		//開くの生成
 		menuItemOpen = new JMenuItem("開く");
 		menuFile.add(menuItemOpen);
-		menuItemOpen.addActionListener(new FileFunction(mainCircuit, this));
+		menuItemOpen.addActionListener(new FileFunction(this));
 
 		//上書きの生成
 		menuItemOverWrite = new JMenuItem("上書き保存");
 		menuFile.add(menuItemOverWrite);
-		menuItemOverWrite.addActionListener(new FileFunction(mainCircuit, this));
+		menuItemOverWrite.addActionListener(new FileFunction(this));
 
 		//名前を付けて保存の生成
 		menuItemSaveAs = new JMenuItem("名前を付けて保存");
 		menuFile.add(menuItemSaveAs);
-		menuItemSaveAs.addActionListener(new FileFunction(mainCircuit, this));
+		menuItemSaveAs.addActionListener(new FileFunction(this));
 
 		//波形の出力の生成
 		menuItemExportGraph = new JMenuItem("波形を画像として保存");

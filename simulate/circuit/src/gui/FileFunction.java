@@ -13,8 +13,9 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-import circuit.Circuit;
 import circuit.ElemType;
 import circuit.Element;
 import circuit.ParallelCircuit;
@@ -29,7 +30,7 @@ public class FileFunction extends JFrame implements ActionListener{
 	private MainDispApp disp;
 	//private String FilePass;
 
-	public FileFunction(Circuit mainCircuit, MainDispApp disp)
+	public FileFunction(MainDispApp disp)
 	{//FileFunctionにCircuitクラスのインスタンスを与えたときのコンストラクタ
 		//this.mainCircuit = mainCircuit;
 		this.disp = disp;
@@ -63,6 +64,12 @@ public class FileFunction extends JFrame implements ActionListener{
 		else if("開く".equals(cmdName))//"開く"ボタンが押されたとき
 		{
 			JFileChooser filechooser = new JFileChooser();
+			//filechooser.addChoosableFileFilter(new simtFilter());
+
+			FileFilter filter = new FileNameExtensionFilter("simtファイル", "simt");
+			filechooser.addChoosableFileFilter(filter);
+			filechooser.setAcceptAllFileFilterUsed(false);
+
 
 		    int selected = filechooser.showOpenDialog(this);
 		    if (selected == JFileChooser.APPROVE_OPTION)
@@ -84,11 +91,41 @@ public class FileFunction extends JFrame implements ActionListener{
 		else if("上書き保存".equals(cmdName))//"上書き保存"ボタンが押されたとき
 		{
 			System.out.println(disp.filePass);
+			if(disp.filePass.equals("empty"))
+			{
+				JFileChooser filechooser = new JFileChooser();
+				FileFilter filter = new FileNameExtensionFilter("simtファイル", "simt");
+				filechooser.addChoosableFileFilter(filter);
+				filechooser.setAcceptAllFileFilterUsed(false);
+
+			    int selected = filechooser.showSaveDialog(this);
+
+			    if (selected == JFileChooser.APPROVE_OPTION)
+			    {
+			      File file = filechooser.getSelectedFile();
+			      fileSave(file.getAbsolutePath());
+			    }
+			    else if (selected == JFileChooser.CANCEL_OPTION)
+			    {
+			    	System.out.println("キャンセルされました");
+			    }
+			    else if (selected == JFileChooser.ERROR_OPTION)
+			    {
+			    	System.out.println("エラー又は取消しがありました");
+			    }
+			}
+			else
+			{
+				fileSave(disp.filePass);
+			}
 		}
 
 		else if("名前を付けて保存".equals(cmdName))//"名前を付けて保存"ボタンが押されたとき
 		{
 			JFileChooser filechooser = new JFileChooser();
+			FileFilter filter = new FileNameExtensionFilter("simtファイル", "simt");
+			filechooser.addChoosableFileFilter(filter);
+			filechooser.setAcceptAllFileFilterUsed(false);
 
 		    int selected = filechooser.showSaveDialog(this);
 
@@ -195,16 +232,27 @@ public class FileFunction extends JFrame implements ActionListener{
 
 	}
 
+	/*--------ファイルを保存するメソッド----------*/
 	public void fileSave(String f)
 	{
 		try
 		{
+			if(f.substring(f.length() - 5).equals(".simt"))
+			{
+				//falseのとき，ファイル拡張子を設定する．trueのときは何もしない
+			}
+			else
+			{
+				f = f + ".simt";
+			}
+
 			FileWriter fw = new FileWriter(f, false);
 			PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
 
+
 			if(disp.mainCircuit instanceof ParallelCircuit)
 			{
-				pw.print("Parallel");
+				pw.println("Parallel");
 			}
 			else if(disp.mainCircuit instanceof SeriesCircuit)
 			{
