@@ -3,15 +3,19 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-import circuit.Circuit;
 import circuit.ElemType;
 import circuit.Element;
 import circuit.ParallelCircuit;
@@ -22,33 +26,136 @@ public class FileFunction extends JFrame implements ActionListener{
 	private ArrayList <Element> elemList = new ArrayList<Element>();
 	private ElemType elem_type;
 	private String circuitType;
-	private Circuit mainCircuit;
+	//private Circuit mainCircuit;
+	private MainDispApp disp;
+	//private String FilePass;
 
-	public FileFunction(Circuit mainCircuit)
+	public FileFunction(MainDispApp disp)
+	{//FileFunctionにCircuitクラスのインスタンスを与えたときのコンストラクタ
+		//this.mainCircuit = mainCircuit;
+		this.disp = disp;
+		//this.FilePass = disp.filePass;
+	}
+
+	public FileFunction()
 	{
-		this.mainCircuit = mainCircuit;
+		//FileFunctionにCircuitクラスのインスタンスを与えないときのコンストラクタ
 	}
 
 	public void actionPerformed(ActionEvent e)
 	{
-		JFileChooser filechooser = new JFileChooser();
+		String cmdName = e.getActionCommand();
+		if("新規作成".equals(cmdName))//"新規作成"ボタンが押されたとき
+		{
+			disp.mainCircuit = new SeriesCircuit();
 
-	    int selected = filechooser.showOpenDialog(this);
-	    if (selected == JFileChooser.APPROVE_OPTION)
-	    {
-	      File file = filechooser.getSelectedFile();
-	      fileOpen(file);
-	    }
-	    else if (selected == JFileChooser.CANCEL_OPTION)
-	    {
-	      System.out.println("キャンセルされました");
-	    }
-	    else if (selected == JFileChooser.ERROR_OPTION)
-	    {
-	    	System.out.println("エラー又は取消しがありました");
-	    }
+			/*-----test------*/
+			for(int z = 0; z < disp.mainCircuit.getElem().length; z++)//test
+			{
+				Element elem = disp.mainCircuit.getElem(z);//test
+
+				System.out.println(elem.getValue());
+				System.out.println(elem.getEt());
+			}
+
+		}
+
+
+		else if("開く".equals(cmdName))//"開く"ボタンが押されたとき
+		{
+			JFileChooser filechooser = new JFileChooser();
+			//filechooser.addChoosableFileFilter(new simtFilter());
+
+			FileFilter filter = new FileNameExtensionFilter("simtファイル", "simt");
+			filechooser.addChoosableFileFilter(filter);
+			filechooser.setAcceptAllFileFilterUsed(false);
+
+
+		    int selected = filechooser.showOpenDialog(this);
+		    if (selected == JFileChooser.APPROVE_OPTION)
+		    {
+		      File file = filechooser.getSelectedFile();
+		      disp.filePass = file.getAbsolutePath();
+		      fileOpen(file);
+		    }
+		    else if (selected == JFileChooser.CANCEL_OPTION)
+		    {
+		      System.out.println("キャンセルされました");
+		    }
+		    else if (selected == JFileChooser.ERROR_OPTION)
+		    {
+		    	System.out.println("エラー又は取消しがありました");
+		    }
+		}
+
+		else if("上書き保存".equals(cmdName))//"上書き保存"ボタンが押されたとき
+		{
+			System.out.println(disp.filePass);
+			if(disp.filePass.equals("empty"))
+			{
+				JFileChooser filechooser = new JFileChooser();
+				FileFilter filter = new FileNameExtensionFilter("simtファイル", "simt");
+				filechooser.addChoosableFileFilter(filter);
+				filechooser.setAcceptAllFileFilterUsed(false);
+
+			    int selected = filechooser.showSaveDialog(this);
+
+			    if (selected == JFileChooser.APPROVE_OPTION)
+			    {
+			      File file = filechooser.getSelectedFile();
+			      fileSave(file.getAbsolutePath());
+			    }
+			    else if (selected == JFileChooser.CANCEL_OPTION)
+			    {
+			    	System.out.println("キャンセルされました");
+			    }
+			    else if (selected == JFileChooser.ERROR_OPTION)
+			    {
+			    	System.out.println("エラー又は取消しがありました");
+			    }
+			}
+			else
+			{
+				fileSave(disp.filePass);
+			}
+		}
+
+		else if("名前を付けて保存".equals(cmdName))//"名前を付けて保存"ボタンが押されたとき
+		{
+			JFileChooser filechooser = new JFileChooser();
+			FileFilter filter = new FileNameExtensionFilter("simtファイル", "simt");
+			filechooser.addChoosableFileFilter(filter);
+			filechooser.setAcceptAllFileFilterUsed(false);
+
+		    int selected = filechooser.showSaveDialog(this);
+
+		    if (selected == JFileChooser.APPROVE_OPTION)
+		    {
+		      File file = filechooser.getSelectedFile();
+		      fileSave(file.getAbsolutePath());
+		    }
+		    else if (selected == JFileChooser.CANCEL_OPTION)
+		    {
+		    	System.out.println("キャンセルされました");
+		    }
+		    else if (selected == JFileChooser.ERROR_OPTION)
+		    {
+		    	System.out.println("エラー又は取消しがありました");
+		    }
+		}
+
+		else if("波形を画像として保存".equals(cmdName))//"波形を画像として保存"ボタンが押されたとき
+		{
+
+		}
+
+		else if("閉じる".equals(cmdName))//"閉じる"ボタンが押されたとき
+		{
+			System.exit(0);
+		}
 	}
 
+	/*------ファイルを開く-----*/
 	public void fileOpen(File f)
 	{ //過去に作成したシミュレーションを開く(CSV形式)
 		try
@@ -83,31 +190,34 @@ public class FileFunction extends JFrame implements ActionListener{
 
 			if(circuitType.equals("Series"))
 			{
-				System.out.println("直列開いたよ");
-				for(int j = 0; j < elemList.size(); j++)
+				disp.mainCircuit = new SeriesCircuit();
+				for(int j = 0; j < disp.mainCircuit.getElem().length; j++)
 				{
-					mainCircuit = new SeriesCircuit();
-					mainCircuit.setElem(j, elemList.get(j));
+
+					disp.mainCircuit.setElem(j, elemList.get(j));
 				}
-				System.out.println("直列開いたよ");
+
+				//disp.setCircuit(mainCircuit);
+				//直列回路のコンポーネントを有効化
+				disp.changeStateSerial(true);
+
+				//並列回路のコンポーネントを非表示に
+				disp.changeStateParallel(false);
+				disp.labelCircuitPicture.setIcon(disp.seriesCircuitPicture);
 			}
 			else if(circuitType.equals("Parallel"))
 			{
-				System.out.println("並列開いたよ");
-				for(int j = 0; j < elemList.size(); j++)
+				disp.mainCircuit = new ParallelCircuit();
+				for(int j = 0; j < disp.mainCircuit.getElem().length; j++)
 				{
-					mainCircuit = new ParallelCircuit();
-					mainCircuit.setElem(j, elemList.get(j));
+					disp.mainCircuit.setElem(j, elemList.get(j));
 				}
-				System.out.println("並列開いたよ");
-			}
+				//disp.setCircuit(mainCircuit);
+				disp.changeStateSerial(false);
 
-			for(int z = 0; z < elemList.size(); z++)
-			{
-				Element elem = elemList.get(z);//test
-
-				System.out.println(elem.getValue());
-				System.out.println(elem.getEt());
+				//並列回路のコンポーネントを有効化
+				disp.changeStateParallel(true);
+				disp.labelCircuitPicture.setIcon(disp.parallelCircuitPicture);
 			}
 
 			br.close();
@@ -119,6 +229,74 @@ public class FileFunction extends JFrame implements ActionListener{
 		}
 
 		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	/*--------ファイルを保存するメソッド----------*/
+	public void fileSave(String f)
+	{
+		try
+		{
+			if(f.substring(f.length() - 5).equals(".simt"))
+			{
+				//falseのとき，ファイル拡張子を設定する．trueのときは何もしない
+			}
+			else
+			{
+				f = f + ".simt";
+			}
+
+			FileWriter fw = new FileWriter(f, false);
+			PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+
+
+			if(disp.mainCircuit instanceof ParallelCircuit)
+			{
+				pw.println("Parallel");
+			}
+			else if(disp.mainCircuit instanceof SeriesCircuit)
+			{
+				pw.println("Series");
+			}
+
+			for(int z = 0; z < disp.mainCircuit.getElem().length; z++)//test
+			{
+				Element elem = disp.mainCircuit.getElem(z);//test
+
+				String elemName;
+
+				switch(elem.getEt())
+				{
+					case RESISTANCE:
+						elemName = "R";
+						break;
+					case INDUCTANCE:
+						elemName = "I";
+						break;
+					case CAPACITANCE:
+						elemName = "C";
+						break;
+					case LINE:
+						elemName = "L";
+						break;
+					default:
+						elemName = "L";
+						break;
+				}
+
+				pw.print(elemName);
+				pw.print(",");
+				pw.print(String.valueOf(elem.getValue()));//値を書き込み
+				pw.println();//改行
+
+			}
+			pw.close();
+		}
+
+		catch(IOException e)
+		{
+
+		}
 
 	}
 }

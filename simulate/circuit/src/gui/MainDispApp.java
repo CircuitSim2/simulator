@@ -30,8 +30,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 
 import circuit.Circuit;
-import circuit.ElemType;
-import circuit.SeriesCircuit;
 
 
 public class MainDispApp extends JFrame
@@ -194,6 +192,9 @@ public class MainDispApp extends JFrame
 	//回路の情報を保持するクラス
 	public Circuit mainCircuit;
 
+	//回路のファイルのパスを保持するフィールド
+	public String filePass = "empty";
+
 	//素子リストの表のデータ
 	private Object[][] tabledata={{new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceDisp.png")),"キャパシタ"},
 			                      {new ImageIcon(MainDispApp.class.getResource("/resources/resisitanceDisp.png")),"抵抗"},
@@ -267,23 +268,31 @@ public class MainDispApp extends JFrame
 		//新規作成の生成
 		menuItemNew = new JMenuItem("新規作成");
 		menuFile.add(menuItemNew);
+		menuItemNew.addActionListener(new FileFunction(this));
+
 		//開くの生成
 		menuItemOpen = new JMenuItem("開く");
 		menuFile.add(menuItemOpen);
-		//menuItemOpen.addActionListener(new FileFunction(mainCircuit));
+		menuItemOpen.addActionListener(new FileFunction(this));
 
 		//上書きの生成
 		menuItemOverWrite = new JMenuItem("上書き保存");
 		menuFile.add(menuItemOverWrite);
+		menuItemOverWrite.addActionListener(new FileFunction(this));
+
 		//名前を付けて保存の生成
 		menuItemSaveAs = new JMenuItem("名前を付けて保存");
 		menuFile.add(menuItemSaveAs);
+		menuItemSaveAs.addActionListener(new FileFunction(this));
+
 		//波形の出力の生成
 		menuItemExportGraph = new JMenuItem("波形を画像として保存");
 		menuFile.add(menuItemExportGraph);
+
 		//閉じるの生成
 		menuItemClose = new JMenuItem("閉じる");
 		menuFile.add(menuItemClose);
+		menuItemClose.addActionListener(new FileFunction());
 
 		//表示メニューの生成
 		meuDisp = new JMenu("表示");
@@ -754,3 +763,4 @@ public class MainDispApp extends JFrame
 		});
 	}
 }
+

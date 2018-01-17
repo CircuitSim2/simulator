@@ -29,4 +29,9 @@ public class Circuit
 	{
 		return this.elem[num];
 	}
+
+	public Element [] getElem()
+	{
+		return this.elem;
+	}
 }
