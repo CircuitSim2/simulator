@@ -118,7 +118,6 @@ public class SeriesCircuit extends Circuit
 	//電流を計算してリストに格納
 	public void calcCurrent(double start, double end)
 	{
-		double dt = 0.01;
 		double current = 0;
 		double currentSum = 0;
 		int times = (int)((end - start) / dt);

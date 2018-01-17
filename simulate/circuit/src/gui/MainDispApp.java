@@ -23,6 +23,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+
 import circuit.Circuit;
 import circuit.ElemType;
 import circuit.SeriesCircuit;
@@ -144,7 +149,9 @@ public class MainDispApp extends JFrame
 	//グラフエリアのラベル
 	public JLabel labelGraph;
 	//グラフエリアを表示するパネル
-	public JPanel panelGraph;
+	public ChartPanel panelGraph;
+	//表示するグラフ
+	public JFreeChart chart;
 
 	//数式エリアのラベル
 	public JLabel labelFormula;
@@ -232,6 +239,7 @@ public class MainDispApp extends JFrame
 
 		//回路情報の生成
 		mainCircuit = new SeriesCircuit();
+		mainCircuit.setVoltage(10);
 		mainCircuit.setElem(0, 1, ElemType.RESISTANCE);
 		mainCircuit.setElem(1, 1, ElemType.CAPACITANCE);
 		mainCircuit.setElem(2, 1, ElemType.INDUCTANCE);
@@ -326,6 +334,7 @@ public class MainDispApp extends JFrame
 		menuBar.add(menuSimulate);
 		//シミュレーションの生成
 		menuItemSimulation = new JMenuItem("シミュレーション");
+		menuItemSimulation.addActionListener(new CalcEvent(this));
 		menuSimulate.add(menuItemSimulation);
 
 		//回路の種類メニューの生成
@@ -363,8 +372,19 @@ public class MainDispApp extends JFrame
 		buttonEnd = new JButton("シミュレーション終了");
 		menuBarButtons.add(buttonEnd);
 
+		chart = ChartFactory.createXYLineChart(
+						null,                     // chart title
+						"Time[s]",                // x axis label
+						"Electric current(i)",    // y axis label
+						null,                     // data
+						PlotOrientation.VERTICAL,
+						true,                     // include legend
+						true,                     // tooltips
+						false                     // urls
+						);
+
 		//グラフエリアを表示するパネルを生成
-		panelGraph = new JPanel();
+		panelGraph = new ChartPanel(chart);
 		panelGraph.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelGraph.setBounds(0, 320, 706, 180);
 		contentPane.add(panelGraph);
@@ -372,6 +392,7 @@ public class MainDispApp extends JFrame
 		labelGraph = new JLabel("波形");
 		labelGraph.setBounds(0, 304, 676, 13);
 		contentPane.add(labelGraph);
+
 
 		//回路エリアを表示するパネルを生成
 		panelCircuit = new JPanel();
@@ -530,7 +551,7 @@ public class MainDispApp extends JFrame
 
 		//*************直列回路*****************//
 		//電圧の値を入力するBOXの生成
-		textFieldVoltage = new JTextField();
+		textFieldVoltage = new JTextField("10");
 		textFieldVoltage.setBounds(72, 115, 36, 19);
 		panelCircuit.add(textFieldVoltage);
 		textFieldVoltage.setColumns(10);
@@ -539,17 +560,17 @@ public class MainDispApp extends JFrame
 		textFieldElement = new JTextField[6];
 
 		//素子1の値を入力するボックスの生成
-		textFieldElement[0] = new JTextField();
+		textFieldElement[0] = new JTextField("1");
 		textFieldElement[0].setBounds(111, 53, 36, 19);
 		panelCircuit.add(textFieldElement[0]);
 		textFieldElement[0].setColumns(10);
 		//素子2の値を入力するボックスの生成
-		textFieldElement[1] = new JTextField();
+		textFieldElement[1] = new JTextField("1");
 		textFieldElement[1].setColumns(10);
 		textFieldElement[1].setBounds(195, 53, 36, 19);
 		panelCircuit.add(textFieldElement[1]);
 		//素子3の値を入力するボックスの生成
-		textFieldElement[2] = new JTextField();
+		textFieldElement[2] = new JTextField("1");
 		textFieldElement[2].setColumns(10);
 		textFieldElement[2].setBounds(242, 80, 36, 19);
 		panelCircuit.add(textFieldElement[2]);
