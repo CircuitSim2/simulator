@@ -30,6 +30,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 
 import circuit.Circuit;
+import circuit.ElemType;
+import circuit.SeriesCircuit;
 
 
 public class MainDispApp extends JFrame
