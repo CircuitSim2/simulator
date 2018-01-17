@@ -24,17 +24,6 @@ public class CalcEvent implements ActionListener
 	{
 		if(disp.mainCircuit instanceof SeriesCircuit)
 		{
-			for(int i = 0;i < 6;i++)
-			{
-				try{
-					disp.mainCircuit.getElem(i).setValue(Double.parseDouble(disp.textFieldElement[i].getText()));
-				}
-				catch(Exception ex)
-				{
-					disp.mainCircuit.getElem(i).setValue(0);
-				}
-			}
-
 			((SeriesCircuit) disp.mainCircuit).calcCurrent(0, 10);
 
 	    	XYSeriesCollection data = new XYSeriesCollection();
@@ -48,7 +37,7 @@ public class CalcEvent implements ActionListener
 
 			JFreeChart chart =
 					ChartFactory.createXYLineChart(
-				            null,                      // chart title
+				            "Waveform ",              // chart title
 				            "Time[s]",                // x axis label
 				            "Electric current(i)",    // y axis label
 				            data,                  // data

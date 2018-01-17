@@ -29,7 +29,7 @@ public class CalcEvent implements ActionListener
 				try{
 					disp.mainCircuit.getElem(i).setValue(Double.parseDouble(disp.textFieldElement[i].getText()));
 				}
-				catch(Exception ex)
+				catch(Exception e)
 				{
 					disp.mainCircuit.getElem(i).setValue(0);
 				}

@@ -26,13 +26,7 @@ public class CalcEvent implements ActionListener
 		{
 			for(int i = 0;i < 6;i++)
 			{
-				try{
-					disp.mainCircuit.getElem(i).setValue(Double.parseDouble(disp.textFieldElement[i].getText()));
-				}
-				catch(Exception ex)
-				{
-					disp.mainCircuit.getElem(i).setValue(0);
-				}
+
 			}
 
 			((SeriesCircuit) disp.mainCircuit).calcCurrent(0, 10);

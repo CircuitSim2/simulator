@@ -421,43 +421,52 @@ public class MainDispApp extends JFrame
 		textFieldElementParallel[0].setBounds(56, 50, 36, 19);
 		textFieldElementParallel[0].setFormatterFactory(new NumberFormatterFactory());
 		panelCircuit.add(textFieldElementParallel[0]);
+		textFieldElementParallel[0].setColumns(10);
 		//素子2の値を入力するBOXの生成
 		textFieldElementParallel[1] = new JFormattedTextField();
+		textFieldElementParallel[1].setColumns(10);
 		textFieldElementParallel[1].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[1].setBounds(112, 49, 36, 19);
 		panelCircuit.add(textFieldElementParallel[1]);
 		//素子3の値を入力するBOXの生成
 		textFieldElementParallel[2] = new JFormattedTextField();
+		textFieldElementParallel[2].setColumns(10);
 		textFieldElementParallel[2].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[2].setBounds(168, 50, 36, 19);
 		panelCircuit.add(textFieldElementParallel[2]);
 		//素子4の値を入力するBOXの生成
 		textFieldElementParallel[3] = new JFormattedTextField();
+		textFieldElementParallel[3].setColumns(10);
 		textFieldElementParallel[3].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[3].setBounds(157, 74, 36, 19);
 		panelCircuit.add(textFieldElementParallel[3]);
 		//素子5の値を入力するBOXの生成
 		textFieldElementParallel[4] = new JFormattedTextField();
+		textFieldElementParallel[4].setColumns(10);
 		textFieldElementParallel[4].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[4].setBounds(157, 123, 36, 19);
 		panelCircuit.add(textFieldElementParallel[4]);
 		//素子6の値を入力するBOXの生成
 		textFieldElementParallel[5] = new JFormattedTextField();
+		textFieldElementParallel[5].setColumns(10);
 		textFieldElementParallel[5].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[5].setBounds(157, 174, 36, 19);
 		panelCircuit.add(textFieldElementParallel[5]);
 		//素子7の値を入力するBOXの生成
 		textFieldElementParallel[6] = new JFormattedTextField();
+		textFieldElementParallel[6].setColumns(10);
 		textFieldElementParallel[6].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[6].setBounds(251, 60, 36, 19);
 		panelCircuit.add(textFieldElementParallel[6]);
 		//素子8の値を入力するBOXの生成
 		textFieldElementParallel[7] = new JFormattedTextField();
+		textFieldElementParallel[7].setColumns(10);
 		textFieldElementParallel[7].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[7].setBounds(252, 120, 36, 19);
 		panelCircuit.add(textFieldElementParallel[7]);
 		//素子9の値を入力するBOXの生成
 		textFieldElementParallel[8] = new JFormattedTextField();
+		textFieldElementParallel[8].setColumns(10);
 		textFieldElementParallel[8].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[8].setBounds(250, 175, 36, 19);
 		panelCircuit.add(textFieldElementParallel[8]);
@@ -561,32 +570,38 @@ public class MainDispApp extends JFrame
 		textFieldElement = new JFormattedTextField[6];
 
 		//素子1の値を入力するボックスの生成
-		textFieldElement[0] = new JFormattedTextField();
+		textFieldElement[0] = new JFormattedTextField("1");
 		textFieldElement[0].setBounds(111, 53, 36, 19);
 		textFieldElement[0].setFormatterFactory(new NumberFormatterFactory());
 		panelCircuit.add(textFieldElement[0]);
+		textFieldElement[0].setColumns(10);
 		//素子2の値を入力するボックスの生成
-		textFieldElement[1] = new JFormattedTextField();
+		textFieldElement[1] = new JFormattedTextField("1");
+		textFieldElement[1].setColumns(10);
 		textFieldElement[1].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[1].setBounds(195, 53, 36, 19);
 		panelCircuit.add(textFieldElement[1]);
 		//素子3の値を入力するボックスの生成
-		textFieldElement[2] = new JFormattedTextField();
+		textFieldElement[2] = new JFormattedTextField("1");
+		textFieldElement[2].setColumns(10);
 		textFieldElement[2].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[2].setBounds(242, 80, 36, 19);
 		panelCircuit.add(textFieldElement[2]);
 		//素子4の値を入力するボックスの生成
 		textFieldElement[3] = new JFormattedTextField();
+		textFieldElement[3].setColumns(10);
 		textFieldElement[3].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[3].setBounds(243, 148, 36, 19);
 		panelCircuit.add(textFieldElement[3]);
 		//素子5の値を入力するボックスの生成
 		textFieldElement[4] = new JFormattedTextField();
+		textFieldElement[4].setColumns(10);
 		textFieldElement[4].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[4].setBounds(198, 171, 36, 19);
 		panelCircuit.add(textFieldElement[4]);
 		//素子6の値を入力するボックスの生成
 		textFieldElement[5] = new JFormattedTextField();
+		textFieldElement[5].setColumns(10);
 		textFieldElement[5].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[5].setBounds(107, 171, 36, 19);
 		panelCircuit.add(textFieldElement[5]);
