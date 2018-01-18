@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -16,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -31,6 +34,7 @@ import org.jfree.chart.plot.PlotOrientation;
 
 import circuit.Circuit;
 import circuit.ElemType;
+import circuit.ParallelCircuit;
 import circuit.SeriesCircuit;
 
 
@@ -204,6 +208,10 @@ public class MainDispApp extends JFrame
 			                      {new ImageIcon(MainDispApp.class.getResource("/resources/LineDisp.png")),"ライン"}};
 
 	private String[] columnNames = {"IMAGE","NAME"};
+	
+	//回路の電流か電圧の選択ボタン
+	public JRadioButton radioButtonCurrent;
+	public JRadioButton radioButtonVoltage;
 
 	/**
 	 * Launch the application.
@@ -246,7 +254,7 @@ public class MainDispApp extends JFrame
 		mainCircuit.setVoltage(10);
 		mainCircuit.setElem(0, 1, ElemType.RESISTANCE);
 		mainCircuit.setElem(1, 1, ElemType.CAPACITANCE);
-		mainCircuit.setElem(2, 1, ElemType.INDUCTANCE);
+		//mainCircuit.setElem(2, 1, ElemType.INDUCTANCE);
 
 		//×ボタンを押したら閉じるように
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -346,7 +354,7 @@ public class MainDispApp extends JFrame
 		menuBar.add(menuSimulate);
 		//シミュレーションの生成
 		menuItemSimulation = new JMenuItem("シミュレーション");
-		menuItemSimulation.addActionListener(new CalcEvent(this));
+		menuItemSimulation.addActionListener(new SimulationSettingEvent(this));
 		menuSimulate.add(menuItemSimulation);
 
 		//回路の種類メニューの生成
@@ -379,6 +387,7 @@ public class MainDispApp extends JFrame
 		menuBarButtons.add(buttonSave);
 		//シミュレーション開始ボタンの生成
 		buttonStart = new JButton("シミュレーション開始");
+		buttonStart.addActionListener(new SimulationSettingEvent(this));
 		menuBarButtons.add(buttonStart);
 		//シミュレーション終了ボタンの生成
 		buttonEnd = new JButton("シミュレーション終了");
@@ -387,7 +396,7 @@ public class MainDispApp extends JFrame
 		chart = ChartFactory.createXYLineChart(
 						null,                     // chart title
 						"Time[s]",                // x axis label
-						"Electric current(i)",    // y axis label
+						null,    // y axis label
 						null,                     // data
 						PlotOrientation.VERTICAL,
 						true,                     // include legend
@@ -402,7 +411,7 @@ public class MainDispApp extends JFrame
 		contentPane.add(panelGraph);
 		//グラフエリアのラベルを生成
 		labelGraph = new JLabel("波形");
-		labelGraph.setBounds(0, 304, 676, 13);
+		labelGraph.setBounds(0, 304, 30, 13);
 		contentPane.add(labelGraph);
 
 
@@ -608,10 +617,12 @@ public class MainDispApp extends JFrame
 		//素子1の画像を表示するラベルを生成
 		labelElement[0] = new JLabel(resistancePicture);
 		labelElement[0].setBounds(111, 19, 43, 29);
+		labelElement[0].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElement[0]);
 		//素子2の画像を表示するラベルを生成
 		labelElement[1] = new JLabel(capacitancePicture);
 		labelElement[1].setBounds(196, 19, 43, 29);
+		labelElement[1].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElement[1]);
 		//素子3の画像を表示するラベルを生成
 		labelElement[2] = new JLabel(inductancePictureV);
@@ -706,7 +717,20 @@ public class MainDispApp extends JFrame
 		scrollPaneElementList.setViewportBorder(null);
 		scrollPaneElementList.setBounds(0, 0, 191, 250);
 		panelElementList.add(scrollPaneElementList);
-
+		
+		//グラフを作成するものを選択
+		radioButtonVoltage = new JRadioButton("電圧");
+		radioButtonVoltage.setBounds(30, 303, 55, 14);
+		contentPane.add(radioButtonVoltage);
+		
+		radioButtonCurrent = new JRadioButton("電流");
+		radioButtonCurrent.setBounds(85, 301, 54, 17);
+		radioButtonCurrent.setSelected(true);
+		contentPane.add(radioButtonCurrent);
+		
+		ButtonGroup selectGroup = new ButtonGroup();
+		selectGroup.add(radioButtonCurrent);
+		selectGroup.add(radioButtonVoltage);
 	}
 
 	public void changeStateSerial(Boolean state)
@@ -734,6 +758,83 @@ public class MainDispApp extends JFrame
 			textFieldElementParallel[i].setVisible(state);
 			labelElementParallel[i].setVisible(state);
 			labelElementUnitParallel[i].setVisible(state);
+		}
+	}
+	
+	public void loadCircuit()
+	{
+		Icon icon;
+		
+		if(mainCircuit instanceof SeriesCircuit)
+		{
+			for(int i = 0;i < mainCircuit.getElem().length;i++)
+			{
+				icon = labelElement[i].getIcon();
+				
+				switch(mainCircuit.getElem(i).getEt())
+				{
+				case RESISTANCE:
+					if(icon.getIconHeight() == linePicture.getIconHeight())
+						labelElement[i].setIcon(resistancePicture);
+					else
+						labelElement[i].setIcon(resistancePictureV);
+					break;
+				case CAPACITANCE:
+					if(icon.getIconHeight() == linePicture.getIconHeight())
+						labelElement[i].setIcon(capacitancePicture);
+					else
+						labelElement[i].setIcon(capacitancePictureV);
+					break;
+				case INDUCTANCE:
+					if(icon.getIconHeight() == linePicture.getIconHeight())
+						labelElement[i].setIcon(inductancePicture);
+					else
+						labelElement[i].setIcon(inductancePictureV);
+					break;
+				case LINE:
+					if(icon.getIconHeight() == linePicture.getIconHeight())
+						labelElement[i].setIcon(linePicture);
+					else
+						labelElement[i].setIcon(linePictureV);
+					break;
+				}
+			}
+		}
+		
+		else if(mainCircuit instanceof ParallelCircuit)
+		{
+			for(int i = 0;i < mainCircuit.getElem().length;i++)
+			{
+				icon = labelElementParallel[i].getIcon();
+				
+				switch(mainCircuit.getElem(i).getEt())
+				{
+				case RESISTANCE:
+					if(icon.getIconHeight() == linePicture.getIconHeight())
+						labelElementParallel[i].setIcon(resistancePicture);
+					else
+						labelElementParallel[i].setIcon(resistancePictureV);
+					break;
+				case CAPACITANCE:
+					if(icon.getIconHeight() == linePicture.getIconHeight())
+						labelElementParallel[i].setIcon(capacitancePicture);
+					else
+						labelElementParallel[i].setIcon(capacitancePictureV);
+					break;
+				case INDUCTANCE:
+					if(icon.getIconHeight() == linePicture.getIconHeight())
+						labelElementParallel[i].setIcon(inductancePicture);
+					else
+						labelElementParallel[i].setIcon(inductancePictureV);
+					break;
+				case LINE:
+					if(icon.getIconHeight() == linePicture.getIconHeight())
+						labelElementParallel[i].setIcon(linePicture);
+					else
+						labelElementParallel[i].setIcon(linePictureV);
+					break;
+				}
+			}
 		}
 	}
 

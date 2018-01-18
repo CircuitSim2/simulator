@@ -1,0 +1,66 @@
+package gui;
+
+import java.awt.Frame;
+import java.awt.event.ActionListener;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+public class SettingDialog extends JDialog implements ActionListener
+{
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+
+	JRadioButton radioButton_1 = new JRadioButton("直流電流");
+	JRadioButton radioButton = new JRadioButton("交流電流");
+
+	public SettingDialog(Frame frame, String title)
+	{
+		super(frame, title);
+
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		boolean status1 = radioButton.isSelected();
+		if(status1 == true)
+		{
+			radioButton_1.setEnabled(false);
+			textField_3.setEnabled(false);
+			textField_2.setEnabled(false);
+		}
+
+		if(status1 == false)
+		{
+			radioButton_1.setEnabled(true);
+			textField_3.setEnabled(true);
+			textField_2.setEnabled(true);
+		}
+
+		boolean status = radioButton_1.isSelected();
+		if(status == true)
+		{
+			radioButton.setEnabled(false);
+			textField_4.setEnabled(false);
+			textField_5.setEnabled(false);
+		}
+
+		if(status == false)
+		{
+			radioButton.setEnabled(true);
+			textField_4.setEnabled(true);
+			textField_5.setEnabled(true);
+		}
+
+	}
+}

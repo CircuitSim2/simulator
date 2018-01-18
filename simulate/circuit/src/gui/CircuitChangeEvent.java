@@ -32,6 +32,8 @@ public class CircuitChangeEvent extends MouseAdapter
 			disp.labelCircuitPicture.setIcon(disp.parallelCircuitPicture);
 
 			disp.mainCircuit = new ParallelCircuit();
+			
+			disp.loadCircuit();
 		}
 
 		else
@@ -44,6 +46,8 @@ public class CircuitChangeEvent extends MouseAdapter
 
 			disp.labelCircuitPicture.setIcon(disp.seriesCircuitPicture);
 			disp.mainCircuit = new SeriesCircuit();
+			
+			disp.loadCircuit();
 		}
 	}
 }

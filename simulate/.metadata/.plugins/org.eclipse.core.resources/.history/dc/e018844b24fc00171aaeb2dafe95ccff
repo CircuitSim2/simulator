@@ -1,0 +1,21 @@
+package gui;
+
+import java.awt.Frame;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class SettingDialog extends JDialog
+{
+	public SettingDialog(Frame frame, String title)
+	{
+		super(frame, title);
+
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+		this.getContentPane().add(new JLabel("label"));
+		this.pack();
+		this.setLocationRelativeTo(frame);
+	}
+}

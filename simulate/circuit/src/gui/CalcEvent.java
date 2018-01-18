@@ -22,6 +22,9 @@ public class CalcEvent implements ActionListener
 
 	public void actionPerformed(ActionEvent e)
 	{
+		//JDialog dialog = new SettingDialog(disp, "シミュレーションの設定");
+		//dialog.setVisible(true);
+
 		if(disp.mainCircuit instanceof SeriesCircuit)
 		{
 			for(int i = 0;i < 6;i++)

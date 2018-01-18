@@ -1,0 +1,13 @@
+package gui;
+
+import javax.swing.JDialog;
+
+public class SettingDialog extends JDialog
+{
+	public SettingDialog()
+	{
+		super();
+
+		this.getContentPane().add(new JLabel("label"));
+	}
+}
