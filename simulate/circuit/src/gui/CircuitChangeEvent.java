@@ -23,30 +23,15 @@ public class CircuitChangeEvent extends MouseAdapter
 		//並列回路に切り替え
 		if(e.getComponent() == disp.menuItemParallelCircuit)
 		{
-			//直列回路のコンポーネントを非表示に
-			disp.changeStateSerial(false);
-
-			//並列回路のコンポーネントを有効化
-			disp.changeStateParallel(true);
-
-			disp.labelCircuitPicture.setIcon(disp.parallelCircuitPicture);
-
 			disp.mainCircuit = new ParallelCircuit();
-			
+
 			disp.loadCircuit();
 		}
 
 		else
 		{
-			//直列回路のコンポーネントを有効化
-			disp.changeStateSerial(true);
-
-			//並列回路のコンポーネントを非表示に
-			disp.changeStateParallel(false);
-
-			disp.labelCircuitPicture.setIcon(disp.seriesCircuitPicture);
 			disp.mainCircuit = new SeriesCircuit();
-			
+
 			disp.loadCircuit();
 		}
 	}

@@ -10,4 +10,5 @@
 <fullyQualifiedTypeName name="circuit.SeriesCircuit"/>
 <fullyQualifiedTypeName name="javax.swing.border.EmptyBorder"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
+<fullyQualifiedTypeName name="circuit.ParallelCircuit"/>
 </qualifiedTypeNameHistroy>

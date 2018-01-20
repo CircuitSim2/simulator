@@ -8,7 +8,7 @@ public class ParallelCircuit extends Circuit
 	private ArrayList<Double> currentListA;
 	private ArrayList<Double> currentListB;
 	//電圧を格納するリスト
-	//private ArrayList<Double> voltageList;
+	private ArrayList<Double> voltList;
 	//各素子の合計
 	private double RSum[];
 	private double LSum[];
@@ -24,17 +24,19 @@ public class ParallelCircuit extends Circuit
 		}
 		this.voltage = 0;
 
-		//currentListA = new ArrayList<Double>();
-		//currentListB = new ArrayList<Double>();
 		RSum = new double[3];
 		LSum = new double[3];
 		CInvSum = new double[3];
+
+		this.simulationEndTime = 10;
+		this.switchOnTime = 0;
+		this.switchOffTime = 5;
 	}
 
 	public ParallelCircuit(Element elem[], double voltage)
 	{
 		this();
-		
+
 		this.elem = elem;
 		this.voltage = voltage;
 	}
@@ -51,12 +53,22 @@ public class ParallelCircuit extends Circuit
 		return this.currentListB;
 	}
 
+	//電圧
+	public ArrayList<Double> getVoltList()
+	{
+		return this.voltList;
+	}
+
 	//各枝の素子を足し上げる 1~3 0除算を防ぐためキャパシタは逆数の合計
 	private void calcBranchSum()
 	{
 		for(int i = 0; i < 3;i++)
 		{
-			for(int j = i;j < 3 * (i + 1);j++)
+			RSum[i] = 0;
+			LSum[i] = 0;
+			CInvSum[i] = 0;
+
+			for(int j = i * 3;j < 3 * (i + 1);j++)
 			{
 				switch(elem[j].getEt())
 				{
@@ -67,7 +79,7 @@ public class ParallelCircuit extends Circuit
 					LSum[i] += elem[j].getValue();
 					break;
 				case CAPACITANCE:
-					CInvSum[i] += 1 / elem[j].getValue();
+					CInvSum[i] += (1 / elem[j].getValue());
 					break;
 				default:
 				}
@@ -95,7 +107,7 @@ public class ParallelCircuit extends Circuit
 		//簡単のため代入
 		double R2 = RSum[1];
 		double L2 = LSum[1];
-		double C2Inv = CInvSum[0];
+		double C2Inv = CInvSum[1];
 
 		return -R2 - L2 / dt - C2Inv * dt;
 	}
@@ -106,7 +118,7 @@ public class ParallelCircuit extends Circuit
 		//簡単のため代入
 		double R2 = RSum[1];
 		double L2 = LSum[1];
-		double C2Inv = CInvSum[0];
+		double C2Inv = CInvSum[1];
 
 		return -R2 - L2 / dt - C2Inv * dt;
 	}
@@ -149,15 +161,123 @@ public class ParallelCircuit extends Circuit
 		return - L2 * Ia / dt + IaSum * C2Inv + (L2 + L3) * Ib  / dt - (C2Inv + C3Inv) * IbSum;
 	}
 
+	//電圧を計算してリストに格納
+	public void calcVoltage(int num)
+	{
+		double volt;
+		double currentSum = 0;
+		int times = (int)(simulationEndTime / dt);
+
+		voltList = new ArrayList<Double>();
+		calcCurrent();
+
+		voltList.add(0.0);
+
+		switch(elem[num].getEt())
+		{
+		case RESISTANCE:
+			if(num / 3 == 0)
+			{
+				for(int i = 1;i < times;i++)
+				{
+					volt = elem[num].getValue() * currentListA.get(i);
+					voltList.add(volt);
+				}
+			}
+
+			else if(num / 3 == 1)
+			{
+				for(int i = 1;i < times;i++)
+				{
+					volt = elem[num].getValue() * (currentListA.get(i) - currentListB.get(i));
+					voltList.add(volt);
+				}
+			}
+
+			else if(num /3 == 2)
+			{
+				for(int i = 1;i < times;i++)
+				{
+					volt = elem[num].getValue() * currentListB.get(i);
+					voltList.add(volt);
+				}
+			}
+			break;
+
+		case CAPACITANCE:
+			if(num / 3 == 0)
+			{
+				for(int i = 1;i < times;i++)
+				{
+					volt = (currentListA.get(i) * dt + currentSum);
+					currentSum += (currentListA.get(i) * dt);
+					voltList.add(volt);
+				}
+			}
+
+			else if(num /3 == 1)
+			{
+				for(int i = 1;i < times;i++)
+				{
+					volt = (((currentListA.get(i) - currentListB.get(i)) * dt) + currentSum);
+					currentSum += ((currentListA.get(i) - currentListB.get(i)) * dt);
+					voltList.add(volt);
+				}
+			}
+
+			else if(num / 3 == 2)
+			{
+				for(int i = 1;i < times;i++)
+				{
+					volt = (currentListB.get(i) * dt + currentSum);
+					currentSum += (currentListB.get(i) * dt);
+					voltList.add(volt);
+				}
+			}
+			break;
+
+		case INDUCTANCE:
+			if(num / 3 == 0)
+			{
+				for(int i = 1;i < times;i++)
+				{
+					volt = elem[num].getValue() * (currentListA.get(i) - currentListA.get(i - 1)) / dt;
+					voltList.add(volt);
+				}
+			}
+
+			else if(num / 3 == 1)
+			{
+				for(int i = 1;i < times;i++)
+				{
+					volt = elem[num].getValue() * ((currentListA.get(i) - currentListB.get(i)) - (currentListA.get(i - 1) - currentListB.get(i - 1))) / dt;
+					voltList.add(volt);
+				}
+			}
+
+			else if(num / 3 == 2)
+			{
+				for(int i = 1;i < times;i++)
+				{
+					volt = elem[num].getValue() * (currentListB.get(i) - currentListB.get(i - 1)) / dt;
+					voltList.add(volt);
+				}
+			}
+			break;
+
+		default :
+		}
+	}
+
 	//電流を計算してリストに格納
-	public void calcCurrent(double start, double end)
+	public void calcCurrent()
 	{
 		double currentA = 0; //Iaを格納する変数
 		double IaSum = 0;
 		double currentB = 0; //Ibを格納する変数
 		double IbSum = 0;
 		double a1, a2, b1, b2, c1, c2;//係数，定数を格納する変数
-		int times = (int)((end - start) / dt);
+		int times = (int)(simulationEndTime / dt);
 
 		//電流をリセット
 		currentListA = new ArrayList<Double>();
@@ -168,6 +288,8 @@ public class ParallelCircuit extends Circuit
 
 		//a1Ia + b1Ib = c1
 		//a2Ia + b2Ib = c2
+		currentListA.add(0.0);
+		currentListB.add(0.0);
 
 		for(int j = 0;j < times;j++)
 		{

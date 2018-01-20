@@ -24,6 +24,10 @@ public class SeriesCircuit extends Circuit
 		this.LSum = 0;
 		this.CinvSum = 0;
 		this.voltage = 0;
+
+		this.simulationEndTime = 10;
+		this.switchOnTime = 0;
+		this.switchOffTime = 5;
 	}
 
 	public SeriesCircuit(Element elem[], double voltage)
@@ -51,6 +55,10 @@ public class SeriesCircuit extends Circuit
 	//素子の値をまとめる
 	public void elemSum()
 	{
+		RSum = 0;
+		LSum = 0;
+		CinvSum = 0;
+
 		for(Element elem : elem)
 		{
 			switch(elem.getEt())
@@ -73,14 +81,14 @@ public class SeriesCircuit extends Circuit
 	}
 
 	//電圧を計算してリストに格納
-	public void calcVoltage(int num, int start, double end)
+	public void calcVoltage(int num)
 	{
 		double volt;
 		double currentSum = 0;
-		int times = (int)((end - start) / dt);
+		int times = (int)(simulationEndTime / dt);
 
 		voltList = new ArrayList<Double>();
-		calcCurrent(start, end);
+		calcCurrent();
 
 		voltList.add(0.0);
 
@@ -116,11 +124,11 @@ public class SeriesCircuit extends Circuit
 	}
 
 	//電流を計算してリストに格納
-	public void calcCurrent(double start, double end)
+	public void calcCurrent()
 	{
 		double current = 0;
 		double currentSum = 0;
-		int times = (int)((end - start) / dt);
+		int times = (int)(simulationEndTime / dt);
 
 		currentList = new ArrayList<Double>();
 

@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -27,6 +26,16 @@ public class CalcEvent implements ActionListener
 
 		if(disp.mainCircuit instanceof SeriesCircuit)
 		{
+			try
+			{
+				disp.mainCircuit.setVoltage(Double.parseDouble(disp.textFieldVoltage.getText()));
+			}
+			catch(Exception ex)
+			{
+				disp.mainCircuit.setVoltage(1);
+				disp.textFieldVoltage.setText("1");
+			}
+
 			for(int i = 0;i < 6;i++)
 			{
 				try{
@@ -38,7 +47,7 @@ public class CalcEvent implements ActionListener
 				}
 			}
 
-			((SeriesCircuit) disp.mainCircuit).calcCurrent(0, 10);
+			((SeriesCircuit) disp.mainCircuit).calcCurrent();
 
 	    	XYSeriesCollection data = new XYSeriesCollection();
 	    	XYSeries series = new XYSeries("current");
@@ -49,7 +58,7 @@ public class CalcEvent implements ActionListener
 
 	    	data.addSeries(series);
 
-			JFreeChart chart =
+			disp.chart =
 					ChartFactory.createXYLineChart(
 				            null,                      // chart title
 				            "Time[s]",                // x axis label
@@ -61,7 +70,7 @@ public class CalcEvent implements ActionListener
 				            false                     // urls
 				            );
 
-			disp.panelGraph.setChart(chart);
+			disp.panelGraph.setChart(disp.chart);
 		}
     }
 }

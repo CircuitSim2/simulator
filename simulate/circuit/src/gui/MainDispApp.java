@@ -108,17 +108,6 @@ public class MainDispApp extends JFrame
 	//閉じる
 	public JMenuItem menuItemClose;
 
-	//表示メニュー
-	public JMenu meuDisp;
-	//回路の表示
-	public JMenuItem menuItemCircuitGraph;
-	//数式の表示
-	public JMenuItem menuItemFormula;
-	//素子リストの表示
-	public JMenuItem menuItemElement;
-	//グラフの表示
-	public JMenuItem menuItemGraph;
-
 	//実行メニュー
 	public JMenu menuSimulate;
 	//シミュレーション
@@ -208,10 +197,14 @@ public class MainDispApp extends JFrame
 			                      {new ImageIcon(MainDispApp.class.getResource("/resources/LineDisp.png")),"ライン"}};
 
 	private String[] columnNames = {"IMAGE","NAME"};
-	
+
 	//回路の電流か電圧の選択ボタン
 	public JRadioButton radioButtonCurrent;
 	public JRadioButton radioButtonVoltage;
+
+	//シミュレーションモードかどうか
+	public boolean isSimulationMode;
+
 
 	/**
 	 * Launch the application.
@@ -250,11 +243,20 @@ public class MainDispApp extends JFrame
 		capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceV.png"));
 
 		//回路情報の生成
-		mainCircuit = new SeriesCircuit();
+		mainCircuit = new ParallelCircuit();
 		mainCircuit.setVoltage(10);
 		mainCircuit.setElem(0, 1, ElemType.RESISTANCE);
-		mainCircuit.setElem(1, 1, ElemType.CAPACITANCE);
+		//mainCircuit.setElem(1, 1, ElemType.CAPACITANCE);
 		//mainCircuit.setElem(2, 1, ElemType.INDUCTANCE);
+		//mainCircuit.setElem(3, 1, ElemType.RESISTANCE);
+		mainCircuit.setElem(4, 1, ElemType.CAPACITANCE);
+		//mainCircuit.setElem(5, 1, ElemType.INDUCTANCE);
+		mainCircuit.setElem(6, 1, ElemType.RESISTANCE);
+		//mainCircuit.setElem(6, 1, ElemType.CAPACITANCE);
+		//mainCircuit.setElem(8, 1, ElemType.INDUCTANCE);
+
+		//モードの初期化
+		isSimulationMode = false;
 
 		//×ボタンを押したら閉じるように
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -303,22 +305,6 @@ public class MainDispApp extends JFrame
 		menuItemClose = new JMenuItem("閉じる");
 		menuFile.add(menuItemClose);
 		menuItemClose.addActionListener(new FileFunction());
-
-		//表示メニューの生成
-		meuDisp = new JMenu("表示");
-		menuBar.add(meuDisp);
-		//回路図の表示の生成
-		menuItemCircuitGraph = new JMenuItem("回路図");
-		meuDisp.add(menuItemCircuitGraph);
-		//数式の表示の生成
-		menuItemFormula = new JMenuItem("数式");
-		meuDisp.add(menuItemFormula);
-		//素子リストの表示の生成
-		menuItemElement = new JMenuItem("素子リスト");
-		meuDisp.add(menuItemElement);
-		//波形の表示の生成
-		menuItemGraph = new JMenuItem("波形");
-		meuDisp.add(menuItemGraph);
 
 		//編集メニューの生成
 		menuEdit = new JMenu("編集");
@@ -488,38 +474,47 @@ public class MainDispApp extends JFrame
 		//素子1の画像を表示するラベルを生成
 		labelElementParallel[0] = new JLabel(resistancePicture);
 		labelElementParallel[0].setBounds(59, 19, 43, 29);
+		labelElementParallel[0].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElementParallel[0]);
 		//素子2の画像を表示するラベルを生成
 		labelElementParallel[1] = new JLabel(capacitancePicture);
 		labelElementParallel[1].setBounds(114, 19, 43, 29);
+		labelElementParallel[1].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElementParallel[1]);
 		//素子3の画像を表示するラベルを生成
 		labelElementParallel[2] = new JLabel(inductancePicture);
 		labelElementParallel[2].setBounds(170, 20, 43, 29);
+		labelElementParallel[2].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElementParallel[2]);
 		//素子4の画像を表示するラベルを生成
 		labelElementParallel[3] = new JLabel(linePictureV);
 		labelElementParallel[3].setBounds(218, 52, 29, 43);
+		labelElementParallel[3].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElementParallel[3]);
 		//素子5の画像を表示するラベルを生成
 		labelElementParallel[4] = new JLabel(linePictureV);
 		labelElementParallel[4].setBounds(217, 109, 29, 43);
+		labelElementParallel[4].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElementParallel[4]);
 		//素子6の画像を表示するラベルを生成
 		labelElementParallel[5] = new JLabel(linePictureV);
 		labelElementParallel[5].setBounds(217, 162, 29, 43);
+		labelElementParallel[5].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElementParallel[5]);
 		//素子7の画像を表示するラベルを生成
 		labelElementParallel[6] = new JLabel(resistancePictureV);
 		labelElementParallel[6].setBounds(304, 47, 29, 43);
+		labelElementParallel[6].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElementParallel[6]);
 		//素子8の画像を表示するラベルを生成
 		labelElementParallel[7] = new JLabel(resistancePictureV);
 		labelElementParallel[7].setBounds(305, 107, 29, 43);
+		labelElementParallel[7].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElementParallel[7]);
 		//素子9の画像を表示するラベルを生成
 		labelElementParallel[8] = new JLabel(resistancePictureV);
 		labelElementParallel[8].setBounds(305, 162, 29, 43);
+		labelElementParallel[8].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElementParallel[8]);
 
 		//電圧の単位を表示するラベルを生成
@@ -626,19 +621,23 @@ public class MainDispApp extends JFrame
 		panelCircuit.add(labelElement[1]);
 		//素子3の画像を表示するラベルを生成
 		labelElement[2] = new JLabel(inductancePictureV);
-		labelElement[2].setBounds(305, 66, 29, 43);
+		labelElement[2].setBounds(304, 66, 29, 43);
+		labelElement[2].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElement[2]);
 		//素子4の画像を表示するラベルを生成
 		labelElement[3] = new JLabel(linePictureV);
 		labelElement[3].setBounds(305, 135, 29, 43);
+		labelElement[3].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElement[3]);
 		//素子5の画像を表示するラベルを生成
 		labelElement[4] = new JLabel(linePicture);
 		labelElement[4].setBounds(201, 200, 43, 29);
+		labelElement[4].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElement[4]);
 		//素子6の画像を表示するラベルを生成
 		labelElement[5] = new JLabel(linePicture);
-		labelElement[5].setBounds(110, 200, 44, 29);
+		labelElement[5].setBounds(110, 199, 44, 29);
+		labelElement[5].addMouseListener(new ElementSelectedEvent(this));
 		panelCircuit.add(labelElement[5]);
 
 		//電圧の単位を表示するラベルを作成
@@ -717,20 +716,22 @@ public class MainDispApp extends JFrame
 		scrollPaneElementList.setViewportBorder(null);
 		scrollPaneElementList.setBounds(0, 0, 191, 250);
 		panelElementList.add(scrollPaneElementList);
-		
+
 		//グラフを作成するものを選択
 		radioButtonVoltage = new JRadioButton("電圧");
 		radioButtonVoltage.setBounds(30, 303, 55, 14);
 		contentPane.add(radioButtonVoltage);
-		
+
 		radioButtonCurrent = new JRadioButton("電流");
 		radioButtonCurrent.setBounds(85, 301, 54, 17);
 		radioButtonCurrent.setSelected(true);
 		contentPane.add(radioButtonCurrent);
-		
+
 		ButtonGroup selectGroup = new ButtonGroup();
 		selectGroup.add(radioButtonCurrent);
 		selectGroup.add(radioButtonVoltage);
+
+		loadCircuit();
 	}
 
 	public void changeStateSerial(Boolean state)
@@ -760,17 +761,25 @@ public class MainDispApp extends JFrame
 			labelElementUnitParallel[i].setVisible(state);
 		}
 	}
-	
+
 	public void loadCircuit()
 	{
 		Icon icon;
-		
+
 		if(mainCircuit instanceof SeriesCircuit)
 		{
+			//直列回路のコンポーネントを有効化
+			changeStateSerial(true);
+
+			//並列回路のコンポーネントを非表示に
+			changeStateParallel(false);
+
+			labelCircuitPicture.setIcon(seriesCircuitPicture);
+
 			for(int i = 0;i < mainCircuit.getElem().length;i++)
 			{
 				icon = labelElement[i].getIcon();
-				
+
 				switch(mainCircuit.getElem(i).getEt())
 				{
 				case RESISTANCE:
@@ -778,35 +787,51 @@ public class MainDispApp extends JFrame
 						labelElement[i].setIcon(resistancePicture);
 					else
 						labelElement[i].setIcon(resistancePictureV);
+
+					labelElementUnit[i].setText("Ω");
 					break;
 				case CAPACITANCE:
 					if(icon.getIconHeight() == linePicture.getIconHeight())
 						labelElement[i].setIcon(capacitancePicture);
 					else
 						labelElement[i].setIcon(capacitancePictureV);
+
+					labelElementUnit[i].setText("F");
 					break;
 				case INDUCTANCE:
 					if(icon.getIconHeight() == linePicture.getIconHeight())
 						labelElement[i].setIcon(inductancePicture);
 					else
 						labelElement[i].setIcon(inductancePictureV);
+
+					labelElementUnit[i].setText("H");
 					break;
 				case LINE:
 					if(icon.getIconHeight() == linePicture.getIconHeight())
 						labelElement[i].setIcon(linePicture);
 					else
 						labelElement[i].setIcon(linePictureV);
+
+					labelElementUnit[i].setText(null);
 					break;
 				}
 			}
 		}
-		
+
 		else if(mainCircuit instanceof ParallelCircuit)
 		{
+			//直列回路のコンポーネントを非表示に
+			changeStateSerial(false);
+
+			//並列回路のコンポーネントを有効化
+			changeStateParallel(true);
+
+			labelCircuitPicture.setIcon(parallelCircuitPicture);
+
 			for(int i = 0;i < mainCircuit.getElem().length;i++)
 			{
 				icon = labelElementParallel[i].getIcon();
-				
+
 				switch(mainCircuit.getElem(i).getEt())
 				{
 				case RESISTANCE:
@@ -814,24 +839,32 @@ public class MainDispApp extends JFrame
 						labelElementParallel[i].setIcon(resistancePicture);
 					else
 						labelElementParallel[i].setIcon(resistancePictureV);
+
+					labelElementUnitParallel[i].setText("Ω");
 					break;
 				case CAPACITANCE:
 					if(icon.getIconHeight() == linePicture.getIconHeight())
 						labelElementParallel[i].setIcon(capacitancePicture);
 					else
 						labelElementParallel[i].setIcon(capacitancePictureV);
+
+					labelElementUnitParallel[i].setText("F");
 					break;
 				case INDUCTANCE:
 					if(icon.getIconHeight() == linePicture.getIconHeight())
 						labelElementParallel[i].setIcon(inductancePicture);
 					else
 						labelElementParallel[i].setIcon(inductancePictureV);
+
+					labelElementUnitParallel[i].setText("H");
 					break;
 				case LINE:
 					if(icon.getIconHeight() == linePicture.getIconHeight())
 						labelElementParallel[i].setIcon(linePicture);
 					else
 						labelElementParallel[i].setIcon(linePictureV);
+
+					labelElementUnitParallel[i].setText(null);
 					break;
 				}
 			}
