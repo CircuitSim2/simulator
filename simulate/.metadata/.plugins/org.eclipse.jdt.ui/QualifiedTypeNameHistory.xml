@@ -11,4 +11,6 @@
 <fullyQualifiedTypeName name="javax.swing.border.EmptyBorder"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
 <fullyQualifiedTypeName name="circuit.ParallelCircuit"/>
+<fullyQualifiedTypeName name="help.Openhelp"/>
+<fullyQualifiedTypeName name="org.jfree.chart.ChartUtilities"/>
 </qualifiedTypeNameHistroy>

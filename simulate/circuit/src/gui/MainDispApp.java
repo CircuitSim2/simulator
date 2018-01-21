@@ -36,6 +36,7 @@ import circuit.Circuit;
 import circuit.ElemType;
 import circuit.ParallelCircuit;
 import circuit.SeriesCircuit;
+import help.Openhelp;
 
 
 public class MainDispApp extends JFrame
@@ -183,12 +184,16 @@ public class MainDispApp extends JFrame
 	//キャパシタの画像(縦)
 	public ImageIcon capacitancePictureV;
 
+	//数式のテキストエリア
+	JTextArea textArea = new JTextArea();
 
 	//回路の情報を保持するクラス
 	public Circuit mainCircuit;
 
 	//回路のファイルのパスを保持するフィールド
 	public String filePass = "empty";
+
+	String formula = null;
 
 	//素子リストの表のデータ
 	private Object[][] tabledata={{new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceDisp.png")),"キャパシタ"},
@@ -300,6 +305,7 @@ public class MainDispApp extends JFrame
 		//波形の出力の生成
 		menuItemExportGraph = new JMenuItem("波形を画像として保存");
 		menuFile.add(menuItemExportGraph);
+		menuItemExportGraph.addActionListener(new FileFunction(this));
 
 		//閉じるの生成
 		menuItemClose = new JMenuItem("閉じる");
@@ -334,6 +340,7 @@ public class MainDispApp extends JFrame
 		//ヘルプビューワアイテムの生成
 		menuItemHelpViewer = new JMenuItem("ヘルプビューア");
 		menuHelp.add(menuItemHelpViewer);
+		menuItemHelpViewer.addActionListener(new Openhelp());
 
 		//実行メニューの生成
 		menuSimulate = new JMenu("実行");
@@ -368,9 +375,13 @@ public class MainDispApp extends JFrame
 		//開くボタンの生成
 		buttonOpen = new JButton("開く");
 		menuBarButtons.add(buttonOpen);
+		buttonOpen.addActionListener(new FileFunction(this));
+
 		//保存ボタンの生成
 		buttonSave = new JButton("保存");
 		menuBarButtons.add(buttonSave);
+		buttonSave.addActionListener(new FileFunction(this));
+
 		//シミュレーション開始ボタンの生成
 		buttonStart = new JButton("シミュレーション開始");
 		buttonStart.addActionListener(new SimulationSettingEvent(this));
@@ -689,7 +700,7 @@ public class MainDispApp extends JFrame
 		contentPane.add(panelFormula);
 		panelFormula.setLayout(null);
 		//数式を表示するテキストエリアを生成
-		JTextArea textArea = new JTextArea();
+		//JTextArea textArea = new JTextArea();
 		textArea.setBounds(1, 1, 150, 248);
 		panelFormula.add(textArea);
 

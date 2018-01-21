@@ -56,6 +56,12 @@ public class Circuit
 		return this.elem;
 	}
 
+	//電圧
+	public double getVoltage()
+	{
+		return this.voltage;
+	}
+
 	//シミュレーション終了時間
 	public double getSimulationEndTime()
 	{
