@@ -1,0 +1,19 @@
+package gui;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class ElementChangeEvent extends MouseAdapter 
+{
+	private MainDispApp disp;
+	
+	public ElementChangeEvent(MainDispApp disp)
+	{
+		this.disp = disp;
+	}
+	
+	public void MousePressed(MouseEvent e)
+	{
+		disp.isChangeElement = true;
+	}
+}

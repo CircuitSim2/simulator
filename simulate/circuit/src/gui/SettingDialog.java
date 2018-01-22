@@ -103,6 +103,11 @@ public class SettingDialog extends JDialog implements ActionListener
         // ユーザの操作対象を判断
         if(event.getSource() == buttonStart)
         {
+        	//数式の表示
+        	Susiki s = new Susiki(disp);
+    		s.showElement();
+
+
         	//開始ボタンが押されたらシミュレーションモードに
         	disp.isSimulationMode = true;
 

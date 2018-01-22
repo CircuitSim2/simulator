@@ -129,7 +129,8 @@ public class SeriesCircuit extends Circuit
 		double current = 0;
 		double currentSum = 0;
 		int times = (int)(simulationEndTime / dt);
-
+		double volt = 0;
+		
 		currentList = new ArrayList<Double>();
 
 		elemSum();
@@ -138,7 +139,12 @@ public class SeriesCircuit extends Circuit
 
 		for(int j = 0;j < times;j++)
 		{
-			current = (voltage + LSum * current / dt - currentSum * CinvSum) / (RSum + LSum / dt + dt * CinvSum);
+			if(j * dt >= switchOffTime)
+				volt = 0;
+			else if(j * dt >= switchOnTime)
+				volt = voltage;
+			
+			current = (volt + LSum * current / dt - currentSum * CinvSum) / (RSum + LSum / dt + dt * CinvSum);
 			currentList.add(current);
 			currentSum += current * dt;
 		}

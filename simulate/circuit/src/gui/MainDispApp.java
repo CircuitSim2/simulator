@@ -6,7 +6,6 @@ import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,6 +35,7 @@ import circuit.Circuit;
 import circuit.ElemType;
 import circuit.ParallelCircuit;
 import circuit.SeriesCircuit;
+import help.Openhelp;
 
 
 public class MainDispApp extends JFrame
@@ -160,7 +160,7 @@ public class MainDispApp extends JFrame
 	//素子リストのスクロールバー用
 	public JScrollPane scrollPaneElementList;
 	//素子リスト用のテーブル
-	private JTable table;
+	public JTable table;
 
 	//直列回路の画像
 	public ImageIcon seriesCircuitPicture;
@@ -183,12 +183,16 @@ public class MainDispApp extends JFrame
 	//キャパシタの画像(縦)
 	public ImageIcon capacitancePictureV;
 
+	//数式のテキストエリア
+	JTextArea textArea = new JTextArea();
 
 	//回路の情報を保持するクラス
 	public Circuit mainCircuit;
 
 	//回路のファイルのパスを保持するフィールド
 	public String filePass = "empty";
+
+	String formula = null;
 
 	//素子リストの表のデータ
 	private Object[][] tabledata={{new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceDisp.png")),"キャパシタ"},
@@ -201,10 +205,13 @@ public class MainDispApp extends JFrame
 	//回路の電流か電圧の選択ボタン
 	public JRadioButton radioButtonCurrent;
 	public JRadioButton radioButtonVoltage;
+	public JRadioButton radioButtonSource;
 
 	//シミュレーションモードかどうか
 	public boolean isSimulationMode;
-
+	
+	//マウスがどの素子の枠に乗っているか
+	public int selectedElemNum;
 
 	/**
 	 * Launch the application.
@@ -243,20 +250,23 @@ public class MainDispApp extends JFrame
 		capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceV.png"));
 
 		//回路情報の生成
-		mainCircuit = new ParallelCircuit();
+		mainCircuit = new SeriesCircuit();
 		mainCircuit.setVoltage(10);
 		mainCircuit.setElem(0, 1, ElemType.RESISTANCE);
 		//mainCircuit.setElem(1, 1, ElemType.CAPACITANCE);
 		//mainCircuit.setElem(2, 1, ElemType.INDUCTANCE);
 		//mainCircuit.setElem(3, 1, ElemType.RESISTANCE);
-		mainCircuit.setElem(4, 1, ElemType.CAPACITANCE);
+		//mainCircuit.setElem(4, 1, ElemType.CAPACITANCE);
 		//mainCircuit.setElem(5, 1, ElemType.INDUCTANCE);
-		mainCircuit.setElem(6, 1, ElemType.RESISTANCE);
+		//mainCircuit.setElem(6, 1, ElemType.RESISTANCE);
 		//mainCircuit.setElem(6, 1, ElemType.CAPACITANCE);
 		//mainCircuit.setElem(8, 1, ElemType.INDUCTANCE);
 
 		//モードの初期化
 		isSimulationMode = false;
+		
+		//マウスがのっている素子
+		selectedElemNum = -1;
 
 		//×ボタンを押したら閉じるように
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -300,6 +310,7 @@ public class MainDispApp extends JFrame
 		//波形の出力の生成
 		menuItemExportGraph = new JMenuItem("波形を画像として保存");
 		menuFile.add(menuItemExportGraph);
+		menuItemExportGraph.addActionListener(new FileFunction(this));
 
 		//閉じるの生成
 		menuItemClose = new JMenuItem("閉じる");
@@ -334,6 +345,7 @@ public class MainDispApp extends JFrame
 		//ヘルプビューワアイテムの生成
 		menuItemHelpViewer = new JMenuItem("ヘルプビューア");
 		menuHelp.add(menuItemHelpViewer);
+		menuItemHelpViewer.addActionListener(new Openhelp());
 
 		//実行メニューの生成
 		menuSimulate = new JMenu("実行");
@@ -368,9 +380,13 @@ public class MainDispApp extends JFrame
 		//開くボタンの生成
 		buttonOpen = new JButton("開く");
 		menuBarButtons.add(buttonOpen);
+		buttonOpen.addActionListener(new FileFunction(this));
+
 		//保存ボタンの生成
 		buttonSave = new JButton("保存");
 		menuBarButtons.add(buttonSave);
+		buttonSave.addActionListener(new FileFunction(this));
+
 		//シミュレーション開始ボタンの生成
 		buttonStart = new JButton("シミュレーション開始");
 		buttonStart.addActionListener(new SimulationSettingEvent(this));
@@ -689,7 +705,7 @@ public class MainDispApp extends JFrame
 		contentPane.add(panelFormula);
 		panelFormula.setLayout(null);
 		//数式を表示するテキストエリアを生成
-		JTextArea textArea = new JTextArea();
+		//JTextArea textArea = new JTextArea();
 		textArea.setBounds(1, 1, 150, 248);
 		panelFormula.add(textArea);
 
@@ -704,14 +720,20 @@ public class MainDispApp extends JFrame
 		contentPane.add(panelElementList);
 		panelElementList.setLayout(null);
 
-		DefaultTableModel tableModel = new MyTableModel(columnNames, 0);
+		//編集不可に
+		DefaultTableModel tableModel = new MyTableModel(columnNames, 0){
+			@Override public boolean isCellEditable(int row, int col) {
+                return false;
+			}
+		};
 		table = new JTable(tableModel);
 		table.setRowHeight(100);
+		table.addMouseListener(new ElementChangeEvent(this));
 
 		for(int i=0;i<4;i++){
 		      tableModel.addRow(tabledata[i]);
 		}
-
+		
 		scrollPaneElementList = new JScrollPane(table);
 		scrollPaneElementList.setViewportBorder(null);
 		scrollPaneElementList.setBounds(0, 0, 191, 250);
@@ -726,10 +748,10 @@ public class MainDispApp extends JFrame
 		radioButtonCurrent.setBounds(85, 301, 54, 17);
 		radioButtonCurrent.setSelected(true);
 		contentPane.add(radioButtonCurrent);
-
-		ButtonGroup selectGroup = new ButtonGroup();
-		selectGroup.add(radioButtonCurrent);
-		selectGroup.add(radioButtonVoltage);
+		
+		radioButtonSource = new JRadioButton("電源電圧");
+		radioButtonSource.setBounds(135, 298, 113, 21);
+		contentPane.add(radioButtonSource);
 
 		loadCircuit();
 	}

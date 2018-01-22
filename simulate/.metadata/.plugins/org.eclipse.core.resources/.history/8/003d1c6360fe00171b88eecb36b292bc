@@ -1,0 +1,222 @@
+package gui;
+
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.border.LineBorder;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+import circuit.ParallelCircuit;
+import circuit.SeriesCircuit;
+
+public class ElementSelectedEvent extends MouseAdapter
+{
+	private MainDispApp disp;
+	private int selectedElementNum;
+
+	public ElementSelectedEvent(MainDispApp disp)
+	{
+		this.disp = disp;
+		this.selectedElementNum = 0;
+	}
+
+	public void mouseClicked(MouseEvent e)
+	{
+		for(int i = 0;i < disp.mainCircuit.getElem().length;i++)
+		{
+			if(e.getComponent() == disp.labelElementParallel[i])
+			{
+				disp.labelElementParallel[i].setBorder(new LineBorder(new Color(0, 0, 0), 2));
+				selectedElementNum = i;
+			}
+
+			else if(i < 6)
+			{
+				if(e.getComponent() == disp.labelElement[i])
+				{
+					disp.labelElement[i].setBorder(new LineBorder(new Color(0, 0, 0), 2));
+					selectedElementNum = i;
+				}
+
+				else
+				{
+					disp.labelElement[i].setBorder(null);
+					disp.labelElementParallel[i].setBorder(null);
+				}
+			}
+
+			else
+			{
+				disp.labelElementParallel[i].setBorder(null);
+			}
+		}
+
+		//シミュレーションモードの時に素子が選択されたらグラフを表示
+		if(disp.isSimulationMode)
+		{
+			if(disp.mainCircuit instanceof SeriesCircuit)
+    		{
+				//電圧の取得
+				try
+				{
+					disp.mainCircuit.setVoltage(Double.parseDouble(disp.textFieldVoltage.getText()));
+				}
+				catch(Exception ex)
+				{
+					disp.mainCircuit.setVoltage(1);
+					disp.textFieldVoltage.setText("1");
+				}
+	    			for(int i = 0;i < 6;i++)
+	    			{
+	    				try{
+	    					disp.mainCircuit.getElem(i).setValue(Double.parseDouble(disp.textFieldElement[i].getText()));
+	    				}
+	    				catch(Exception ex)
+	    				{
+	    					disp.mainCircuit.getElem(i).setValue(0);
+	    				}
+	    			}
+
+	    			((SeriesCircuit) disp.mainCircuit).calcCurrent();
+	    			((SeriesCircuit) disp.mainCircuit).calcVoltage(selectedElementNum);
+
+	    	    	XYSeriesCollection data = new XYSeriesCollection();
+	    	    	XYSeries series = new XYSeries("");
+
+	    	    	if(disp.radioButtonCurrent.isSelected())
+	    	    	{
+		    	    	for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
+		    	    	{
+		    	    		series.add(i * disp.mainCircuit.dt ,((SeriesCircuit)disp.mainCircuit).getCurrentList().get(i));
+		    	    	}
+	    	    	}
+
+	    	    	else if(disp.radioButtonVoltage.isSelected())
+	    	    	{
+		    	    	for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
+		    	    	{
+		    	    		series.add(i * disp.mainCircuit.dt ,((SeriesCircuit)disp.mainCircuit).getVoltList().get(i));
+		    	    	}
+	    	    	}
+
+	    	    	XYSeries voltSeries = new XYSeries("source");
+	    	    	
+	    	    	for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
+    	    		{
+	    	    		if(i * disp.mainCircuit.dt >= disp.mainCircuit.getSwitchOffTime())
+	    	    			voltSeries.add(i * disp.mainCircuit.dt , 0);
+	    	    		else if(i * disp.mainCircuit.dt >= disp.mainCircuit.getSwitchOnTime())
+	    	    			voltSeries.add(i * disp.mainCircuit.dt ,disp.mainCircuit.getVoltage());
+	    	    	}
+	    	    	
+	    	    	data.addSeries(series);
+	    	    	data.addSeries(voltSeries);
+
+	    			disp.chart =
+	    					ChartFactory.createXYLineChart(
+	    				            null,                      // chart title
+	    				            "Time[s]",                // x axis label
+	    				            null,    // y axis label
+	    				            data,                  // data
+	    				            PlotOrientation.VERTICAL,
+	    				            true,                     // include legend
+	    				            true,                     // tooltips
+	    				            false                     // urls
+	    				            );
+
+	    			disp.panelGraph.setChart(disp.chart);
+    		}
+
+			else if(disp.mainCircuit instanceof ParallelCircuit)
+			{
+				//電圧の取得
+				try
+				{
+					disp.mainCircuit.setVoltage(Double.parseDouble(disp.textFieldVoltageParallel.getText()));
+				}
+				catch(Exception ex)
+				{
+					disp.mainCircuit.setVoltage(1);
+					disp.textFieldVoltageParallel.setText("1");
+				}
+				
+    			for(int i = 0;i < 6;i++)
+    			{
+    				try{
+    					disp.mainCircuit.getElem(i).setValue(Double.parseDouble(disp.textFieldElementParallel[i].getText()));
+    				}
+    				catch(Exception ex)
+    				{
+    					disp.mainCircuit.getElem(i).setValue(0);
+    				}
+    			}
+
+    			((ParallelCircuit) disp.mainCircuit).calcCurrent();
+    			((ParallelCircuit) disp.mainCircuit).calcVoltage(selectedElementNum);
+
+    	    	XYSeriesCollection data = new XYSeriesCollection();
+
+    	    	if(disp.radioButtonCurrent.isSelected())
+    	    	{
+    	    		XYSeries currentSeries = new XYSeries("current");
+    	    		
+    	    		for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
+	    	    	{
+	    	    		if(selectedElementNum / 3 == 0)
+	    	    			currentSeries.add(i * disp.mainCircuit.dt ,((ParallelCircuit)disp.mainCircuit).getCurrentListA().get(i));
+	    	    		if(selectedElementNum / 3 == 1)
+	    	    			currentSeries.add(i * disp.mainCircuit.dt ,((ParallelCircuit)disp.mainCircuit).getCurrentListA().get(i) - ((ParallelCircuit)disp.mainCircuit).getCurrentListB().get(i));
+	    	    		if(selectedElementNum / 3 == 2)
+	    	    			currentSeries.add(i * disp.mainCircuit.dt ,((ParallelCircuit)disp.mainCircuit).getCurrentListB().get(i));
+	    	    	}
+    	    		
+    	    		data.addSeries(currentSeries);
+    	    	}
+
+    	    	
+    	    	if(disp.radioButtonVoltage.isSelected())
+    	    	{
+    	    		XYSeries voltageSeries = new XYSeries("voltage");
+    	    		
+    	    		for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
+    	    		{
+	    	    		voltageSeries.add(i * disp.mainCircuit.dt ,((ParallelCircuit)disp.mainCircuit).getVoltList().get(i));
+	    	    	}
+    	    	}
+    	    	
+    	    	if(disp.rad)
+    	    	XYSeries voltSeries = new XYSeries("source");
+    	    	
+    	    	for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
+	    		{
+    	    		if(i * disp.mainCircuit.dt >= disp.mainCircuit.getSwitchOffTime())
+    	    			voltSeries.add(i * disp.mainCircuit.dt , 0);
+    	    		else if(i * disp.mainCircuit.dt >= disp.mainCircuit.getSwitchOnTime())
+    	    			voltSeries.add(i * disp.mainCircuit.dt ,disp.mainCircuit.getVoltage());
+    	    	}
+
+    	    	data.addSeries(series);
+    	    	data.addSeries(voltSeries);
+
+    			disp.chart =
+    					ChartFactory.createXYLineChart(
+    				            null,                      // chart title
+    				            "Time[s]",                // x axis label
+    				            null,    // y axis label
+    				            data,                  // data
+    				            PlotOrientation.VERTICAL,
+    				            true,                     // include legend
+    				            true,                     // tooltips
+    				            false                     // urls
+    				            );
+
+    			disp.panelGraph.setChart(disp.chart);
+			}
+		}
+	}
+}

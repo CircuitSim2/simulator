@@ -3,12 +3,15 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
-<fullyQualifiedTypeName name="circuit.ElemType"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="javax.swing.filechooser.FileFilter"/>
 <fullyQualifiedTypeName name="javax.swing.filechooser.FileNameExtensionFilter"/>
 <fullyQualifiedTypeName name="circuit.SeriesCircuit"/>
 <fullyQualifiedTypeName name="javax.swing.border.EmptyBorder"/>
-<fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
 <fullyQualifiedTypeName name="circuit.ParallelCircuit"/>
+<fullyQualifiedTypeName name="help.Openhelp"/>
+<fullyQualifiedTypeName name="org.jfree.chart.ChartUtilities"/>
+<fullyQualifiedTypeName name="circuit.Element"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
+<fullyQualifiedTypeName name="circuit.ElemType"/>
 </qualifiedTypeNameHistroy>

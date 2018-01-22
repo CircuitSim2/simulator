@@ -1,0 +1,28 @@
+package gui;
+
+import java.awt.event.MouseAdapter;
+
+import javax.swing.JLabel;
+
+import circuit.Element;
+
+public class ElementChangeEvent extends MouseAdapter
+{
+	private Element selectedElem;
+	private JLabel mouseOnElemLabel;
+	private MainDispApp disp;
+	
+	public ElementChangeEvent(MainDispApp disp)
+	{
+		this.disp = disp;
+		mouseOnElemLabel = null;
+		selectedElem = null;
+	}
+	
+	public void mousePressed(MouseEvent e)
+	{
+		String elemName = (String) disp.table.getValueAt(disp.table.getSelectedRow(), 1);
+		
+		System.out.println(elemName);
+	}
+}

@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.jfree.chart.ChartUtilities;
+
 import circuit.ElemType;
 import circuit.Element;
 import circuit.ParallelCircuit;
@@ -26,15 +28,12 @@ public class FileFunction extends JFrame implements ActionListener{
 	private ArrayList <Element> elemList = new ArrayList<Element>();
 	private ElemType elem_type;
 	private String circuitType;
-	//private Circuit mainCircuit;
 	private MainDispApp disp;
-	//private String FilePass;
+	private double voltage;
 
 	public FileFunction(MainDispApp disp)
 	{//FileFunctionにCircuitクラスのインスタンスを与えたときのコンストラクタ
-		//this.mainCircuit = mainCircuit;
 		this.disp = disp;
-		//this.FilePass = disp.filePass;
 	}
 
 	public FileFunction()
@@ -48,23 +47,13 @@ public class FileFunction extends JFrame implements ActionListener{
 		if("新規作成".equals(cmdName))//"新規作成"ボタンが押されたとき
 		{
 			disp.mainCircuit = new SeriesCircuit();
-
-			/*-----test------*/
-			for(int z = 0; z < disp.mainCircuit.getElem().length; z++)//test
-			{
-				Element elem = disp.mainCircuit.getElem(z);//test
-
-				System.out.println(elem.getValue());
-				System.out.println(elem.getEt());
-			}
-
+			disp.loadCircuit();
 		}
 
 
 		else if("開く".equals(cmdName))//"開く"ボタンが押されたとき
 		{
 			JFileChooser filechooser = new JFileChooser();
-			//filechooser.addChoosableFileFilter(new simtFilter());
 
 			FileFilter filter = new FileNameExtensionFilter("simtファイル", "simt");
 			filechooser.addChoosableFileFilter(filter);
@@ -78,19 +67,10 @@ public class FileFunction extends JFrame implements ActionListener{
 		      disp.filePass = file.getAbsolutePath();
 		      fileOpen(file);
 		    }
-		    else if (selected == JFileChooser.CANCEL_OPTION)
-		    {
-		      System.out.println("キャンセルされました");
-		    }
-		    else if (selected == JFileChooser.ERROR_OPTION)
-		    {
-		    	System.out.println("エラー又は取消しがありました");
-		    }
 		}
 
-		else if("上書き保存".equals(cmdName))//"上書き保存"ボタンが押されたとき
+		else if("上書き保存".equals(cmdName) || "保存".equals(cmdName))//"上書き保存"ボタンが押されたとき
 		{
-			System.out.println(disp.filePass);
 			if(disp.filePass.equals("empty"))
 			{
 				JFileChooser filechooser = new JFileChooser();
@@ -104,14 +84,6 @@ public class FileFunction extends JFrame implements ActionListener{
 			    {
 			      File file = filechooser.getSelectedFile();
 			      fileSave(file.getAbsolutePath());
-			    }
-			    else if (selected == JFileChooser.CANCEL_OPTION)
-			    {
-			    	System.out.println("キャンセルされました");
-			    }
-			    else if (selected == JFileChooser.ERROR_OPTION)
-			    {
-			    	System.out.println("エラー又は取消しがありました");
 			    }
 			}
 			else
@@ -134,19 +106,22 @@ public class FileFunction extends JFrame implements ActionListener{
 		      File file = filechooser.getSelectedFile();
 		      fileSave(file.getAbsolutePath());
 		    }
-		    else if (selected == JFileChooser.CANCEL_OPTION)
-		    {
-		    	System.out.println("キャンセルされました");
-		    }
-		    else if (selected == JFileChooser.ERROR_OPTION)
-		    {
-		    	System.out.println("エラー又は取消しがありました");
-		    }
 		}
 
 		else if("波形を画像として保存".equals(cmdName))//"波形を画像として保存"ボタンが押されたとき
 		{
+			JFileChooser filechooser = new JFileChooser();
+			FileFilter filter = new FileNameExtensionFilter("PNGファイル", "png");
+			filechooser.addChoosableFileFilter(filter);
+			filechooser.setAcceptAllFileFilterUsed(false);
 
+		    int selected = filechooser.showSaveDialog(this);
+
+		    if (selected == JFileChooser.APPROVE_OPTION)
+		    {
+		      File file = filechooser.getSelectedFile();
+		      waveSave(file.getAbsolutePath());
+		    }
 		}
 
 		else if("閉じる".equals(cmdName))//"閉じる"ボタンが押されたとき
@@ -173,6 +148,10 @@ public class FileFunction extends JFrame implements ActionListener{
 					if(element[0].equals("Series")) {circuitType = "Series";}
 					else if(element[0].equals("Parallel")) {circuitType = "Parallel";}
 				}
+				else if(i == 2) //回路の電圧の読み込み
+				{
+					voltage = Double.parseDouble(element[0]);
+				}
 				else //素子の読み込み
 				{
 					if(element[0].equals("R")) {elem_type = ElemType.RESISTANCE;}
@@ -181,7 +160,6 @@ public class FileFunction extends JFrame implements ActionListener{
 					else if(element[0].equals("L")) {elem_type = ElemType.LINE;}
 
 					Element elem = new Element(Double.parseDouble(element[1]), elem_type);
-					System.out.println(elem_type);
 
 					elemList.add(elem);
 				}
@@ -197,13 +175,8 @@ public class FileFunction extends JFrame implements ActionListener{
 					disp.mainCircuit.setElem(j, elemList.get(j));
 				}
 
-				//disp.setCircuit(mainCircuit);
-				//直列回路のコンポーネントを有効化
-				disp.changeStateSerial(true);
+				disp.loadCircuit();
 
-				//並列回路のコンポーネントを非表示に
-				disp.changeStateParallel(false);
-				disp.labelCircuitPicture.setIcon(disp.seriesCircuitPicture);
 			}
 			else if(circuitType.equals("Parallel"))
 			{
@@ -212,12 +185,9 @@ public class FileFunction extends JFrame implements ActionListener{
 				{
 					disp.mainCircuit.setElem(j, elemList.get(j));
 				}
-				//disp.setCircuit(mainCircuit);
-				disp.changeStateSerial(false);
 
-				//並列回路のコンポーネントを有効化
-				disp.changeStateParallel(true);
-				disp.labelCircuitPicture.setIcon(disp.parallelCircuitPicture);
+				disp.loadCircuit();
+
 			}
 
 			br.close();
@@ -259,6 +229,8 @@ public class FileFunction extends JFrame implements ActionListener{
 				pw.println("Series");
 			}
 
+			pw.println(String.valueOf(disp.mainCircuit.getVoltage()));
+
 			for(int z = 0; z < disp.mainCircuit.getElem().length; z++)//test
 			{
 				Element elem = disp.mainCircuit.getElem(z);//test
@@ -298,5 +270,28 @@ public class FileFunction extends JFrame implements ActionListener{
 
 		}
 
+	}
+
+	/*-------波形を保存するメソッド------*/
+	public void waveSave(String f)
+	{
+		try
+		{
+			if(f.substring(f.length() - 5).equals(".png"))
+			{
+				//falseのとき，ファイル拡張子を設定する．trueのときは何もしない
+			}
+			else
+			{
+				f = f + ".png";
+			}
+
+			File waveFile = new File(f);
+			ChartUtilities.saveChartAsPNG(waveFile, disp.chart, 400, 300);
+		}
+		catch(IOException e)
+		{
+
+		}
 	}
 }

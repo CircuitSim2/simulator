@@ -13,6 +13,8 @@ public class ParallelCircuit extends Circuit
 	private double RSum[];
 	private double LSum[];
 	private double CInvSum[];
+	
+	private double volt;
 
 	//コンストラクタ
 	public ParallelCircuit()
@@ -31,6 +33,8 @@ public class ParallelCircuit extends Circuit
 		this.simulationEndTime = 10;
 		this.switchOnTime = 0;
 		this.switchOffTime = 5;
+		
+		volt = 0;
 	}
 
 	public ParallelCircuit(Element elem[], double voltage)
@@ -146,7 +150,7 @@ public class ParallelCircuit extends Circuit
 		double C1Inv = CInvSum[0];
 		double C2Inv = CInvSum[1];
 
-		return voltage + (L1 + L2) * Ia / dt - (C1Inv + C2Inv) * IaSum - L2 * Ib / dt + IbSum * C2Inv;
+		return volt + (L1 + L2) * Ia / dt - (C1Inv + C2Inv) * IaSum - L2 * Ib / dt + IbSum * C2Inv;
 	}
 
 	//2式のIbの係数
@@ -293,6 +297,11 @@ public class ParallelCircuit extends Circuit
 
 		for(int j = 0;j < times;j++)
 		{
+			if(j * dt >= switchOffTime)
+				volt = 0;
+			else if(j * dt >= switchOnTime)
+				volt = voltage;
+			
 			a1 = form1IaCoeff();
 			b1 = form1IbCoeff();
 			a2 = form2IaCoeff();
