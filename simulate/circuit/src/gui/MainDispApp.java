@@ -209,9 +209,12 @@ public class MainDispApp extends JFrame
 
 	//シミュレーションモードかどうか
 	public boolean isSimulationMode;
-	
+
 	//マウスがどの素子の枠に乗っているか
 	public int selectedElemNum;
+	
+	//戻ると進む機能
+	public RedoAndUndo redoAndUndo;
 
 	/**
 	 * Launch the application.
@@ -264,16 +267,18 @@ public class MainDispApp extends JFrame
 
 		//モードの初期化
 		isSimulationMode = false;
-		
+
 		//マウスがのっている素子
 		selectedElemNum = -1;
+		
+		redoAndUndo = new RedoAndUndo();
 
 		//×ボタンを押したら閉じるように
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//ウィンドウサイズの決定
 		setBounds(100, 100, 730, 577);
-
+		
 		//コンテントペーン(大枠)の生成
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -322,9 +327,11 @@ public class MainDispApp extends JFrame
 		menuBar.add(menuEdit);
 		//戻るの生成
 		menuItemRedo = new JMenuItem("戻る");
+		menuItemRedo.addActionListener(new RedoUndoEvent(this));
 		menuEdit.add(menuItemRedo);
 		//進むの生成
 		menuItemUndo = new JMenuItem("進む");
+		menuItemUndo.addActionListener(new RedoUndoEvent(this));
 		menuEdit.add(menuItemUndo);
 		//コピーの生成
 		menuItemCopy = new JMenuItem("コピー");
@@ -373,26 +380,34 @@ public class MainDispApp extends JFrame
 		contentPane.add(menuBarButtons);
 		//戻るボタンの生成
 		buttonRedo = new JButton("戻る");
+		buttonRedo.addActionListener(new RedoUndoEvent(this));
+		buttonRedo.addKeyListener(new ShortcutKeyEvent(this));
 		menuBarButtons.add(buttonRedo);
 		//進むボタンの生成
 		buttonUndo = new JButton("進む");
+		buttonUndo.addActionListener(new RedoUndoEvent(this));
+		buttonUndo.addKeyListener(new ShortcutKeyEvent(this));
 		menuBarButtons.add(buttonUndo);
 		//開くボタンの生成
 		buttonOpen = new JButton("開く");
+		buttonOpen.addKeyListener(new ShortcutKeyEvent(this));
 		menuBarButtons.add(buttonOpen);
 		buttonOpen.addActionListener(new FileFunction(this));
 
 		//保存ボタンの生成
 		buttonSave = new JButton("保存");
+		buttonSave.addKeyListener(new ShortcutKeyEvent(this));
 		menuBarButtons.add(buttonSave);
 		buttonSave.addActionListener(new FileFunction(this));
 
 		//シミュレーション開始ボタンの生成
 		buttonStart = new JButton("シミュレーション開始");
+		buttonStart.addKeyListener(new ShortcutKeyEvent(this));
 		buttonStart.addActionListener(new SimulationSettingEvent(this));
 		menuBarButtons.add(buttonStart);
 		//シミュレーション終了ボタンの生成
 		buttonEnd = new JButton("シミュレーション終了");
+		buttonEnd.addKeyListener(new ShortcutKeyEvent(this));
 		menuBarButtons.add(buttonEnd);
 
 		chart = ChartFactory.createXYLineChart(
@@ -432,6 +447,7 @@ public class MainDispApp extends JFrame
 		//電圧の値を入力するボックスの生成
 		textFieldVoltageParallel = new JTextField();
 		textFieldVoltageParallel.setBounds(66, 113, 36, 19);
+		textFieldVoltageParallel.addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldVoltageParallel);
 		textFieldVoltageParallel.setColumns(10);
 
@@ -441,47 +457,56 @@ public class MainDispApp extends JFrame
 		//素子1の値を入力するBOXの生成
 		textFieldElementParallel[0] = new JFormattedTextField();
 		textFieldElementParallel[0].setBounds(56, 50, 36, 19);
+		textFieldElementParallel[0].addKeyListener(new ShortcutKeyEvent(this));
 		textFieldElementParallel[0].setFormatterFactory(new NumberFormatterFactory());
 		panelCircuit.add(textFieldElementParallel[0]);
 		//素子2の値を入力するBOXの生成
 		textFieldElementParallel[1] = new JFormattedTextField();
 		textFieldElementParallel[1].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[1].setBounds(112, 49, 36, 19);
+		textFieldElementParallel[1].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[1]);
 		//素子3の値を入力するBOXの生成
 		textFieldElementParallel[2] = new JFormattedTextField();
 		textFieldElementParallel[2].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[2].setBounds(168, 50, 36, 19);
+		textFieldElementParallel[2].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[2]);
 		//素子4の値を入力するBOXの生成
 		textFieldElementParallel[3] = new JFormattedTextField();
 		textFieldElementParallel[3].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[3].setBounds(157, 74, 36, 19);
+		textFieldElementParallel[3].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[3]);
 		//素子5の値を入力するBOXの生成
 		textFieldElementParallel[4] = new JFormattedTextField();
 		textFieldElementParallel[4].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[4].setBounds(157, 123, 36, 19);
+		textFieldElementParallel[4].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[4]);
 		//素子6の値を入力するBOXの生成
 		textFieldElementParallel[5] = new JFormattedTextField();
 		textFieldElementParallel[5].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[5].setBounds(157, 174, 36, 19);
+		textFieldElementParallel[5].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[5]);
 		//素子7の値を入力するBOXの生成
 		textFieldElementParallel[6] = new JFormattedTextField();
 		textFieldElementParallel[6].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[6].setBounds(251, 60, 36, 19);
+		textFieldElementParallel[6].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[6]);
 		//素子8の値を入力するBOXの生成
 		textFieldElementParallel[7] = new JFormattedTextField();
 		textFieldElementParallel[7].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[7].setBounds(252, 120, 36, 19);
+		textFieldElementParallel[7].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[7]);
 		//素子9の値を入力するBOXの生成
 		textFieldElementParallel[8] = new JFormattedTextField();
 		textFieldElementParallel[8].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[8].setBounds(250, 175, 36, 19);
+		textFieldElementParallel[8].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[8]);
 
 		//素子の画像を表示するラベルの配列を作成
@@ -585,6 +610,7 @@ public class MainDispApp extends JFrame
 		//電圧の値を入力するBOXの生成
 		textFieldVoltage = new JTextField("10");
 		textFieldVoltage.setBounds(72, 115, 36, 19);
+		textFieldVoltage.addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldVoltage);
 		textFieldVoltage.setColumns(10);
 
@@ -595,31 +621,37 @@ public class MainDispApp extends JFrame
 		textFieldElement[0] = new JFormattedTextField();
 		textFieldElement[0].setBounds(111, 53, 36, 19);
 		textFieldElement[0].setFormatterFactory(new NumberFormatterFactory());
+		textFieldElement[0].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[0]);
 		//素子2の値を入力するボックスの生成
 		textFieldElement[1] = new JFormattedTextField();
 		textFieldElement[1].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[1].setBounds(195, 53, 36, 19);
+		textFieldElement[1].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[1]);
 		//素子3の値を入力するボックスの生成
 		textFieldElement[2] = new JFormattedTextField();
 		textFieldElement[2].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[2].setBounds(242, 80, 36, 19);
+		textFieldElement[2].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[2]);
 		//素子4の値を入力するボックスの生成
 		textFieldElement[3] = new JFormattedTextField();
 		textFieldElement[3].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[3].setBounds(243, 148, 36, 19);
+		textFieldElement[3].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[3]);
 		//素子5の値を入力するボックスの生成
 		textFieldElement[4] = new JFormattedTextField();
 		textFieldElement[4].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[4].setBounds(198, 171, 36, 19);
+		textFieldElement[4].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[4]);
 		//素子6の値を入力するボックスの生成
 		textFieldElement[5] = new JFormattedTextField();
 		textFieldElement[5].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[5].setBounds(107, 171, 36, 19);
+		textFieldElement[5].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[5]);
 
 		//素子の画像を表示するラベルの配列を作成
@@ -707,6 +739,8 @@ public class MainDispApp extends JFrame
 		//数式を表示するテキストエリアを生成
 		//JTextArea textArea = new JTextArea();
 		textArea.setBounds(1, 1, 150, 248);
+		textArea.setEditable(false);
+		textArea.addKeyListener(new ShortcutKeyEvent(this));
 		panelFormula.add(textArea);
 
 		//素子リストのラベルを生成
@@ -729,11 +763,12 @@ public class MainDispApp extends JFrame
 		table = new JTable(tableModel);
 		table.setRowHeight(100);
 		table.addMouseListener(new ElementChangeEvent(this));
+		table.addKeyListener(new ShortcutKeyEvent(this));
 
 		for(int i=0;i<4;i++){
 		      tableModel.addRow(tabledata[i]);
 		}
-		
+
 		scrollPaneElementList = new JScrollPane(table);
 		scrollPaneElementList.setViewportBorder(null);
 		scrollPaneElementList.setBounds(0, 0, 191, 250);
@@ -742,15 +777,18 @@ public class MainDispApp extends JFrame
 		//グラフを作成するものを選択
 		radioButtonVoltage = new JRadioButton("電圧");
 		radioButtonVoltage.setBounds(30, 303, 55, 14);
+		radioButtonVoltage.addKeyListener(new ShortcutKeyEvent(this));
 		contentPane.add(radioButtonVoltage);
 
 		radioButtonCurrent = new JRadioButton("電流");
 		radioButtonCurrent.setBounds(85, 301, 54, 17);
 		radioButtonCurrent.setSelected(true);
+		radioButtonCurrent.addKeyListener(new ShortcutKeyEvent(this));
 		contentPane.add(radioButtonCurrent);
-		
+
 		radioButtonSource = new JRadioButton("電源電圧");
 		radioButtonSource.setBounds(135, 298, 113, 21);
+		radioButtonSource.addKeyListener(new ShortcutKeyEvent(this));;
 		contentPane.add(radioButtonSource);
 
 		loadCircuit();
@@ -802,6 +840,8 @@ public class MainDispApp extends JFrame
 			{
 				icon = labelElement[i].getIcon();
 
+				textFieldElement[i].setText(Double.toString(mainCircuit.getElem(i).getValue()));
+
 				switch(mainCircuit.getElem(i).getEt())
 				{
 				case RESISTANCE:
@@ -852,6 +892,8 @@ public class MainDispApp extends JFrame
 
 			for(int i = 0;i < mainCircuit.getElem().length;i++)
 			{
+				textFieldElementParallel[i].setText(Double.toString(mainCircuit.getElem(i).getValue()));
+
 				icon = labelElementParallel[i].getIcon();
 
 				switch(mainCircuit.getElem(i).getEt())

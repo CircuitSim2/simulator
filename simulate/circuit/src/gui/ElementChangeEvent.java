@@ -10,17 +10,17 @@ public class ElementChangeEvent extends MouseAdapter
 {
 	private Element selectedElem;
 	private MainDispApp disp;
-	
+
 	public ElementChangeEvent(MainDispApp disp)
 	{
 		this.disp = disp;
 		selectedElem = null;
 	}
-	
+
 	public void mousePressed(MouseEvent e)
 	{
 		String elemName = (String) disp.table.getValueAt(disp.table.getSelectedRow(), 1);
-		
+
 		if(elemName.equals("抵抗"))
 			selectedElem = new Element(0.0, ElemType.RESISTANCE);
 		else if(elemName.equals("キャパシタ"))
@@ -29,15 +29,16 @@ public class ElementChangeEvent extends MouseAdapter
 			selectedElem = new Element(0.0, ElemType.INDUCTANCE);
 		else if(elemName.equals("ライン"))
 			selectedElem = new Element(0.0, ElemType.LINE);
-		
-		System.out.println(elemName);
 	}
-	
+
 	public void mouseReleased(MouseEvent e)
 	{
 		if(disp.selectedElemNum != -1)
+		{
+			disp.redoAndUndo.listPush(disp.mainCircuit);
 			disp.mainCircuit.setElem(disp.selectedElemNum, selectedElem);
-		
+		}
+
 		disp.loadCircuit();
 	}
 }

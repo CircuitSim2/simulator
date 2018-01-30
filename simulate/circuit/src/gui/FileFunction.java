@@ -205,6 +205,56 @@ public class FileFunction extends JFrame implements ActionListener{
 	/*--------ファイルを保存するメソッド----------*/
 	public void fileSave(String f)
 	{
+		if(disp.mainCircuit instanceof SeriesCircuit)
+		{
+			//電圧の取得
+			try
+			{
+				disp.mainCircuit.setVoltage(Double.parseDouble(disp.textFieldVoltage.getText()));
+			}
+			catch(Exception ex)
+			{
+				disp.mainCircuit.setVoltage(1);
+				disp.textFieldVoltage.setText("1");
+			}
+
+			for(int i = 0;i < 6;i++)
+			{
+				try{
+					disp.mainCircuit.getElem(i).setValue(Double.parseDouble(disp.textFieldElement[i].getText()));
+				}
+				catch(Exception ex)
+				{
+					disp.mainCircuit.getElem(i).setValue(0);
+				}
+			}
+		}
+
+		else if(disp.mainCircuit instanceof ParallelCircuit)
+		{
+			//電圧の取得
+			try
+			{
+				disp.mainCircuit.setVoltage(Double.parseDouble(disp.textFieldVoltageParallel.getText()));
+			}
+			catch(Exception ex)
+			{
+				disp.mainCircuit.setVoltage(1);
+				disp.textFieldVoltageParallel.setText("1");
+			}
+
+			for(int i = 0;i < 9;i++)
+			{
+				try{
+					disp.mainCircuit.getElem(i).setValue(Double.parseDouble(disp.textFieldElementParallel[i].getText()));
+				}
+				catch(Exception ex)
+				{
+					disp.mainCircuit.getElem(i).setValue(0);
+				}
+			}
+		}
+
 		try
 		{
 			if(f.substring(f.length() - 5).equals(".simt"))

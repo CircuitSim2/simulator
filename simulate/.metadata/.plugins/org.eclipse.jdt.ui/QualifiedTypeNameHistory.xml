@@ -14,4 +14,5 @@
 <fullyQualifiedTypeName name="circuit.Element"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
 <fullyQualifiedTypeName name="circuit.ElemType"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
 </qualifiedTypeNameHistroy>

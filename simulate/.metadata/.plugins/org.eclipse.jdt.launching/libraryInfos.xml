@@ -57,7 +57,7 @@
 <entry path="C:\pleiades\java\8\jre\lib\endorsed"/>
 </endorsedDirs>
 </libraryInfo>
-<libraryInfo home="C:\pleiades\eclipse\jre" version="1.8.0_74">
+<libraryInfo home="C:\pleiades\eclipse\jre" version="1.8.0_60">
 <bootpath>
 <entry path="C:\pleiades\eclipse\jre\jre\lib\resources.jar"/>
 <entry path="C:\pleiades\eclipse\jre\jre\lib\rt.jar"/>
