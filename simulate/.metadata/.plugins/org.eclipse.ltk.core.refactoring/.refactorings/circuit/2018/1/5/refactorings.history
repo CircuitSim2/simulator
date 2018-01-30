@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="型 &apos;gui.RedoAndUndu&apos; を &apos;RedoAndUndo&apos; に名前変更します&#x0D;&#x0A;- 元のプロジェクト: &apos;circuit&apos;&#x0D;&#x0A;- オリジナル要素: &apos;gui.RedoAndUndu&apos;&#x0D;&#x0A;- 名前変更済み要素: &apos;gui.RedoAndUndo&apos;&#x0D;&#x0A;- リファクタリングされた要素の参照を更新&#x0D;&#x0A;- コメントおよびストリング内のテキスト出現箇所の更新" description="型名 &apos;RedoAndUndu&apos; を変更します" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;gui{RedoAndUndu.java[RedoAndUndu" matchStrategy="1" name="RedoAndUndo" qualified="false" references="true" similarDeclarations="false" stamp="1517232912467" textual="false" version="1.0"/>
+</session>

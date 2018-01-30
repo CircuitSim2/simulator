@@ -1,0 +1,13 @@
+package gui;
+
+import java.util.LinkedList;
+
+public class RedoAndUndu 
+{
+	private LinkedList list;
+	
+	public RedoAndUndo()
+	{
+		list = new LinkedList<Circuit>();
+	}
+}

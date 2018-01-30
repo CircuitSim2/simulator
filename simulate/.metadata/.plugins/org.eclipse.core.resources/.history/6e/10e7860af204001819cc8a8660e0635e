@@ -1,0 +1,19 @@
+package gui;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class ShortcutKeyEvent extends KeyAdapter
+{
+	private MainDispApp disp;
+	
+	public ShortcutKeyEvent(MainDispApp disp)
+	{
+		this.disp = disp;
+	}
+	
+	public void keyPressed(KeyEvent e)
+	{
+		
+	}
+}

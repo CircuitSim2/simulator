@@ -1,0 +1,8 @@
+package gui;
+
+import java.util.LinkedList;
+
+public class RedoAndUndu 
+{
+	private LinkedList list;
+}

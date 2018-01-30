@@ -1,0 +1,33 @@
+package gui;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class ShortcutKeyEvent extends KeyAdapter
+{
+	private MainDispApp disp;
+	
+	public ShortcutKeyEvent(MainDispApp disp)
+	{
+		this.disp = disp;
+	}
+	
+	public void keyPressed(KeyEvent e)
+	{
+		System.out.println("key pressed");
+		
+		//ctrl+z
+		if(e.getModifiers() == KeyEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_Z)
+		{
+			System.out.println("ctrl+z");
+			disp.mainCircuit = disp.redoAndUndo.redo();
+			disp.loadCircuit();
+		}
+		
+		if(e.getModifiers() == KeyEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_Y)
+		{
+			disp.mainCircuit = disp.redoAndUndo.undo();
+			disp.loadCircuit();
+		}
+	}
+}

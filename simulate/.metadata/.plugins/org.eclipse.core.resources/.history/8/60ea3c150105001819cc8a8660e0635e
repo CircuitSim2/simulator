@@ -1,0 +1,27 @@
+package gui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class RedoUndoEvent implements ActionListener
+{
+	private MainDispApp disp;
+	
+	public RedoUndoEvent(MainDispApp disp)
+	{
+		this.disp = disp;
+	}
+	
+	public void actionPerformed(ActionEvent e)
+	{
+		if(e.getActionCommand().equals("進む"))
+		{
+			System.out.println("進む");
+		}
+		
+		else if(e.getActionCommand().equals("戻る"))
+		{
+			System.out.println("戻る");
+		}
+	}
+}

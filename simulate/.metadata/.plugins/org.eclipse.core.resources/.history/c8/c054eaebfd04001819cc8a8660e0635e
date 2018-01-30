@@ -1,0 +1,39 @@
+package gui;
+
+import java.util.LinkedList;
+
+import circuit.Circuit;
+
+public class RedoAndUndo 
+{
+	private LinkedList<Circuit> listHistory;
+	private LinkedList<Circuit> listHistoryF;
+	
+	public RedoAndUndo()
+	{
+		listHistory = new LinkedList<Circuit>();
+		listHistoryF = new LinkedList<Circuit>();
+	}
+	
+	public void listPush(Circuit circuit)
+	{
+		listHistory.push(circuit);
+		listHistoryF.removeAll(listHistoryF);
+	}
+	
+	public Circuit redo()
+	{
+		Circuit circuit = listHistory.getFirst();
+		listHistory.removeFirst();
+		listHistoryF.push(circuit);
+		return circuit;
+	}
+	
+	public Circuit undo()
+	{
+		Circuit circuit = listHistoryF.getFirst();
+		listHistoryF.removeFirst();
+		listHistory.push(circuit);
+		return circuit;
+	}
+}
