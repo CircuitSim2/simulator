@@ -205,6 +205,7 @@ public class FileFunction extends JFrame implements ActionListener{
 	/*--------ファイルを保存するメソッド----------*/
 	public void fileSave(String f)
 	{
+		disp.filePass = f;
 		if(disp.mainCircuit instanceof SeriesCircuit)
 		{
 			//電圧の取得
