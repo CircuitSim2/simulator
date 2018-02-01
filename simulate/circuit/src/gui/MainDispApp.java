@@ -195,7 +195,7 @@ public class MainDispApp extends JFrame
 	String formula = null;
 
 	//素子リストの表のデータ
-	private Object[][] tabledata={{new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceDisp.png")),"キャパシタ"},
+	private Object[][] tabledata={{new ImageIcon(MainDispApp.class.getResource("/resources/CapacitanceDisp.png")),"キャパシタ"},
 			                      {new ImageIcon(MainDispApp.class.getResource("/resources/resisitanceDisp.png")),"抵抗"},
 			                      {new ImageIcon(MainDispApp.class.getResource("/resources/InductanceDisp.png")),"インダクタ"},
 			                      {new ImageIcon(MainDispApp.class.getResource("/resources/LineDisp.png")),"ライン"}};
@@ -212,6 +212,9 @@ public class MainDispApp extends JFrame
 
 	//マウスがどの素子の枠に乗っているか
 	public int selectedElemNum;
+	
+	//選ばれたテキストボックスの番号
+	public int selectedTextField;
 	
 	//戻ると進む機能
 	public RedoAndUndo redoAndUndo;
@@ -236,6 +239,9 @@ public class MainDispApp extends JFrame
 	 * Create the frame.
 	 */
 	public MainDispApp() {
+		
+		setTitle("SpicEasy");
+		
 		//必要画像の読み込み
 		seriesCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/SeriesCircuit.png"));
 		parallelCircuitPicture = new ImageIcon(MainDispApp.class.getResource("/resources/ParallelCircuit.png"));
@@ -249,8 +255,10 @@ public class MainDispApp extends JFrame
 		inductancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Inductance.png"));
 		inductancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/InductanceV.png"));
 		//キャパシタ
-		capacitancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Cpacitance.png"));
-		capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CpacitanceV.png"));
+		capacitancePicture = new ImageIcon(MainDispApp.class.getResource("/resources/Capacitance.png"));
+		capacitancePictureV = new ImageIcon(MainDispApp.class.getResource("/resources/CapacitanceV.png"));
+		
+		this.setIconImage(new ImageIcon(MainDispApp.class.getResource("/resources/character.png")).getImage());
 
 		//回路情報の生成
 		mainCircuit = new SeriesCircuit();
@@ -270,6 +278,8 @@ public class MainDispApp extends JFrame
 
 		//マウスがのっている素子
 		selectedElemNum = -1;
+		
+		selectedTextField = 0;
 		
 		redoAndUndo = new RedoAndUndo();
 
@@ -335,15 +345,19 @@ public class MainDispApp extends JFrame
 		menuEdit.add(menuItemUndo);
 		//コピーの生成
 		menuItemCopy = new JMenuItem("コピー");
+		menuItemCopy.addActionListener(new Hensyu(this));
 		menuEdit.add(menuItemCopy);
 		//切り取りの生成
 		menuItemCut = new JMenuItem("切り取り");
+		menuItemCut.addActionListener(new Hensyu(this));
 		menuEdit.add(menuItemCut);
 		//ペーストの生成
 		menuItemPaste = new JMenuItem("ペースト");
+		menuItemPaste.addActionListener(new Hensyu(this));
 		menuEdit.add(menuItemPaste);
-		//前消去の生成
+		//全消去の生成
 		menuItemAllClear = new JMenuItem("全消去");
+		menuItemAllClear.addActionListener(new CircuitChangeEvent(this));
 		menuEdit.add(menuItemAllClear);
 
 		//ヘルプメニューの生成
@@ -367,11 +381,11 @@ public class MainDispApp extends JFrame
 		menuBar.add(menuCircuitSelect);
 		//直列回路の生成
 		menuItemSeriesCircuit = new JMenuItem("直列回路");
-		menuItemSeriesCircuit.addMouseListener(new CircuitChangeEvent(this));
+		menuItemSeriesCircuit.addActionListener(new CircuitChangeEvent(this));
 		menuCircuitSelect.add(menuItemSeriesCircuit);
 		//並列回路の生成
 		menuItemParallelCircuit = new JMenuItem("並列回路");
-		menuItemParallelCircuit.addMouseListener(new CircuitChangeEvent(this));
+		menuItemParallelCircuit.addActionListener(new CircuitChangeEvent(this));
 		menuCircuitSelect.add(menuItemParallelCircuit);
 
 		//メニューバー(ボタン)
@@ -448,6 +462,7 @@ public class MainDispApp extends JFrame
 		textFieldVoltageParallel = new JTextField();
 		textFieldVoltageParallel.setBounds(66, 113, 36, 19);
 		textFieldVoltageParallel.addKeyListener(new ShortcutKeyEvent(this));
+		textFieldVoltageParallel.addCaretListener(new textFieldCaretEvent(this));
 		panelCircuit.add(textFieldVoltageParallel);
 		textFieldVoltageParallel.setColumns(10);
 
@@ -458,12 +473,14 @@ public class MainDispApp extends JFrame
 		textFieldElementParallel[0] = new JFormattedTextField();
 		textFieldElementParallel[0].setBounds(56, 50, 36, 19);
 		textFieldElementParallel[0].addKeyListener(new ShortcutKeyEvent(this));
+		textFieldElementParallel[0].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElementParallel[0].setFormatterFactory(new NumberFormatterFactory());
 		panelCircuit.add(textFieldElementParallel[0]);
 		//素子2の値を入力するBOXの生成
 		textFieldElementParallel[1] = new JFormattedTextField();
 		textFieldElementParallel[1].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[1].setBounds(112, 49, 36, 19);
+		textFieldElementParallel[1].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElementParallel[1].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[1]);
 		//素子3の値を入力するBOXの生成
@@ -471,41 +488,48 @@ public class MainDispApp extends JFrame
 		textFieldElementParallel[2].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[2].setBounds(168, 50, 36, 19);
 		textFieldElementParallel[2].addKeyListener(new ShortcutKeyEvent(this));
+		textFieldElementParallel[2].addCaretListener(new textFieldCaretEvent(this));
 		panelCircuit.add(textFieldElementParallel[2]);
 		//素子4の値を入力するBOXの生成
 		textFieldElementParallel[3] = new JFormattedTextField();
 		textFieldElementParallel[3].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[3].setBounds(157, 74, 36, 19);
+		textFieldElementParallel[3].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElementParallel[3].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[3]);
 		//素子5の値を入力するBOXの生成
 		textFieldElementParallel[4] = new JFormattedTextField();
 		textFieldElementParallel[4].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[4].setBounds(157, 123, 36, 19);
+		textFieldElementParallel[4].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElementParallel[4].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[4]);
 		//素子6の値を入力するBOXの生成
 		textFieldElementParallel[5] = new JFormattedTextField();
 		textFieldElementParallel[5].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[5].setBounds(157, 174, 36, 19);
+		textFieldElementParallel[5].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElementParallel[5].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[5]);
 		//素子7の値を入力するBOXの生成
 		textFieldElementParallel[6] = new JFormattedTextField();
 		textFieldElementParallel[6].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[6].setBounds(251, 60, 36, 19);
+		textFieldElementParallel[6].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElementParallel[6].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[6]);
 		//素子8の値を入力するBOXの生成
 		textFieldElementParallel[7] = new JFormattedTextField();
 		textFieldElementParallel[7].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[7].setBounds(252, 120, 36, 19);
+		textFieldElementParallel[7].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElementParallel[7].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[7]);
 		//素子9の値を入力するBOXの生成
 		textFieldElementParallel[8] = new JFormattedTextField();
 		textFieldElementParallel[8].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElementParallel[8].setBounds(250, 175, 36, 19);
+		textFieldElementParallel[8].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElementParallel[8].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElementParallel[8]);
 
@@ -611,6 +635,7 @@ public class MainDispApp extends JFrame
 		textFieldVoltage = new JTextField("10");
 		textFieldVoltage.setBounds(72, 115, 36, 19);
 		textFieldVoltage.addKeyListener(new ShortcutKeyEvent(this));
+		textFieldVoltage.addCaretListener(new textFieldCaretEvent(this));
 		panelCircuit.add(textFieldVoltage);
 		textFieldVoltage.setColumns(10);
 
@@ -621,36 +646,42 @@ public class MainDispApp extends JFrame
 		textFieldElement[0] = new JFormattedTextField();
 		textFieldElement[0].setBounds(111, 53, 36, 19);
 		textFieldElement[0].setFormatterFactory(new NumberFormatterFactory());
+		textFieldElement[0].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElement[0].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[0]);
 		//素子2の値を入力するボックスの生成
 		textFieldElement[1] = new JFormattedTextField();
 		textFieldElement[1].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[1].setBounds(195, 53, 36, 19);
+		textFieldElement[1].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElement[1].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[1]);
 		//素子3の値を入力するボックスの生成
 		textFieldElement[2] = new JFormattedTextField();
 		textFieldElement[2].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[2].setBounds(242, 80, 36, 19);
+		textFieldElement[2].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElement[2].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[2]);
 		//素子4の値を入力するボックスの生成
 		textFieldElement[3] = new JFormattedTextField();
 		textFieldElement[3].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[3].setBounds(243, 148, 36, 19);
+		textFieldElement[3].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElement[3].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[3]);
 		//素子5の値を入力するボックスの生成
 		textFieldElement[4] = new JFormattedTextField();
 		textFieldElement[4].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[4].setBounds(198, 171, 36, 19);
+		textFieldElement[4].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElement[4].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[4]);
 		//素子6の値を入力するボックスの生成
 		textFieldElement[5] = new JFormattedTextField();
 		textFieldElement[5].setFormatterFactory(new NumberFormatterFactory());
 		textFieldElement[5].setBounds(107, 171, 36, 19);
+		textFieldElement[5].addCaretListener(new textFieldCaretEvent(this));
 		textFieldElement[5].addKeyListener(new ShortcutKeyEvent(this));
 		panelCircuit.add(textFieldElement[5]);
 
@@ -835,6 +866,8 @@ public class MainDispApp extends JFrame
 			changeStateParallel(false);
 
 			labelCircuitPicture.setIcon(seriesCircuitPicture);
+			
+			textFieldVoltage.setText(Double.toString(mainCircuit.getVoltage()));
 
 			for(int i = 0;i < mainCircuit.getElem().length;i++)
 			{
@@ -887,6 +920,8 @@ public class MainDispApp extends JFrame
 
 			//並列回路のコンポーネントを有効化
 			changeStateParallel(true);
+			
+			textFieldVoltage.setText(Double.toString(mainCircuit.getVoltage()));
 
 			labelCircuitPicture.setIcon(parallelCircuitPicture);
 

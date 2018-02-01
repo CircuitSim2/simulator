@@ -39,8 +39,6 @@ public class SeriesCircuit extends Circuit
 		this.CinvSum = 0;
 	}
 
-	//セッター
-
 	//ゲッター
 	public ArrayList<Double> getCurrentList()
 	{
@@ -130,7 +128,7 @@ public class SeriesCircuit extends Circuit
 		double currentSum = 0;
 		int times = (int)(simulationEndTime / dt);
 		double volt = 0;
-		
+
 		currentList = new ArrayList<Double>();
 
 		elemSum();
@@ -143,7 +141,7 @@ public class SeriesCircuit extends Circuit
 				volt = 0;
 			else if(j * dt >= switchOnTime)
 				volt = voltage;
-			
+
 			current = (volt + LSum * current / dt - currentSum * CinvSum) / (RSum + LSum / dt + dt * CinvSum);
 			currentList.add(current);
 			currentSum += current * dt;

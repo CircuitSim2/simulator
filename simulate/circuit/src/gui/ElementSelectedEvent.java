@@ -24,7 +24,7 @@ public class ElementSelectedEvent extends MouseAdapter
 		this.disp = disp;
 		this.selectedElementNum = 0;
 	}
-	
+
 	public void mouseEntered(MouseEvent e)
 	{
 		if(disp.mainCircuit instanceof SeriesCircuit)
@@ -37,7 +37,7 @@ public class ElementSelectedEvent extends MouseAdapter
 				}
 			}
 		}
-		
+
 		else if(disp.mainCircuit instanceof ParallelCircuit)
 		{
 			for(int i = 0; i < disp.labelElementParallel.length;i++)
@@ -49,7 +49,7 @@ public class ElementSelectedEvent extends MouseAdapter
 			}
 		}
 	}
-	
+
 	public void mouseExited(MouseEvent e)
 	{
 		disp.selectedElemNum = -1;
@@ -120,31 +120,31 @@ public class ElementSelectedEvent extends MouseAdapter
     	    	if(disp.radioButtonCurrent.isSelected())
     	    	{
     	    		XYSeries currentSeries = new XYSeries("current");
-    	    		
+
 	    	    	for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
 	    	    	{
 	    	    		currentSeries.add(i * disp.mainCircuit.dt ,((SeriesCircuit)disp.mainCircuit).getCurrentList().get(i));
 	    	    	}
-	    	    	
+
 	    	    	data.addSeries(currentSeries);
     	    	}
 
     	    	if(disp.radioButtonVoltage.isSelected())
     	    	{
     	    		XYSeries voltageSeries = new XYSeries("voltage");
-    	    		
+
 	    	    	for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
 	    	    	{
 	    	    		voltageSeries.add(i * disp.mainCircuit.dt ,((SeriesCircuit)disp.mainCircuit).getVoltList().get(i));
 	    	    	}
-	    	    	
+
 	    	    	data.addSeries(voltageSeries);
     	    	}
-    	    	
+
     	    	if(disp.radioButtonSource.isSelected())
     	    	{
     	    		XYSeries sourceSeries = new XYSeries("source");
-    	    		
+
 	    	    	for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
 	    	    	{
 	    	    		if(i * disp.mainCircuit.dt >= disp.mainCircuit.getSwitchOffTime())
@@ -152,10 +152,10 @@ public class ElementSelectedEvent extends MouseAdapter
 	    	    		else if(i * disp.mainCircuit.dt >= disp.mainCircuit.getSwitchOnTime())
 	    	    			sourceSeries.add(i * disp.mainCircuit.dt ,((SeriesCircuit)disp.mainCircuit).getVoltage());
 	    	    	}
-	    	    	
+
 	    	    	data.addSeries(sourceSeries);
     	    	}
-    			
+
     	    	disp.chart =
     					ChartFactory.createXYLineChart(
     				            null,                      // chart title
@@ -183,7 +183,7 @@ public class ElementSelectedEvent extends MouseAdapter
 					disp.mainCircuit.setVoltage(1);
 					disp.textFieldVoltageParallel.setText("1");
 				}
-    			for(int i = 0;i < 6;i++)
+    			for(int i = 0;i < 9;i++)
     			{
     				try{
     					disp.mainCircuit.getElem(i).setValue(Double.parseDouble(disp.textFieldElementParallel[i].getText()));
@@ -202,7 +202,7 @@ public class ElementSelectedEvent extends MouseAdapter
     	    	if(disp.radioButtonCurrent.isSelected())
     	    	{
     	    		XYSeries currentSeries = new XYSeries("current");
-    	    		
+
     	    		for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
 	    	    	{
 	    	    		if(selectedElementNum / 3 == 0)
@@ -212,26 +212,26 @@ public class ElementSelectedEvent extends MouseAdapter
 	    	    		if(selectedElementNum / 3 == 2)
 	    	    			currentSeries.add(i * disp.mainCircuit.dt ,((ParallelCircuit)disp.mainCircuit).getCurrentListB().get(i));
 	    	    	}
-    	    		
+
     	    		data.addSeries(currentSeries);
     	    	}
 
     	    	if(disp.radioButtonVoltage.isSelected())
     	    	{
     	    		XYSeries voltageSeries = new XYSeries("voltage");
-    	    		
+
     	    		for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
     	    		{
 	    	    		voltageSeries.add(i * disp.mainCircuit.dt ,((ParallelCircuit)disp.mainCircuit).getVoltList().get(i));
 	    	    	}
-    	    		
+
     	    		data.addSeries(voltageSeries);
     	    	}
 
     	    	if(disp.radioButtonSource.isSelected())
     	    	{
     	    		XYSeries sourceSeries = new XYSeries("source");
-    	    		
+
 	    	    	for(int i = 0; i < (disp.mainCircuit.getSimulationEndTime() / disp.mainCircuit.dt);i++)
 	    	    	{
 	    	    		if(i * disp.mainCircuit.dt >= disp.mainCircuit.getSwitchOffTime())
@@ -239,7 +239,7 @@ public class ElementSelectedEvent extends MouseAdapter
 	    	    		else if(i * disp.mainCircuit.dt >= disp.mainCircuit.getSwitchOnTime())
 	    	    			sourceSeries.add(i * disp.mainCircuit.dt ,disp.mainCircuit.getVoltage());
 	    	    	}
-	    	    	
+
 	    	    	data.addSeries(sourceSeries);
     	    	}
 
